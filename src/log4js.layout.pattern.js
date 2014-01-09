@@ -22,11 +22,11 @@ function formatObjectExpansion(obj, depth, indentation) {
 
     if (obj === null) {
       return "null";
-    } else if (typeof obj == "undefined") {
+    } else if (typeof obj === "undefined") {
       return "undefined";
-    } else if (typeof obj == "string") {
+    } else if (typeof obj === "string") {
       return formatString(obj);
-    } else if (typeof obj == "object" && array_contains(objectsExpanded, obj)) {
+    } else if (typeof obj === "object" && array_contains(objectsExpanded, obj)) {
       try {
         expansion = toStr(obj);
       } catch (ex) {
@@ -50,9 +50,9 @@ function formatObjectExpansion(obj, depth, indentation) {
       }
       expansion += childLines.join("," + newLine) + newLine + indentation + "]";
       return expansion;
-    } else if (Object.prototype.toString.call(obj) == "[object Date]") {
+    } else if (Object.prototype.toString.call(obj) === "[object Date]") {
       return obj.toString();
-    } else if (typeof obj == "object" && depth > 0) {
+    } else if (typeof obj === "object" && depth > 0) {
       objectsExpanded.push(obj);
       expansion = "{" + newLine;
       childDepth = depth - 1;
@@ -227,7 +227,7 @@ var SimpleDateFormat;
 
       // If the pattern matched is quoted string, output the text between the quotes
       if (quotedString) {
-        if (quotedString == "''") {
+        if (quotedString === "''") {
           formattedString += "'";
         } else {
           formattedString += quotedString.substring(1, quotedString.length - 1);
@@ -539,11 +539,11 @@ PatternLayout.prototype.format = function (loggingEvent) {
           if (specifier) {
             dateFormat = specifier;
             // Pick up special cases
-            if (dateFormat == "ISO8601") {
+            if (dateFormat === "ISO8601") {
               dateFormat = PatternLayout.ISO8601_DATEFORMAT;
-            } else if (dateFormat == "ABSOLUTE") {
+            } else if (dateFormat === "ABSOLUTE") {
               dateFormat = PatternLayout.ABSOLUTETIME_DATEFORMAT;
-            } else if (dateFormat == "DATE") {
+            } else if (dateFormat === "DATE") {
               dateFormat = PatternLayout.DATETIME_DATEFORMAT;
             }
           }
@@ -569,7 +569,7 @@ PatternLayout.prototype.format = function (loggingEvent) {
               }
             }
             var val = this.customFields[fieldIndex].value;
-            if (typeof val == "function") {
+            if (typeof val === "function") {
               val = val(this, loggingEvent);
             }
             replacement = val;
@@ -605,7 +605,7 @@ PatternLayout.prototype.format = function (loggingEvent) {
       }
       // Next, padding
       if (padding) {
-        if (padding.charAt(0) == "-") {
+        if (padding.charAt(0) === "-") {
           l = parseInt(padding.substr(1), 10);
           // Right pad with spaces
           while (replacement.length < l) {

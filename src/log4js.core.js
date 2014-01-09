@@ -78,7 +78,7 @@ if (!Array.prototype.splice) {
 
 
 function isUndefined(obj) {
-  return typeof obj == "undefined";
+  return typeof obj === "undefined";
 }
 
 /* ---------------------------------------------------------------------- */
@@ -103,7 +103,7 @@ EventSupport.prototype = {
   },
 
   addEventListener: function (eventType, listener) {
-    if (typeof listener == "function") {
+    if (typeof listener === "function") {
       if (!array_contains(this.eventTypes, eventType)) {
         handleError("log4javascript.EventSupport [" + this + "]: addEventListener: no event called '" + eventType + "'");
       }
@@ -114,7 +114,7 @@ EventSupport.prototype = {
   },
 
   removeEventListener: function (eventType, listener) {
-    if (typeof listener == "function") {
+    if (typeof listener === "function") {
       if (!array_contains(this.eventTypes, eventType)) {
         handleError("log4javascript.EventSupport [" + this + "]: removeEventListener: no event called '" + eventType + "'");
       }
@@ -253,7 +253,7 @@ function array_remove(arr, val) {
 
 function array_contains(arr, val) {
   for (var i = 0, len = arr.length; i < len; i++) {
-    if (arr[i] == val) {
+    if (arr[i] === val) {
       return true;
     }
   }
@@ -291,7 +291,7 @@ function extractIntFromParam(param, defaultValue) {
 }
 
 function extractFunctionFromParam(param, defaultValue) {
-  if (typeof param == "function") {
+  if (typeof param === "function") {
     return param;
   } else {
     return defaultValue;
@@ -423,7 +423,7 @@ var logLog = {
   },
 
   error: function (message, exception) {
-    if (++this.numberOfErrors == 1 || this.alertAllErrors) {
+    if (++this.numberOfErrors === 1 || this.alertAllErrors) {
       if (!this.quietMode) {
         var alertMessage = "log4javascript error: " + message;
         if (exception) {
@@ -494,7 +494,7 @@ Level.prototype = {
     return this.name;
   },
   equals: function (level) {
-    return this.level == level.level;
+    return this.level === level.level;
   },
   isGreaterOrEqual: function (level) {
     return this.level >= level.level;
@@ -819,14 +819,14 @@ log4javascript.getRootLogger = function () {
 
 log4javascript.getLogger = function (loggerName) {
   // Use default logger if loggerName is not specified or invalid
-  if (!(typeof loggerName == "string")) {
+  if (!(typeof loggerName === "string")) {
     loggerName = anonymousLoggerName;
     logLog.warn("log4javascript.getLogger: non-string logger name " +
       toStr(loggerName) + " supplied, returning anonymous logger");
   }
 
   // Do not allow retrieval of the root logger by name
-  if (loggerName == rootLoggerName) {
+  if (loggerName === rootLoggerName) {
     handleError("log4javascript.getLogger: root logger may not be obtained by name");
   }
 
@@ -895,7 +895,7 @@ LoggingEvent.prototype = {
       getExceptionStringRep(this.exception) : "";
   },
   getCombinedMessages: function () {
-    return (this.messages.length == 1) ? this.messages[0] :
+    return (this.messages.length === 1) ? this.messages[0] :
       this.messages.join(newLine);
   },
   toString: function () {

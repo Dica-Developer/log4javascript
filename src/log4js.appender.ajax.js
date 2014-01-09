@@ -37,7 +37,7 @@ var getXmlHttp = function (errorHandler) {
 function isHttpRequestSuccessful(xmlHttp) {
   return isUndefined(xmlHttp.status) || xmlHttp.status === 0 ||
     (xmlHttp.status >= 200 && xmlHttp.status < 300) ||
-    xmlHttp.status == 1223 /* Fix for IE */;
+    xmlHttp.status === 1223 /* Fix for IE */;
 }
 
 /* ---------------------------------------------------------------------- */
@@ -164,7 +164,7 @@ function AjaxAppender(url) {
     return headers;
   };
   this.addHeader = function (name, value) {
-    if (name.toLowerCase() == "content-type") {
+    if (name.toLowerCase() === "content-type") {
       contentType = value;
     } else {
       headers.push({ name: name, value: value });
@@ -248,14 +248,14 @@ function AjaxAppender(url) {
       formattedMessages.push(currentFormattedMessage);
     }
     // Create the post data string
-    if (batchedLoggingEvents.length == 1) {
+    if (batchedLoggingEvents.length === 1) {
       postData = formattedMessages.join("");
     } else {
       postData = appender.getLayout().batchHeader +
         formattedMessages.join(appender.getLayout().batchSeparator) +
         appender.getLayout().batchFooter;
     }
-    if (contentType == appender.defaults.contentType) {
+    if (contentType === appender.defaults.contentType) {
       postData = appender.getLayout().returnsPostData ? postData :
         urlEncode(postVarName) + "=" + urlEncode(postData);
       // Add the layout name to the post data
@@ -288,7 +288,7 @@ function AjaxAppender(url) {
           xmlHttp.overrideMimeType(appender.getLayout().getContentType());
         }
         xmlHttp.onreadystatechange = function () {
-          if (xmlHttp.readyState == 4) {
+          if (xmlHttp.readyState === 4) {
             if (isHttpRequestSuccessful(xmlHttp)) {
               if (requestSuccessCallback) {
                 requestSuccessCallback(xmlHttp);
