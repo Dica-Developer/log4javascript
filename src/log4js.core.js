@@ -37,8 +37,7 @@ function isUndefined(obj) {
 /* ---------------------------------------------------------------------- */
 // Custom event support
 
-function EventSupport() {
-}
+function EventSupport() {}
 
 EventSupport.prototype = {
   eventTypes: [],
