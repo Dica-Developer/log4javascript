@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <script src="src/log4js.core.js"></script>
+    <script src="src/log4js.layout.js"></script>
+    <script src="src/log4js.layout.httpPostData.js"></script>
+    <script src="src/log4js.layout.null.js"></script>
+    <script src="src/log4js.layout.json.js"></script>
+    <script src="src/log4js.layout.pattern.js"></script>
+    <script src="src/log4js.layout.simple.js"></script>
+    <script src="src/log4js.layout.xml.js"></script>
+    <script src="src/log4js.appender.js"></script>
+    <script src="src/log4js.appender.ajax.js"></script>
+    <script src="src/log4js.appender.alert.js"></script>
+    <script src="src/log4js.appender.browserConsole.js"></script>
+    <script type="text/javascript">
+        console.log(log4javascript);
+        var log4js = log4javascript;
+        var log = log4js.getLogger('userManagement');
+        var consoleLogger = new log4js.BrowserConsoleAppender();
+        consoleLogger.setThreshold(log4js.Level.TRACE);
+        var logPattern = new log4js.PatternLayout('%r [%c] %l{r40:l:c} %-5p %m');
+        consoleLogger.setLayout(logPattern);
+        log.addAppender(consoleLogger);
+        log.setLevel(log4js.Level.ALL);
+        log.trace('It work\'s');
+    </script>
+</head>
+<body>
+
+</body>
+</html>
