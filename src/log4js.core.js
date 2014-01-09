@@ -152,7 +152,7 @@ function Log4JavaScript() {
 
 Log4JavaScript.prototype = new EventSupport();
 
-log4javascript = new Log4JavaScript();
+var log4javascript = new Log4JavaScript();
 log4javascript.version = "1.4.6";
 log4javascript.edition = "log4javascript_production";
 
