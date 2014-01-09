@@ -1,0 +1,22 @@
+/* ---------------------------------------------------------------------- */
+// SimpleLayout
+
+function SimpleLayout() {
+  this.customFields = [];
+}
+
+SimpleLayout.prototype = new Layout();
+
+SimpleLayout.prototype.format = function(loggingEvent) {
+  return loggingEvent.level.name + " - " + loggingEvent.getCombinedMessages();
+};
+
+SimpleLayout.prototype.ignoresThrowable = function() {
+  return true;
+};
+
+SimpleLayout.prototype.toString = function() {
+  return "SimpleLayout";
+};
+
+log4javascript.SimpleLayout = SimpleLayout;
