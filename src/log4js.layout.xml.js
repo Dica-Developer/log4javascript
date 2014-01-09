@@ -8,21 +8,22 @@ function XmlLayout(combineMessages) {
 
 XmlLayout.prototype = new Layout();
 
-XmlLayout.prototype.isCombinedMessages = function() {
+XmlLayout.prototype.isCombinedMessages = function () {
   return this.combineMessages;
 };
 
-XmlLayout.prototype.getContentType = function() {
+XmlLayout.prototype.getContentType = function () {
   return "text/xml";
 };
 
-XmlLayout.prototype.escapeCdata = function(str) {
+XmlLayout.prototype.escapeCdata = function (str) {
   return str.replace(/\]\]>/, "]]>]]&gt;<![CDATA[");
 };
 
-XmlLayout.prototype.format = function(loggingEvent) {
+XmlLayout.prototype.format = function (loggingEvent) {
   var layout = this;
   var i, len;
+
   function formatMessage(message) {
     message = (typeof message === "string") ? message : toStr(message);
     return "<log4javascript:message><![CDATA[" +
@@ -61,11 +62,11 @@ XmlLayout.prototype.format = function(loggingEvent) {
   return str;
 };
 
-XmlLayout.prototype.ignoresThrowable = function() {
+XmlLayout.prototype.ignoresThrowable = function () {
   return false;
 };
 
-XmlLayout.prototype.toString = function() {
+XmlLayout.prototype.toString = function () {
   return "XmlLayout";
 };
 

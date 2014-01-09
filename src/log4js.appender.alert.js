@@ -1,13 +1,14 @@
 /* ---------------------------------------------------------------------- */
 // AlertAppender
 
-function AlertAppender() {}
+function AlertAppender() {
+}
 
 AlertAppender.prototype = new Appender();
 
 AlertAppender.prototype.layout = new SimpleLayout();
 
-AlertAppender.prototype.append = function(loggingEvent) {
+AlertAppender.prototype.append = function (loggingEvent) {
   var formattedMessage = this.getLayout().format(loggingEvent);
   if (this.getLayout().ignoresThrowable()) {
     formattedMessage += loggingEvent.getThrowableStrRep();
@@ -15,7 +16,7 @@ AlertAppender.prototype.append = function(loggingEvent) {
   alert(formattedMessage);
 };
 
-AlertAppender.prototype.toString = function() {
+AlertAppender.prototype.toString = function () {
   return "AlertAppender";
 };
 

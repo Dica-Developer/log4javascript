@@ -2,16 +2,17 @@
 // BrowserConsoleAppender (only works in Opera and Safari and Firefox with
 // Firebug extension)
 
-function BrowserConsoleAppender() {}
+function BrowserConsoleAppender() {
+}
 
 BrowserConsoleAppender.prototype = new log4javascript.Appender();
 BrowserConsoleAppender.prototype.layout = new NullLayout();
 BrowserConsoleAppender.prototype.threshold = Level.DEBUG;
 
-BrowserConsoleAppender.prototype.append = function(loggingEvent) {
+BrowserConsoleAppender.prototype.append = function (loggingEvent) {
   var appender = this;
 
-  var getFormattedMessage = function() {
+  var getFormattedMessage = function () {
     var layout = appender.getLayout();
     var formattedMessage = layout.format(loggingEvent);
     if (layout.ignoresThrowable() && loggingEvent.exception) {
@@ -40,19 +41,19 @@ BrowserConsoleAppender.prototype.append = function(loggingEvent) {
   }
 };
 
-BrowserConsoleAppender.prototype.group = function(name) {
+BrowserConsoleAppender.prototype.group = function (name) {
   if (window.console && window.console.group) {
     window.console.group(name);
   }
 };
 
-BrowserConsoleAppender.prototype.groupEnd = function() {
+BrowserConsoleAppender.prototype.groupEnd = function () {
   if (window.console && window.console.groupEnd) {
     window.console.groupEnd();
   }
 };
 
-BrowserConsoleAppender.prototype.toString = function() {
+BrowserConsoleAppender.prototype.toString = function () {
   return "BrowserConsoleAppender";
 };
 

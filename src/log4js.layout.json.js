@@ -23,15 +23,15 @@ function JsonLayout(readable, combineMessages) {
 
 JsonLayout.prototype = new Layout();
 
-JsonLayout.prototype.isReadable = function() {
+JsonLayout.prototype.isReadable = function () {
   return this.readable;
 };
 
-JsonLayout.prototype.isCombinedMessages = function() {
+JsonLayout.prototype.isCombinedMessages = function () {
   return this.combineMessages;
 };
 
-JsonLayout.prototype.format = function(loggingEvent) {
+JsonLayout.prototype.format = function (loggingEvent) {
   var layout = this;
   var dataValues = this.getDataValues(loggingEvent, this.combineMessages);
   var str = "{" + this.lineBreak;
@@ -75,15 +75,15 @@ JsonLayout.prototype.format = function(loggingEvent) {
   return str;
 };
 
-JsonLayout.prototype.ignoresThrowable = function() {
+JsonLayout.prototype.ignoresThrowable = function () {
   return false;
 };
 
-JsonLayout.prototype.toString = function() {
+JsonLayout.prototype.toString = function () {
   return "JsonLayout";
 };
 
-JsonLayout.prototype.getContentType = function() {
+JsonLayout.prototype.getContentType = function () {
   return "application/json";
 };
 

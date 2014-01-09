@@ -2,12 +2,18 @@
 // AjaxAppender related
 
 var xmlHttpFactories = [
-  function() { return new XMLHttpRequest(); },
-  function() { return new ActiveXObject("Msxml2.XMLHTTP"); },
-  function() { return new ActiveXObject("Microsoft.XMLHTTP"); }
+  function () {
+    return new XMLHttpRequest();
+  },
+  function () {
+    return new ActiveXObject("Msxml2.XMLHTTP");
+  },
+  function () {
+    return new ActiveXObject("Microsoft.XMLHTTP");
+  }
 ];
 
-var getXmlHttp = function(errorHandler) {
+var getXmlHttp = function (errorHandler) {
   // This is only run the first time; the value of getXmlHttp gets
   // replaced with the factory that succeeds on the first run
   var xmlHttp = null, factory;
@@ -74,13 +80,15 @@ function AjaxAppender(url) {
     return true;
   }
 
-  this.getSessionId = function() { return sessionId; };
-  this.setSessionId = function(sessionIdParam) {
+  this.getSessionId = function () {
+    return sessionId;
+  };
+  this.setSessionId = function (sessionIdParam) {
     sessionId = extractStringFromParam(sessionIdParam, null);
     this.layout.setCustomField("sessionid", sessionId);
   };
 
-  this.setLayout = function(layoutParam) {
+  this.setLayout = function (layoutParam) {
     if (checkCanConfigure("layout")) {
       this.layout = layoutParam;
       // Set the session id as a custom field on the layout, if not already present
@@ -90,62 +98,76 @@ function AjaxAppender(url) {
     }
   };
 
-  this.isTimed = function() { return timed; };
-  this.setTimed = function(timedParam) {
+  this.isTimed = function () {
+    return timed;
+  };
+  this.setTimed = function (timedParam) {
     if (checkCanConfigure("timed")) {
       timed = bool(timedParam);
     }
   };
 
-  this.getTimerInterval = function() { return timerInterval; };
-  this.setTimerInterval = function(timerIntervalParam) {
+  this.getTimerInterval = function () {
+    return timerInterval;
+  };
+  this.setTimerInterval = function (timerIntervalParam) {
     if (checkCanConfigure("timerInterval")) {
       timerInterval = extractIntFromParam(timerIntervalParam, timerInterval);
     }
   };
 
-  this.isWaitForResponse = function() { return waitForResponse; };
-  this.setWaitForResponse = function(waitForResponseParam) {
+  this.isWaitForResponse = function () {
+    return waitForResponse;
+  };
+  this.setWaitForResponse = function (waitForResponseParam) {
     if (checkCanConfigure("waitForResponse")) {
       waitForResponse = bool(waitForResponseParam);
     }
   };
 
-  this.getBatchSize = function() { return batchSize; };
-  this.setBatchSize = function(batchSizeParam) {
+  this.getBatchSize = function () {
+    return batchSize;
+  };
+  this.setBatchSize = function (batchSizeParam) {
     if (checkCanConfigure("batchSize")) {
       batchSize = extractIntFromParam(batchSizeParam, batchSize);
     }
   };
 
-  this.isSendAllOnUnload = function() { return sendAllOnUnload; };
-  this.setSendAllOnUnload = function(sendAllOnUnloadParam) {
+  this.isSendAllOnUnload = function () {
+    return sendAllOnUnload;
+  };
+  this.setSendAllOnUnload = function (sendAllOnUnloadParam) {
     if (checkCanConfigure("sendAllOnUnload")) {
       sendAllOnUnload = extractBooleanFromParam(sendAllOnUnloadParam, sendAllOnUnload);
     }
   };
 
-  this.setRequestSuccessCallback = function(requestSuccessCallbackParam) {
+  this.setRequestSuccessCallback = function (requestSuccessCallbackParam) {
     requestSuccessCallback = extractFunctionFromParam(requestSuccessCallbackParam, requestSuccessCallback);
   };
 
-  this.setFailCallback = function(failCallbackParam) {
+  this.setFailCallback = function (failCallbackParam) {
     failCallback = extractFunctionFromParam(failCallbackParam, failCallback);
   };
 
-  this.getPostVarName = function() { return postVarName; };
-  this.setPostVarName = function(postVarNameParam) {
+  this.getPostVarName = function () {
+    return postVarName;
+  };
+  this.setPostVarName = function (postVarNameParam) {
     if (checkCanConfigure("postVarName")) {
       postVarName = extractStringFromParam(postVarNameParam, postVarName);
     }
   };
 
-  this.getHeaders = function() { return headers; };
-  this.addHeader = function(name, value) {
+  this.getHeaders = function () {
+    return headers;
+  };
+  this.addHeader = function (name, value) {
     if (name.toLowerCase() == "content-type") {
       contentType = value;
     } else {
-      headers.push( { name: name, value: value } );
+      headers.push({ name: name, value: value });
     }
   };
 
@@ -265,7 +287,7 @@ function AjaxAppender(url) {
         if (xmlHttp.overrideMimeType) {
           xmlHttp.overrideMimeType(appender.getLayout().getContentType());
         }
-        xmlHttp.onreadystatechange = function() {
+        xmlHttp.onreadystatechange = function () {
           if (xmlHttp.readyState == 4) {
             if (isHttpRequestSuccessful(xmlHttp)) {
               if (requestSuccessCallback) {
@@ -288,7 +310,7 @@ function AjaxAppender(url) {
         };
         xmlHttp.open("POST", url, true);
         try {
-          for (var i = 0, header; header = headers[i++]; ) {
+          for (var i = 0, header; header = headers[i++];) {
             xmlHttp.setRequestHeader(header.name, header.value);
           }
           xmlHttp.setRequestHeader("Content-Type", contentType);
@@ -314,7 +336,7 @@ function AjaxAppender(url) {
     }
   }
 
-  this.append = function(loggingEvent) {
+  this.append = function (loggingEvent) {
     if (isSupported) {
       if (!initialized) {
         init();
@@ -345,7 +367,7 @@ function AjaxAppender(url) {
     // Add unload event to send outstanding messages
     if (sendAllOnUnload) {
       var oldBeforeUnload = window.onbeforeunload;
-      window.onbeforeunload = function() {
+      window.onbeforeunload = function () {
         if (oldBeforeUnload) {
           oldBeforeUnload();
         }
@@ -377,7 +399,7 @@ AjaxAppender.prototype.defaults = {
 
 AjaxAppender.prototype.layout = new HttpPostDataLayout();
 
-AjaxAppender.prototype.toString = function() {
+AjaxAppender.prototype.toString = function () {
   return "AjaxAppender";
 };
 

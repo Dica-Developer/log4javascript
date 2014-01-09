@@ -10,11 +10,11 @@ function HttpPostDataLayout() {
 HttpPostDataLayout.prototype = new Layout();
 
 // Disable batching
-HttpPostDataLayout.prototype.allowBatching = function() {
+HttpPostDataLayout.prototype.allowBatching = function () {
   return false;
 };
 
-HttpPostDataLayout.prototype.format = function(loggingEvent) {
+HttpPostDataLayout.prototype.format = function (loggingEvent) {
   var dataValues = this.getDataValues(loggingEvent);
   var queryBits = [];
   for (var i = 0, len = dataValues.length; i < len; i++) {
@@ -25,11 +25,11 @@ HttpPostDataLayout.prototype.format = function(loggingEvent) {
   return queryBits.join("&");
 };
 
-HttpPostDataLayout.prototype.ignoresThrowable = function(loggingEvent) {
+HttpPostDataLayout.prototype.ignoresThrowable = function (loggingEvent) {
   return false;
 };
 
-HttpPostDataLayout.prototype.toString = function() {
+HttpPostDataLayout.prototype.toString = function () {
   return "HttpPostDataLayout";
 };
 

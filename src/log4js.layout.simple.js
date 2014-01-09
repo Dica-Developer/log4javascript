@@ -7,15 +7,15 @@ function SimpleLayout() {
 
 SimpleLayout.prototype = new Layout();
 
-SimpleLayout.prototype.format = function(loggingEvent) {
+SimpleLayout.prototype.format = function (loggingEvent) {
   return loggingEvent.level.name + " - " + loggingEvent.getCombinedMessages();
 };
 
-SimpleLayout.prototype.ignoresThrowable = function() {
+SimpleLayout.prototype.ignoresThrowable = function () {
   return true;
 };
 
-SimpleLayout.prototype.toString = function() {
+SimpleLayout.prototype.toString = function () {
   return "SimpleLayout";
 };
 

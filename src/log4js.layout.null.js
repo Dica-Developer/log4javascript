@@ -7,15 +7,15 @@ function NullLayout() {
 
 NullLayout.prototype = new Layout();
 
-NullLayout.prototype.format = function(loggingEvent) {
+NullLayout.prototype.format = function (loggingEvent) {
   return loggingEvent.messages;
 };
 
-NullLayout.prototype.ignoresThrowable = function() {
+NullLayout.prototype.ignoresThrowable = function () {
   return true;
 };
 
-NullLayout.prototype.toString = function() {
+NullLayout.prototype.toString = function () {
   return "NullLayout";
 };
 

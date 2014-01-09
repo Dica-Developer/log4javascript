@@ -73,6 +73,7 @@ function formatObjectExpansion(obj, depth, indentation) {
       return formatString(toStr(obj));
     }
   }
+
   return doFormat(obj, depth, indentation);
 }
 /* ---------------------------------------------------------------------- */
@@ -80,60 +81,60 @@ function formatObjectExpansion(obj, depth, indentation) {
 
 var SimpleDateFormat;
 
-(function() {
+(function () {
   var regex = /('[^']*')|(G+|y+|M+|w+|W+|D+|d+|F+|E+|a+|H+|k+|K+|h+|m+|s+|S+|Z+)|([a-zA-Z]+)|([^a-zA-Z']+)/;
   var monthNames = ["January", "February", "March", "April", "May", "June",
     "July", "August", "September", "October", "November", "December"];
   var dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
   var TEXT2 = 0, TEXT3 = 1, NUMBER = 2, YEAR = 3, MONTH = 4, TIMEZONE = 5;
   var types = {
-    G : TEXT2,
-    y : YEAR,
-    M : MONTH,
-    w : NUMBER,
-    W : NUMBER,
-    D : NUMBER,
-    d : NUMBER,
-    F : NUMBER,
-    E : TEXT3,
-    a : TEXT2,
-    H : NUMBER,
-    k : NUMBER,
-    K : NUMBER,
-    h : NUMBER,
-    m : NUMBER,
-    s : NUMBER,
-    S : NUMBER,
-    Z : TIMEZONE
+    G: TEXT2,
+    y: YEAR,
+    M: MONTH,
+    w: NUMBER,
+    W: NUMBER,
+    D: NUMBER,
+    d: NUMBER,
+    F: NUMBER,
+    E: TEXT3,
+    a: TEXT2,
+    H: NUMBER,
+    k: NUMBER,
+    K: NUMBER,
+    h: NUMBER,
+    m: NUMBER,
+    s: NUMBER,
+    S: NUMBER,
+    Z: TIMEZONE
   };
   var ONE_DAY = 24 * 60 * 60 * 1000;
   var ONE_WEEK = 7 * ONE_DAY;
   var DEFAULT_MINIMAL_DAYS_IN_FIRST_WEEK = 1;
 
-  var newDateAtMidnight = function(year, month, day) {
+  var newDateAtMidnight = function (year, month, day) {
     var d = new Date(year, month, day, 0, 0, 0);
     d.setMilliseconds(0);
     return d;
   };
 
-  Date.prototype.getDifference = function(date) {
+  Date.prototype.getDifference = function (date) {
     return this.getTime() - date.getTime();
   };
 
-  Date.prototype.isBefore = function(d) {
+  Date.prototype.isBefore = function (d) {
     return this.getTime() < d.getTime();
   };
 
-  Date.prototype.getUTCTime = function() {
+  Date.prototype.getUTCTime = function () {
     return Date.UTC(this.getFullYear(), this.getMonth(), this.getDate(), this.getHours(), this.getMinutes(),
       this.getSeconds(), this.getMilliseconds());
   };
 
-  Date.prototype.getTimeSince = function(d) {
+  Date.prototype.getTimeSince = function (d) {
     return this.getUTCTime() - d.getUTCTime();
   };
 
-  Date.prototype.getPreviousSunday = function() {
+  Date.prototype.getPreviousSunday = function () {
     // Using midday avoids any possibility of DST messing things up
     var midday = new Date(this.getFullYear(), this.getMonth(), this.getDate(), 12, 0, 0);
     var previousSunday = new Date(midday.getTime() - this.getDay() * ONE_DAY);
@@ -141,7 +142,7 @@ var SimpleDateFormat;
       previousSunday.getDate());
   };
 
-  Date.prototype.getWeekInYear = function(minimalDaysInFirstWeek) {
+  Date.prototype.getWeekInYear = function (minimalDaysInFirstWeek) {
     if (isUndefined(this.minimalDaysInFirstWeek)) {
       minimalDaysInFirstWeek = DEFAULT_MINIMAL_DAYS_IN_FIRST_WEEK;
     }
@@ -149,7 +150,7 @@ var SimpleDateFormat;
     var startOfYear = newDateAtMidnight(this.getFullYear(), 0, 1);
     var numberOfSundays = previousSunday.isBefore(startOfYear) ?
       0 : 1 + Math.floor(previousSunday.getTimeSince(startOfYear) / ONE_WEEK);
-    var numberOfDaysInFirstWeek =  7 - startOfYear.getDay();
+    var numberOfDaysInFirstWeek = 7 - startOfYear.getDay();
     var weekInYear = numberOfSundays;
     if (numberOfDaysInFirstWeek < minimalDaysInFirstWeek) {
       weekInYear--;
@@ -157,7 +158,7 @@ var SimpleDateFormat;
     return weekInYear;
   };
 
-  Date.prototype.getWeekInMonth = function(minimalDaysInFirstWeek) {
+  Date.prototype.getWeekInMonth = function (minimalDaysInFirstWeek) {
     if (isUndefined(this.minimalDaysInFirstWeek)) {
       minimalDaysInFirstWeek = DEFAULT_MINIMAL_DAYS_IN_FIRST_WEEK;
     }
@@ -165,7 +166,7 @@ var SimpleDateFormat;
     var startOfMonth = newDateAtMidnight(this.getFullYear(), this.getMonth(), 1);
     var numberOfSundays = previousSunday.isBefore(startOfMonth) ?
       0 : 1 + Math.floor(previousSunday.getTimeSince(startOfMonth) / ONE_WEEK);
-    var numberOfDaysInFirstWeek =  7 - startOfMonth.getDay();
+    var numberOfDaysInFirstWeek = 7 - startOfMonth.getDay();
     var weekInMonth = numberOfSundays;
     if (numberOfDaysInFirstWeek >= minimalDaysInFirstWeek) {
       weekInMonth++;
@@ -173,14 +174,14 @@ var SimpleDateFormat;
     return weekInMonth;
   };
 
-  Date.prototype.getDayInYear = function() {
+  Date.prototype.getDayInYear = function () {
     var startOfYear = newDateAtMidnight(this.getFullYear(), 0, 1);
     return 1 + Math.floor(this.getTimeSince(startOfYear) / ONE_DAY);
   };
 
   /* ------------------------------------------------------------------ */
 
-  SimpleDateFormat = function(formatString) {
+  SimpleDateFormat = function (formatString) {
     this.formatString = formatString;
   };
 
@@ -188,33 +189,33 @@ var SimpleDateFormat;
    * Sets the minimum number of days in a week in order for that week to
    * be considered as belonging to a particular month or year
    */
-  SimpleDateFormat.prototype.setMinimalDaysInFirstWeek = function(days) {
+  SimpleDateFormat.prototype.setMinimalDaysInFirstWeek = function (days) {
     this.minimalDaysInFirstWeek = days;
   };
 
-  SimpleDateFormat.prototype.getMinimalDaysInFirstWeek = function() {
-    return isUndefined(this.minimalDaysInFirstWeek)	?
+  SimpleDateFormat.prototype.getMinimalDaysInFirstWeek = function () {
+    return isUndefined(this.minimalDaysInFirstWeek) ?
       DEFAULT_MINIMAL_DAYS_IN_FIRST_WEEK : this.minimalDaysInFirstWeek;
   };
 
-  var padWithZeroes = function(str, len) {
+  var padWithZeroes = function (str, len) {
     while (str.length < len) {
       str = "0" + str;
     }
     return str;
   };
 
-  var formatText = function(data, numberOfLetters, minLength) {
+  var formatText = function (data, numberOfLetters, minLength) {
     return (numberOfLetters >= 4) ? data : data.substr(0, Math.max(minLength, numberOfLetters));
   };
 
-  var formatNumber = function(data, numberOfLetters) {
+  var formatNumber = function (data, numberOfLetters) {
     var dataString = "" + data;
     // Pad with 0s as necessary
     return padWithZeroes(dataString, numberOfLetters);
   };
 
-  SimpleDateFormat.prototype.format = function(date) {
+  SimpleDateFormat.prototype.format = function (date) {
     var formattedString = "";
     var result;
     var searchString = this.formatString;
@@ -241,7 +242,7 @@ var SimpleDateFormat;
         var patternLetter = patternLetters.charAt(0);
         var numberOfLetters = patternLetters.length;
         var rawData = "";
-        switch(patternLetter) {
+        switch (patternLetter) {
           case "G":
             rawData = "AD";
             break;
@@ -298,7 +299,7 @@ var SimpleDateFormat;
             break;
         }
         // Format the raw data depending on the type
-        switch(types[patternLetter]) {
+        switch (types[patternLetter]) {
           case TEXT2:
             formattedString += formatText(rawData, numberOfLetters, 2);
             break;
@@ -370,7 +371,7 @@ PatternLayout.ABSOLUTETIME_DATEFORMAT = "HH:mm:ss,SSS";
 
 PatternLayout.prototype = new Layout();
 
-PatternLayout.prototype.format = function(loggingEvent) {
+PatternLayout.prototype.format = function (loggingEvent) {
   var regex = /%(-?[0-9]+)?(\.?[0-9]+)?([acdflmMnpr%])(\{([^\}]+)\})?|([^%]+)/;
   var formattedString = "";
   var result;
@@ -392,10 +393,10 @@ PatternLayout.prototype.format = function(loggingEvent) {
       // Create a raw replacement string based on the conversion
       // character and specifier
       var replacement = "";
-      switch(conversionCharacter) {
+      switch (conversionCharacter) {
         case "l": //Location
           var isChrome = navigator.userAgent.indexOf("Chrome") !== -1;
-          if(isChrome){
+          if (isChrome) {
             //do someting else
             var stack = new Error().stack;
             var lineAccessingLogger = stack.split("\n")[8];
@@ -404,25 +405,25 @@ PatternLayout.prototype.format = function(loggingEvent) {
             var resourceBegin = lineAccessingLogger.indexOf(" (") + 2;
 
 
-            var functionName = funcBegin < resourceBegin ? lineAccessingLogger.substring(funcBegin,resourceBegin-2) : null;
+            var functionName = funcBegin < resourceBegin ? lineAccessingLogger.substring(funcBegin, resourceBegin - 2) : null;
 
             var resourceLoc;
-            if(functionName){
-              resourceLoc = lineAccessingLogger.substring(resourceBegin,lineAccessingLogger.length-1);
-            }else{
+            if (functionName) {
+              resourceLoc = lineAccessingLogger.substring(resourceBegin, lineAccessingLogger.length - 1);
+            } else {
               functionName = "(anonymous)";
               resourceLoc = lineAccessingLogger.substring(funcBegin);
             }
 
             var colIdx = resourceLoc.lastIndexOf(":");
-            var column = parseInt(resourceLoc.substring(colIdx+1),10);
-            var lineIdx = resourceLoc.lastIndexOf(":",colIdx-1);
-            var line = parseInt(resourceLoc.substring(lineIdx+1,colIdx),10);
+            var column = parseInt(resourceLoc.substring(colIdx + 1), 10);
+            var lineIdx = resourceLoc.lastIndexOf(":", colIdx - 1);
+            var line = parseInt(resourceLoc.substring(lineIdx + 1, colIdx), 10);
 
-            var resource = resourceLoc.substring(0,lineIdx);
+            var resource = resourceLoc.substring(0, lineIdx);
             var lastSegmentIdx = resource.lastIndexOf("/");
 
-            var lastSegment = resource.substring(lastSegmentIdx+1);
+            var lastSegment = resource.substring(lastSegmentIdx + 1);
 
             /*
              var resultObject = {
@@ -435,39 +436,39 @@ PatternLayout.prototype.format = function(loggingEvent) {
              */
 
             var spec = "s:l";
-            if(specifier)spec = specifier;
+            if (specifier)spec = specifier;
 
             var specresult = [];
             var priorNum = "";
-            for ( var int = 0; int < spec.length; int++) {
+            for (var int = 0; int < spec.length; int++) {
               var l = spec[int];
-              var num = parseInt(l,10);
-              if(num > -1 ){
+              var num = parseInt(l, 10);
+              if (num > -1) {
                 priorNum += l;
                 continue;
-              }else{
-                if(priorNum.length >0){
-                  specresult.push(parseInt(priorNum,10));
+              } else {
+                if (priorNum.length > 0) {
+                  specresult.push(parseInt(priorNum, 10));
                   priorNum = "";
                 }
                 specresult.push(l);
               }
             }
-            if(priorNum.length >0)
-              specresult.push(parseInt(priorNum,10));
+            if (priorNum.length > 0)
+              specresult.push(parseInt(priorNum, 10));
             spec = specresult;
 
-            for ( var int = 0; int < spec.length; int++) {
-              var optNum = spec[int+1];
-              switch(spec[int]){
+            for (var int = 0; int < spec.length; int++) {
+              var optNum = spec[int + 1];
+              switch (spec[int]) {
                 case "s":
                   replacement += lastSegment;
                   break;
                 case "r":
                   var string = resource;
-                  if(typeof optNum === "number"){
-                    string = string.substring(string.length-optNum);
-                    spec.splice(int+1,1);
+                  if (typeof optNum === "number") {
+                    string = string.substring(string.length - optNum);
+                    spec.splice(int + 1, 1);
                   }
                   replacement += string;
                   break;
@@ -479,18 +480,19 @@ PatternLayout.prototype.format = function(loggingEvent) {
                   break;
                 case "f":
                   var string = functionName;
-                  if(typeof optNum === "number"){
-                    string = string.substring(string.length-optNum);
-                    spec.splice(int+1,1);
+                  if (typeof optNum === "number") {
+                    string = string.substring(string.length - optNum);
+                    spec.splice(int + 1, 1);
                   }
                   replacement += string;
                   break;
                   break;
                 default:
                   replacement += spec[int];
-              };
+              }
+              ;
             }
-          }else{
+          } else {
             throw "can only use this method on google chrome";
           }
           break;
@@ -624,11 +626,11 @@ PatternLayout.prototype.format = function(loggingEvent) {
   return formattedString;
 };
 
-PatternLayout.prototype.ignoresThrowable = function() {
+PatternLayout.prototype.ignoresThrowable = function () {
   return true;
 };
 
-PatternLayout.prototype.toString = function() {
+PatternLayout.prototype.toString = function () {
   return "PatternLayout";
 };
 
