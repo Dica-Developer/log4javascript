@@ -371,7 +371,7 @@ PatternLayout.ABSOLUTETIME_DATEFORMAT = "HH:mm:ss,SSS";
 PatternLayout.prototype = new Layout();
 
 PatternLayout.prototype.format = function(loggingEvent) {
-  var regex = /%(-?[0-9]+)?(\.?[0-9]+)?([acdfmMnpr%])(\{([^\}]+)\})?|([^%]+)/;
+  var regex = /%(-?[0-9]+)?(\.?[0-9]+)?([acdflmMnpr%])(\{([^\}]+)\})?|([^%]+)/;
   var formattedString = "";
   var result;
   var searchString = this.pattern;
@@ -393,6 +393,107 @@ PatternLayout.prototype.format = function(loggingEvent) {
       // character and specifier
       var replacement = "";
       switch(conversionCharacter) {
+        case "l": //Location
+          var isChrome = navigator.userAgent.indexOf("Chrome") !== -1;
+          if(isChrome){
+            //do someting else
+            var stack = new Error().stack;
+            var lineAccessingLogger = stack.split("\n")[8];
+
+            var funcBegin = lineAccessingLogger.indexOf("at ") + 3;
+            var resourceBegin = lineAccessingLogger.indexOf(" (") + 2;
+
+
+            var functionName = funcBegin < resourceBegin ? lineAccessingLogger.substring(funcBegin,resourceBegin-2) : null;
+
+            var resourceLoc;
+            if(functionName){
+              resourceLoc = lineAccessingLogger.substring(resourceBegin,lineAccessingLogger.length-1);
+            }else{
+              functionName = "(anonymous)";
+              resourceLoc = lineAccessingLogger.substring(funcBegin);
+            }
+
+            var colIdx = resourceLoc.lastIndexOf(":");
+            var column = parseInt(resourceLoc.substring(colIdx+1),10);
+            var lineIdx = resourceLoc.lastIndexOf(":",colIdx-1);
+            var line = parseInt(resourceLoc.substring(lineIdx+1,colIdx),10);
+
+            var resource = resourceLoc.substring(0,lineIdx);
+            var lastSegmentIdx = resource.lastIndexOf("/");
+
+            var lastSegment = resource.substring(lastSegmentIdx+1);
+
+            /*
+             var resultObject = {
+             r : resource,
+             l : line,
+             c : column,
+             f : functionName,
+             s : lastSegment
+             };
+             */
+
+            var spec = "s:l";
+            if(specifier)spec = specifier;
+
+            var specresult = [];
+            var priorNum = "";
+            for ( var int = 0; int < spec.length; int++) {
+              var l = spec[int];
+              var num = parseInt(l,10);
+              if(num > -1 ){
+                priorNum += l;
+                continue;
+              }else{
+                if(priorNum.length >0){
+                  specresult.push(parseInt(priorNum,10));
+                  priorNum = "";
+                }
+                specresult.push(l);
+              }
+            }
+            if(priorNum.length >0)
+              specresult.push(parseInt(priorNum,10));
+            spec = specresult;
+
+            for ( var int = 0; int < spec.length; int++) {
+              var optNum = spec[int+1];
+              switch(spec[int]){
+                case "s":
+                  replacement += lastSegment;
+                  break;
+                case "r":
+                  var string = resource;
+                  if(typeof optNum === "number"){
+                    string = string.substring(string.length-optNum);
+                    spec.splice(int+1,1);
+                  }
+                  replacement += string;
+                  break;
+                case "l":
+                  replacement += line;
+                  break;
+                case "c":
+                  replacement += column;
+                  break;
+                case "f":
+                  var string = functionName;
+                  if(typeof optNum === "number"){
+                    string = string.substring(string.length-optNum);
+                    spec.splice(int+1,1);
+                  }
+                  replacement += string;
+                  break;
+                  break;
+                default:
+                  replacement += spec[int];
+              };
+            }
+          }else{
+            throw "can only use this method on google chrome";
+          }
+          break;
         case "a": // Array of messages
         case "m": // Message
           var depth = 0;
