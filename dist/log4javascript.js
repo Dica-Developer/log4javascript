@@ -80,7 +80,7 @@ if (!Array.prototype.splice) {
 
 
 function isUndefined(obj) {
-  return typeof obj == "undefined";
+  return typeof obj === "undefined";
 }
 
 /* ---------------------------------------------------------------------- */
@@ -105,7 +105,7 @@ EventSupport.prototype = {
   },
 
   addEventListener: function (eventType, listener) {
-    if (typeof listener == "function") {
+    if (typeof listener === "function") {
       if (!array_contains(this.eventTypes, eventType)) {
         handleError("log4javascript.EventSupport [" + this + "]: addEventListener: no event called '" + eventType + "'");
       }
@@ -116,7 +116,7 @@ EventSupport.prototype = {
   },
 
   removeEventListener: function (eventType, listener) {
-    if (typeof listener == "function") {
+    if (typeof listener === "function") {
       if (!array_contains(this.eventTypes, eventType)) {
         handleError("log4javascript.EventSupport [" + this + "]: removeEventListener: no event called '" + eventType + "'");
       }
@@ -255,7 +255,7 @@ function array_remove(arr, val) {
 
 function array_contains(arr, val) {
   for (var i = 0, len = arr.length; i < len; i++) {
-    if (arr[i] == val) {
+    if (arr[i] === val) {
       return true;
     }
   }
@@ -293,7 +293,7 @@ function extractIntFromParam(param, defaultValue) {
 }
 
 function extractFunctionFromParam(param, defaultValue) {
-  if (typeof param == "function") {
+  if (typeof param === "function") {
     return param;
   } else {
     return defaultValue;
@@ -425,7 +425,7 @@ var logLog = {
   },
 
   error: function (message, exception) {
-    if (++this.numberOfErrors == 1 || this.alertAllErrors) {
+    if (++this.numberOfErrors === 1 || this.alertAllErrors) {
       if (!this.quietMode) {
         var alertMessage = "log4javascript error: " + message;
         if (exception) {
@@ -496,7 +496,7 @@ Level.prototype = {
     return this.name;
   },
   equals: function (level) {
-    return this.level == level.level;
+    return this.level === level.level;
   },
   isGreaterOrEqual: function (level) {
     return this.level >= level.level;
@@ -821,14 +821,14 @@ log4javascript.getRootLogger = function () {
 
 log4javascript.getLogger = function (loggerName) {
   // Use default logger if loggerName is not specified or invalid
-  if (!(typeof loggerName == "string")) {
+  if (!(typeof loggerName === "string")) {
     loggerName = anonymousLoggerName;
     logLog.warn("log4javascript.getLogger: non-string logger name " +
       toStr(loggerName) + " supplied, returning anonymous logger");
   }
 
   // Do not allow retrieval of the root logger by name
-  if (loggerName == rootLoggerName) {
+  if (loggerName === rootLoggerName) {
     handleError("log4javascript.getLogger: root logger may not be obtained by name");
   }
 
@@ -897,7 +897,7 @@ LoggingEvent.prototype = {
       getExceptionStringRep(this.exception) : "";
   },
   getCombinedMessages: function () {
-    return (this.messages.length == 1) ? this.messages[0] :
+    return (this.messages.length === 1) ? this.messages[0] :
       this.messages.join(newLine);
   },
   toString: function () {
@@ -1222,11 +1222,11 @@ function formatObjectExpansion(obj, depth, indentation) {
 
     if (obj === null) {
       return "null";
-    } else if (typeof obj == "undefined") {
+    } else if (typeof obj === "undefined") {
       return "undefined";
-    } else if (typeof obj == "string") {
+    } else if (typeof obj === "string") {
       return formatString(obj);
-    } else if (typeof obj == "object" && array_contains(objectsExpanded, obj)) {
+    } else if (typeof obj === "object" && array_contains(objectsExpanded, obj)) {
       try {
         expansion = toStr(obj);
       } catch (ex) {
@@ -1250,9 +1250,9 @@ function formatObjectExpansion(obj, depth, indentation) {
       }
       expansion += childLines.join("," + newLine) + newLine + indentation + "]";
       return expansion;
-    } else if (Object.prototype.toString.call(obj) == "[object Date]") {
+    } else if (Object.prototype.toString.call(obj) === "[object Date]") {
       return obj.toString();
-    } else if (typeof obj == "object" && depth > 0) {
+    } else if (typeof obj === "object" && depth > 0) {
       objectsExpanded.push(obj);
       expansion = "{" + newLine;
       childDepth = depth - 1;
@@ -1427,7 +1427,7 @@ var SimpleDateFormat;
 
       // If the pattern matched is quoted string, output the text between the quotes
       if (quotedString) {
-        if (quotedString == "''") {
+        if (quotedString === "''") {
           formattedString += "'";
         } else {
           formattedString += quotedString.substring(1, quotedString.length - 1);
@@ -1739,11 +1739,11 @@ PatternLayout.prototype.format = function (loggingEvent) {
           if (specifier) {
             dateFormat = specifier;
             // Pick up special cases
-            if (dateFormat == "ISO8601") {
+            if (dateFormat === "ISO8601") {
               dateFormat = PatternLayout.ISO8601_DATEFORMAT;
-            } else if (dateFormat == "ABSOLUTE") {
+            } else if (dateFormat === "ABSOLUTE") {
               dateFormat = PatternLayout.ABSOLUTETIME_DATEFORMAT;
-            } else if (dateFormat == "DATE") {
+            } else if (dateFormat === "DATE") {
               dateFormat = PatternLayout.DATETIME_DATEFORMAT;
             }
           }
@@ -1769,7 +1769,7 @@ PatternLayout.prototype.format = function (loggingEvent) {
               }
             }
             var val = this.customFields[fieldIndex].value;
-            if (typeof val == "function") {
+            if (typeof val === "function") {
               val = val(this, loggingEvent);
             }
             replacement = val;
@@ -1805,7 +1805,7 @@ PatternLayout.prototype.format = function (loggingEvent) {
       }
       // Next, padding
       if (padding) {
-        if (padding.charAt(0) == "-") {
+        if (padding.charAt(0) === "-") {
           l = parseInt(padding.substr(1), 10);
           // Right pad with spaces
           while (replacement.length < l) {
@@ -2030,7 +2030,7 @@ var getXmlHttp = function (errorHandler) {
 function isHttpRequestSuccessful(xmlHttp) {
   return isUndefined(xmlHttp.status) || xmlHttp.status === 0 ||
     (xmlHttp.status >= 200 && xmlHttp.status < 300) ||
-    xmlHttp.status == 1223 /* Fix for IE */;
+    xmlHttp.status === 1223 /* Fix for IE */;
 }
 
 /* ---------------------------------------------------------------------- */
@@ -2157,7 +2157,7 @@ function AjaxAppender(url) {
     return headers;
   };
   this.addHeader = function (name, value) {
-    if (name.toLowerCase() == "content-type") {
+    if (name.toLowerCase() === "content-type") {
       contentType = value;
     } else {
       headers.push({ name: name, value: value });
@@ -2241,14 +2241,14 @@ function AjaxAppender(url) {
       formattedMessages.push(currentFormattedMessage);
     }
     // Create the post data string
-    if (batchedLoggingEvents.length == 1) {
+    if (batchedLoggingEvents.length === 1) {
       postData = formattedMessages.join("");
     } else {
       postData = appender.getLayout().batchHeader +
         formattedMessages.join(appender.getLayout().batchSeparator) +
         appender.getLayout().batchFooter;
     }
-    if (contentType == appender.defaults.contentType) {
+    if (contentType === appender.defaults.contentType) {
       postData = appender.getLayout().returnsPostData ? postData :
         urlEncode(postVarName) + "=" + urlEncode(postData);
       // Add the layout name to the post data
@@ -2281,7 +2281,7 @@ function AjaxAppender(url) {
           xmlHttp.overrideMimeType(appender.getLayout().getContentType());
         }
         xmlHttp.onreadystatechange = function () {
-          if (xmlHttp.readyState == 4) {
+          if (xmlHttp.readyState === 4) {
             if (isHttpRequestSuccessful(xmlHttp)) {
               if (requestSuccessCallback) {
                 requestSuccessCallback(xmlHttp);
