@@ -1,0 +1,19 @@
+{
+  "name": "log4javascript",
+  "version": "",
+  "author": "",
+  "description": "",
+  "keywords": [],
+  "repository": [],
+  "bugs": {
+    "url": ""
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "grunt-contrib": "~0.8.0",
+    "time-grunt": "~0.2.7"
+  },
+  "engines": {
+    "node": ">=0.8.0"
+  }
+}
