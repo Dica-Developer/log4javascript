@@ -1,3 +1,5 @@
+(function(window){
+  'use strict';
 /**
  * Copyright 2013 Tim Down.
  *
@@ -152,7 +154,7 @@ function Log4JavaScript() {
 
 Log4JavaScript.prototype = new EventSupport();
 
-log4javascript = new Log4JavaScript();
+var log4javascript = new Log4JavaScript();
 log4javascript.version = "1.4.6";
 log4javascript.edition = "log4javascript_production";
 
@@ -2476,3 +2478,14 @@ BrowserConsoleAppender.prototype.toString = function () {
 };
 
 log4javascript.BrowserConsoleAppender = BrowserConsoleAppender;
+if (typeof module === "object" && module && typeof module.exports === "object") {
+module.exports = log4javascript;
+} else {
+window.log4javascript = log4javascript;
+if (typeof define === "function" && define.amd) {
+  define("log4javascript", [], function() {
+    return log4javascript;
+ });
+}
+}
+}(window));
