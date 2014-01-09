@@ -29,53 +29,6 @@
  * Build date: 19 March 2013
  * Website: http://log4javascript.org
  */
-/* -------------------------------------------------------------------------- */
-// Array-related stuff
-
-// Next three methods are solely for IE5, which is missing them
-if (!Array.prototype.push) {
-  Array.prototype.push = function () {
-    for (var i = 0, len = arguments.length; i < len; i++) {
-      this[this.length] = arguments[i];
-    }
-    return this.length;
-  };
-}
-
-if (!Array.prototype.shift) {
-  Array.prototype.shift = function () {
-    if (this.length > 0) {
-      var firstItem = this[0];
-      for (var i = 0, len = this.length - 1; i < len; i++) {
-        this[i] = this[i + 1];
-      }
-      this.length = this.length - 1;
-      return firstItem;
-    }
-  };
-}
-
-if (!Array.prototype.splice) {
-  Array.prototype.splice = function (startIndex, deleteCount) {
-    var itemsAfterDeleted = this.slice(startIndex + deleteCount);
-    var itemsDeleted = this.slice(startIndex, startIndex + deleteCount);
-    this.length = startIndex;
-    // Copy the arguments into a proper Array object
-    var argumentsArray = [];
-    for (var i = 0, len = arguments.length; i < len; i++) {
-      argumentsArray[i] = arguments[i];
-    }
-    var itemsToAppend = (argumentsArray.length > 2) ?
-      itemsAfterDeleted = argumentsArray.slice(2).concat(itemsAfterDeleted) : itemsAfterDeleted;
-    for (i = 0, len = itemsToAppend.length; i < len; i++) {
-      this.push(itemsToAppend[i]);
-    }
-    return itemsDeleted;
-  };
-}
-
-/* -------------------------------------------------------------------------- */
-
 
 function isUndefined(obj) {
   return typeof obj === "undefined";
