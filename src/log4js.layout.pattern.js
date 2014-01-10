@@ -395,14 +395,21 @@ PatternLayout.prototype.format = function (loggingEvent) {
       var replacement = "";
       switch (conversionCharacter) {
         case "l": //Location
-          var isChrome = navigator.userAgent.indexOf("Chrome") !== -1;
-          if (isChrome) {
-            //do someting else
-            var stack = new Error().stack;
+          var error = new Error();
+          if (error.stack) {
+            var column, line, resource, funcBegin, resourceBegin;
+            var stack = error.stack;
             var lineAccessingLogger = stack.split("\n")[8];
 
-            var funcBegin = lineAccessingLogger.indexOf("at ") + 3;
-            var resourceBegin = lineAccessingLogger.indexOf(" (") + 2;
+            if (lineAccessingLogger === '') {
+              var lastIndexOfAt = stack.lastIndexOf('@');
+              lineAccessingLogger = stack.substr(lastIndexOfAt);
+              funcBegin = 0;
+              resourceBegin = lineAccessingLogger.indexOf("@") + 1;
+            } else {
+              funcBegin = lineAccessingLogger.indexOf("at ") + 3;
+              resourceBegin = lineAccessingLogger.indexOf(" (") + 2;
+            }
 
 
             var functionName = funcBegin < resourceBegin ? lineAccessingLogger.substring(funcBegin, resourceBegin - 2) : null;
@@ -415,14 +422,21 @@ PatternLayout.prototype.format = function (loggingEvent) {
               resourceLoc = lineAccessingLogger.substring(funcBegin);
             }
 
-            var colIdx = resourceLoc.lastIndexOf(":");
-            var column = parseInt(resourceLoc.substring(colIdx + 1), 10);
-            var lineIdx = resourceLoc.lastIndexOf(":", colIdx - 1);
-            var line = parseInt(resourceLoc.substring(lineIdx + 1, colIdx), 10);
-
-            var resource = resourceLoc.substring(0, lineIdx);
+            var resourceLocSplit = resourceLoc.split(':');
+            column = resourceLocSplit.pop();
+            line = resourceLocSplit.pop();
+            if (isNaN(line)) {
+              resourceLocSplit.push(line);
+              resource = resourceLocSplit.join(':');
+              if (resource.indexOf('@') === 0) {
+                resource = resource.substr(1);
+              }
+              line = column;
+              column = NaN;
+            } else {
+              resource = resourceLocSplit.join(':');
+            }
             var lastSegmentIdx = resource.lastIndexOf("/");
-
             var lastSegment = resource.substring(lastSegmentIdx + 1);
 
             /*
@@ -440,12 +454,12 @@ PatternLayout.prototype.format = function (loggingEvent) {
 
             var specresult = [];
             var priorNum = "";
-            for (var int = 0; int < spec.length; int++) {
+            var int;
+            for (int = 0; int < spec.length; int++) {
               var l = spec[int];
               var num = parseInt(l, 10);
               if (num > -1) {
                 priorNum += l;
-                continue;
               } else {
                 if (priorNum.length > 0) {
                   specresult.push(parseInt(priorNum, 10));
@@ -457,15 +471,14 @@ PatternLayout.prototype.format = function (loggingEvent) {
             if (priorNum.length > 0)
               specresult.push(parseInt(priorNum, 10));
             spec = specresult;
-
-            for (var int = 0; int < spec.length; int++) {
-              var optNum = spec[int + 1];
+            for (int = 0; int < spec.length; int++) {
+              var optNum = spec[int + 1], string = '';
               switch (spec[int]) {
                 case "s":
                   replacement += lastSegment;
                   break;
                 case "r":
-                  var string = resource;
+                  string = resource;
                   if (typeof optNum === "number") {
                     string = string.substring(string.length - optNum);
                     spec.splice(int + 1, 1);
@@ -476,24 +489,28 @@ PatternLayout.prototype.format = function (loggingEvent) {
                   replacement += line;
                   break;
                 case "c":
-                  replacement += column;
+                  if(!isNaN(column)){
+                    replacement += column;
+                  }else{
+                    replacement = replacement.substring(0, replacement.lastIndexOf(spec[int - 1]));
+                  }
                   break;
                 case "f":
-                  var string = functionName;
+                  string = functionName;
                   if (typeof optNum === "number") {
                     string = string.substring(string.length - optNum);
                     spec.splice(int + 1, 1);
                   }
                   replacement += string;
                   break;
-                  break;
                 default:
                   replacement += spec[int];
               }
-              ;
             }
           } else {
-            throw "can only use this method on google chrome";
+            column = error.columnNumber;
+            line = error.lineNumber;
+            resource = error.fileName;
           }
           break;
         case "a": // Array of messages
