@@ -76,6 +76,13 @@ module.exports = function (grunt) {
         ],
         dest: 'dist/log4javascript.js'
       }
+    },
+    uglify: {
+      dist: {
+        files: {
+          '<%= config.dist %>/log4javascript.min.js': ['<%= config.dist %>/log4javascript.js']
+        }
+      }
     }
   });
 
@@ -86,6 +93,7 @@ module.exports = function (grunt) {
   grunt.registerTask('build', [
 //    'jshint',
     'clean:dist',
-    'concat:dist'
+    'concat:dist',
+    'uglify:dist'
   ]);
 };

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <script src="dist/log4javascript.min.js"></script>
+    <script type="text/javascript">
+        var log = log4javascript.getLogger('testLogger');
+
+        var consoleWithNull = new log4javascript.BrowserConsoleAppender();
+        consoleWithNull.setThreshold(log4javascript.Level.TRACE);
+
+        var consoleWithSimple = new log4javascript.BrowserConsoleAppender();
+        consoleWithSimple.setThreshold(log4javascript.Level.TRACE);
+        var logSimple = new log4javascript.SimpleLayout();
+        consoleWithSimple.setLayout(logSimple);
+
+        var consoleWithPattern = new log4javascript.BrowserConsoleAppender();
+        consoleWithPattern.setThreshold(log4javascript.Level.TRACE);
+        var logPattern = new log4javascript.PatternLayout('%r [%c] %l{r40:l:c} %-5p %m');
+        consoleWithPattern.setLayout(logPattern);
+
+        var consoleWithJSON = new log4javascript.BrowserConsoleAppender();
+        consoleWithJSON.setThreshold(log4javascript.Level.TRACE);
+        var logJSON = new log4javascript.JsonLayout();
+        consoleWithJSON.setLayout(logJSON);
+
+        var consoleWithXML = new log4javascript.BrowserConsoleAppender();
+        consoleWithXML.setThreshold(log4javascript.Level.TRACE);
+        var logXML = new log4javascript.XmlLayout();
+        consoleWithXML.setLayout(logXML);
+
+        var consoleWithHttpPostData = new log4javascript.BrowserConsoleAppender();
+        consoleWithHttpPostData.setThreshold(log4javascript.Level.TRACE);
+        var logHttpPostData = new log4javascript.HttpPostDataLayout();
+        consoleWithHttpPostData.setLayout(logHttpPostData);
+
+        var popupAppender = new log4javascript.PopUpAppender();
+        popupAppender.setThreshold(log4javascript.Level.TRACE);
+
+        var inlineAppender = new log4javascript.InlineAppender();
+        inlineAppender.setThreshold(log4javascript.Level.TRACE);
+
+        var alertAppender = new log4javascript.AlertAppender();
+        alertAppender.setThreshold(log4javascript.Level.TRACE);
+
+        log.addAppender(consoleWithNull);
+        log.addAppender(consoleWithSimple);
+        log.addAppender(consoleWithPattern);
+        log.addAppender(consoleWithJSON);
+        log.addAppender(consoleWithXML);
+        log.addAppender(consoleWithHttpPostData);
+        log.addAppender(popupAppender);
+        log.addAppender(inlineAppender);
+        log.addAppender(alertAppender);
+        log.setLevel(log4javascript.Level.ALL);
+        log.trace('It work\'s', {'It': 'work\'s'}, ['It', 'work\'s']);
+    </script>
+</head>
+<body>
+
+</body>
+</html>
