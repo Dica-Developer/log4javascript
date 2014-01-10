@@ -16,7 +16,7 @@
 
         var consoleWithPattern = new log4javascript.BrowserConsoleAppender();
         consoleWithPattern.setThreshold(log4javascript.Level.TRACE);
-        var logPattern = new log4javascript.PatternLayout('%r [%c] %l{r40:l:c} %-5p %m');
+        var logPattern = new log4javascript.PatternLayout('%r [%c] %l{r:l:c} %-5p %m');
         consoleWithPattern.setLayout(logPattern);
 
         var consoleWithJSON = new log4javascript.BrowserConsoleAppender();
