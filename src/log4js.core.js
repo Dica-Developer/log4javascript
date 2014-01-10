@@ -176,7 +176,7 @@ function splitIntoLines(text) {
   return text2.split("\n");
 }
 
-var urlEncode = (typeof window.encodeURIComponent != "undefined") ?
+var urlEncode = (typeof window.encodeURIComponent !== "undefined") ?
   function (str) {
     return encodeURIComponent(str);
   } :
@@ -184,7 +184,7 @@ var urlEncode = (typeof window.encodeURIComponent != "undefined") ?
     return escape(str).replace(/\+/g, "%2B").replace(/"/g, "%22").replace(/'/g, "%27").replace(/\//g, "%2F").replace(/=/g, "%3D");
   };
 
-var urlDecode = (typeof window.decodeURIComponent != "undefined") ?
+var urlDecode = (typeof window.decodeURIComponent !== "undefined") ?
   function (str) {
     return decodeURIComponent(str);
   } :
@@ -262,7 +262,7 @@ function isError(err) {
 if (!Function.prototype.apply) {
   Function.prototype.apply = function (obj, args) {
     var methodName = "__apply__";
-    if (typeof obj[methodName] != "undefined") {
+    if (typeof obj[methodName] !== "undefined") {
       methodName += String(Math.random()).substr(2);
     }
     obj[methodName] = this;
@@ -342,7 +342,7 @@ function getEvent(evt, win) {
 function stopEventPropagation(evt) {
   if (evt.stopPropagation) {
     evt.stopPropagation();
-  } else if (typeof evt.cancelBubble != "undefined") {
+  } else if (typeof evt.cancelBubble !== "undefined") {
     evt.cancelBubble = true;
   }
   evt.returnValue = false;
@@ -404,7 +404,7 @@ log4javascript.handleError = handleError;
 
 /* ---------------------------------------------------------------------- */
 
-var enabled = !((typeof log4javascript_disabled != "undefined") &&
+var enabled = !((typeof log4javascript_disabled !== "undefined") &&
   log4javascript_disabled);
 
 log4javascript.setEnabled = function (enable) {
@@ -516,7 +516,7 @@ function Logger(name) {
   };
 
   this.setAdditivity = function (additivity) {
-    var valueChanged = (additive != additivity);
+    var valueChanged = (additive !== additivity);
     additive = additivity;
     if (valueChanged) {
       this.invalidateAppenderCache();
@@ -876,7 +876,7 @@ if (window.addEventListener) {
   window.attachEvent("onload", log4javascript.setDocumentReady);
 } else {
   var oldOnload = window.onload;
-  if (typeof window.onload != "function") {
+  if (typeof window.onload !== "function") {
     window.onload = log4javascript.setDocumentReady;
   } else {
     window.onload = function (evt) {

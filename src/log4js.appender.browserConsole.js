@@ -21,7 +21,7 @@ BrowserConsoleAppender.prototype.append = function (loggingEvent) {
     return formattedMessage;
   };
 
-  if ((typeof opera != "undefined") && opera.postError) { // Opera
+  if ((typeof opera !== "undefined") && opera.postError) { // Opera
     opera.postError(getFormattedMessage());
   } else if (window.console && window.console.log) { // Safari and Firebug
     var formattedMesage = getFormattedMessage();

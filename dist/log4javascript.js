@@ -31,53 +31,6 @@
  * Build date: 19 March 2013
  * Website: http://log4javascript.org
  */
-/* -------------------------------------------------------------------------- */
-// Array-related stuff
-
-// Next three methods are solely for IE5, which is missing them
-if (!Array.prototype.push) {
-  Array.prototype.push = function () {
-    for (var i = 0, len = arguments.length; i < len; i++) {
-      this[this.length] = arguments[i];
-    }
-    return this.length;
-  };
-}
-
-if (!Array.prototype.shift) {
-  Array.prototype.shift = function () {
-    if (this.length > 0) {
-      var firstItem = this[0];
-      for (var i = 0, len = this.length - 1; i < len; i++) {
-        this[i] = this[i + 1];
-      }
-      this.length = this.length - 1;
-      return firstItem;
-    }
-  };
-}
-
-if (!Array.prototype.splice) {
-  Array.prototype.splice = function (startIndex, deleteCount) {
-    var itemsAfterDeleted = this.slice(startIndex + deleteCount);
-    var itemsDeleted = this.slice(startIndex, startIndex + deleteCount);
-    this.length = startIndex;
-    // Copy the arguments into a proper Array object
-    var argumentsArray = [];
-    for (var i = 0, len = arguments.length; i < len; i++) {
-      argumentsArray[i] = arguments[i];
-    }
-    var itemsToAppend = (argumentsArray.length > 2) ?
-      itemsAfterDeleted = argumentsArray.slice(2).concat(itemsAfterDeleted) : itemsAfterDeleted;
-    for (i = 0, len = itemsToAppend.length; i < len; i++) {
-      this.push(itemsToAppend[i]);
-    }
-    return itemsDeleted;
-  };
-}
-
-/* -------------------------------------------------------------------------- */
-
 
 function isUndefined(obj) {
   return typeof obj === "undefined";
@@ -86,8 +39,7 @@ function isUndefined(obj) {
 /* ---------------------------------------------------------------------- */
 // Custom event support
 
-function EventSupport() {
-}
+function EventSupport() {}
 
 EventSupport.prototype = {
   eventTypes: [],
@@ -141,8 +93,13 @@ EventSupport.prototype = {
 /* -------------------------------------------------------------------------- */
 
 var applicationStartDate = new Date();
-var uniqueId = "log4javascript_" + applicationStartDate.getTime() + "_" +
-  Math.floor(Math.random() * 100000000);
+var getUUID = function(){
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+    var r = Math.random()*16|0, v = c == 'x' ? r : (r&0x3|0x8);
+    return v.toString(16);
+  });
+};
+var uniqueId = "log4javascript_" + getUUID();
 var emptyFunction = function () {
 };
 var newLine = "\r\n";
@@ -221,7 +178,7 @@ function splitIntoLines(text) {
   return text2.split("\n");
 }
 
-var urlEncode = (typeof window.encodeURIComponent != "undefined") ?
+var urlEncode = (typeof window.encodeURIComponent !== "undefined") ?
   function (str) {
     return encodeURIComponent(str);
   } :
@@ -229,7 +186,7 @@ var urlEncode = (typeof window.encodeURIComponent != "undefined") ?
     return escape(str).replace(/\+/g, "%2B").replace(/"/g, "%22").replace(/'/g, "%27").replace(/\//g, "%2F").replace(/=/g, "%3D");
   };
 
-var urlDecode = (typeof window.decodeURIComponent != "undefined") ?
+var urlDecode = (typeof window.decodeURIComponent !== "undefined") ?
   function (str) {
     return decodeURIComponent(str);
   } :
@@ -307,7 +264,7 @@ function isError(err) {
 if (!Function.prototype.apply) {
   Function.prototype.apply = function (obj, args) {
     var methodName = "__apply__";
-    if (typeof obj[methodName] != "undefined") {
+    if (typeof obj[methodName] !== "undefined") {
       methodName += String(Math.random()).substr(2);
     }
     obj[methodName] = this;
@@ -387,7 +344,7 @@ function getEvent(evt, win) {
 function stopEventPropagation(evt) {
   if (evt.stopPropagation) {
     evt.stopPropagation();
-  } else if (typeof evt.cancelBubble != "undefined") {
+  } else if (typeof evt.cancelBubble !== "undefined") {
     evt.cancelBubble = true;
   }
   evt.returnValue = false;
@@ -449,7 +406,7 @@ log4javascript.handleError = handleError;
 
 /* ---------------------------------------------------------------------- */
 
-var enabled = !((typeof log4javascript_disabled != "undefined") &&
+var enabled = !((typeof log4javascript_disabled !== "undefined") &&
   log4javascript_disabled);
 
 log4javascript.setEnabled = function (enable) {
@@ -561,7 +518,7 @@ function Logger(name) {
   };
 
   this.setAdditivity = function (additivity) {
-    var valueChanged = (additive != additivity);
+    var valueChanged = (additive !== additivity);
     additive = additivity;
     if (valueChanged) {
       this.invalidateAppenderCache();
@@ -921,7 +878,7 @@ if (window.addEventListener) {
   window.attachEvent("onload", log4javascript.setDocumentReady);
 } else {
   var oldOnload = window.onload;
-  if (typeof window.onload != "function") {
+  if (typeof window.onload !== "function") {
     window.onload = log4javascript.setDocumentReady;
   } else {
     window.onload = function (evt) {
@@ -2441,7 +2398,7 @@ BrowserConsoleAppender.prototype.append = function (loggingEvent) {
     return formattedMessage;
   };
 
-  if ((typeof opera != "undefined") && opera.postError) { // Opera
+  if ((typeof opera !== "undefined") && opera.postError) { // Opera
     opera.postError(getFormattedMessage());
   } else if (window.console && window.console.log) { // Safari and Firebug
     var formattedMesage = getFormattedMessage();
