@@ -34,6 +34,12 @@
         var logHttpPostData = new log4javascript.HttpPostDataLayout();
         consoleWithHttpPostData.setLayout(logHttpPostData);
 
+        var popupAppender = new log4javascript.PopUpAppender();
+        popupAppender.setThreshold(log4javascript.Level.TRACE);
+
+        var inlineAppender = new log4javascript.InlineAppender();
+        inlineAppender.setThreshold(log4javascript.Level.TRACE);
+
         var alertAppender = new log4javascript.AlertAppender();
         alertAppender.setThreshold(log4javascript.Level.TRACE);
 
@@ -43,6 +49,8 @@
         log.addAppender(consoleWithJSON);
         log.addAppender(consoleWithXML);
         log.addAppender(consoleWithHttpPostData);
+        log.addAppender(popupAppender);
+        log.addAppender(inlineAppender);
         log.addAppender(alertAppender);
         log.setLevel(log4javascript.Level.ALL);
         log.trace('It work\'s', {'It': 'work\'s'}, ['It', 'work\'s']);
