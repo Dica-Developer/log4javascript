@@ -52,7 +52,7 @@ Appender.prototype.setAddedToLogger = function (logger) {
 };
 
 Appender.prototype.setRemovedFromLogger = function (logger) {
-  array_remove(this.loggers, logger);
+  arrayRemove(this.loggers, logger);
 };
 
 Appender.prototype.group = emptyFunction;

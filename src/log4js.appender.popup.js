@@ -44,7 +44,7 @@ function getBaseUrl() {
 
 function isLoaded(win) {
   try {
-    return bool(win.loaded);
+    return toBool(win.loaded);
   } catch (ex) {
     return false;
   }
@@ -402,7 +402,7 @@ var ConsoleAppender;
       '				},',
       '',
       '				removeChild: function(child, doUpdate) {',
-      '					array_remove(this.children, child);',
+      '					arrayRemove(this.children, child);',
       '					child.group = null;',
       '					if (doUpdate) {',
       '						this.update();',
@@ -1032,11 +1032,11 @@ var ConsoleAppender;
       '					var group;',
       '					for (var i = 0; i < numberToDelete; i++) {',
       '						group = logEntriesAndSeparators[i].group;',
-      '						array_remove(logItems, logEntriesAndSeparators[i]);',
-      '						array_remove(logEntries, logEntriesAndSeparators[i]);',
+      '						arrayRemove(logItems, logEntriesAndSeparators[i]);',
+      '						arrayRemove(logEntries, logEntriesAndSeparators[i]);',
       '						logEntriesAndSeparators[i].remove(true, true);',
       '						if (group.children.length === 0 && group !== currentGroup && group !== rootGroup) {',
-      '							array_remove(logItems, group);',
+      '							arrayRemove(logItems, group);',
       '							group.remove(true, true);',
       '						}',
       '					}',
@@ -1376,7 +1376,7 @@ var ConsoleAppender;
       '					var newMatch = currentMatchRemoved ? null : this.matches[currentMatchIndex];',
       '					if (currentMatchRemoved) {',
       '						for (i = currentMatchIndex, iLen = this.matches.length; i < iLen; i++) {',
-      '							if (this.matches[i].isVisible() && !array_contains(matchesToRemove, this.matches[i])) {',
+      '							if (this.matches[i].isVisible() && !arrayContains(matchesToRemove, this.matches[i])) {',
       '								newMatch = this.matches[i];',
       '								break;',
       '							}',
@@ -1385,7 +1385,7 @@ var ConsoleAppender;
       '',
       '					// Remove the matches',
       '					for (i = 0, iLen = matchesToRemove.length; i < iLen; i++) {',
-      '						array_remove(this.matches, matchesToRemove[i]);',
+      '						arrayRemove(this.matches, matchesToRemove[i]);',
       '						matchesToRemove[i].remove();',
       '					}',
       '',
@@ -1714,7 +1714,7 @@ var ConsoleAppender;
       '			function hasClass(el, cssClass) {',
       '				if (el.className) {',
       '					var classNames = el.className.split(" ");',
-      '					return array_contains(classNames, cssClass);',
+      '					return arrayContains(classNames, cssClass);',
       '				}',
       '				return false;',
       '			}',
@@ -1889,7 +1889,7 @@ var ConsoleAppender;
       '				};',
       '			}',
       '',
-      '			function array_remove(arr, val) {',
+      '			function arrayRemove(arr, val) {',
       '				var index = -1;',
       '				for (var i = 0, len = arr.length; i < len; i++) {',
       '					if (arr[i] === val) {',
@@ -1917,7 +1917,7 @@ var ConsoleAppender;
       '				return array;',
       '			}',
       '',
-      '			function array_contains(arr, val) {',
+      '			function arrayContains(arr, val) {',
       '				for (var i = 0, len = arr.length; i < len; i++) {',
       '					if (arr[i] == val) {',
       '						return true;',
@@ -2400,7 +2400,7 @@ var ConsoleAppender;
 
     this.isNewestMessageAtTop = function() { return newestMessageAtTop; };
     this.setNewestMessageAtTop = function(newestMessageAtTopParam) {
-      newestMessageAtTop = bool(newestMessageAtTopParam);
+      newestMessageAtTop = toBool(newestMessageAtTopParam);
       if (consoleWindowExists()) {
         getConsoleWindow().setNewestAtTop(newestMessageAtTop);
       }
@@ -2408,7 +2408,7 @@ var ConsoleAppender;
 
     this.isScrollToLatestMessage = function() { return scrollToLatestMessage; };
     this.setScrollToLatestMessage = function(scrollToLatestMessageParam) {
-      scrollToLatestMessage = bool(scrollToLatestMessageParam);
+      scrollToLatestMessage = toBool(scrollToLatestMessageParam);
       if (consoleWindowExists()) {
         getConsoleWindow().setScrollToLatest(scrollToLatestMessage);
       }
@@ -2438,7 +2438,7 @@ var ConsoleAppender;
 
     this.isShowCommandLine = function() { return showCommandLine; };
     this.setShowCommandLine = function(showCommandLineParam) {
-      showCommandLine = bool(showCommandLineParam);
+      showCommandLine = toBool(showCommandLineParam);
       if (consoleWindowExists()) {
         getConsoleWindow().setShowCommandLine(showCommandLine);
       }
@@ -2446,7 +2446,7 @@ var ConsoleAppender;
 
     this.isShowHideButton = function() { return showHideButton; };
     this.setShowHideButton = function(showHideButtonParam) {
-      showHideButton = bool(showHideButtonParam);
+      showHideButton = toBool(showHideButtonParam);
       if (consoleWindowExists()) {
         getConsoleWindow().setShowHideButton(showHideButton);
       }
@@ -2454,7 +2454,7 @@ var ConsoleAppender;
 
     this.isShowCloseButton = function() { return showCloseButton; };
     this.setShowCloseButton = function(showCloseButtonParam) {
-      showCloseButton = bool(showCloseButtonParam);
+      showCloseButton = toBool(showCloseButtonParam);
       if (consoleWindowExists()) {
         getConsoleWindow().setShowCloseButton(showCloseButton);
       }
@@ -2469,7 +2469,7 @@ var ConsoleAppender;
     this.isInitiallyMinimized = function() { return initiallyMinimized; };
     this.setInitiallyMinimized = function(initiallyMinimizedParam) {
       if (checkCanConfigure("initiallyMinimized")) {
-        initiallyMinimized = bool(initiallyMinimizedParam);
+        initiallyMinimized = toBool(initiallyMinimizedParam);
         minimized = initiallyMinimized;
       }
     };
@@ -2477,7 +2477,7 @@ var ConsoleAppender;
     this.isUseDocumentWrite = function() { return useDocumentWrite; };
     this.setUseDocumentWrite = function(useDocumentWriteParam) {
       if (checkCanConfigure("useDocumentWrite")) {
-        useDocumentWrite = bool(useDocumentWriteParam);
+        useDocumentWrite = toBool(useDocumentWriteParam);
       }
     };
 
@@ -2883,7 +2883,7 @@ var ConsoleAppender;
         // Write the console HTML to the iframe
         var iframeDocumentExistsTest = function(win) {
           try {
-            return bool(win) && bool(win.document);
+            return toBool(win) && toBool(win.document);
           } catch (ex) {
             return false;
           }
@@ -2970,27 +2970,27 @@ var ConsoleAppender;
       this.isUseOldPopUp = function() { return useOldPopUp; };
       this.setUseOldPopUp = function(useOldPopUpParam) {
         if (checkCanConfigure("useOldPopUp")) {
-          useOldPopUp = bool(useOldPopUpParam);
+          useOldPopUp = toBool(useOldPopUpParam);
         }
       };
 
       this.isComplainAboutPopUpBlocking = function() { return complainAboutPopUpBlocking; };
       this.setComplainAboutPopUpBlocking = function(complainAboutPopUpBlockingParam) {
         if (checkCanConfigure("complainAboutPopUpBlocking")) {
-          complainAboutPopUpBlocking = bool(complainAboutPopUpBlockingParam);
+          complainAboutPopUpBlocking = toBool(complainAboutPopUpBlockingParam);
         }
       };
 
       this.isFocusPopUp = function() { return focusConsoleWindow; };
       this.setFocusPopUp = function(focusPopUpParam) {
         // This property can be safely altered after logging has started
-        focusConsoleWindow = bool(focusPopUpParam);
+        focusConsoleWindow = toBool(focusPopUpParam);
       };
 
       this.isReopenWhenClosed = function() { return reopenWhenClosed; };
       this.setReopenWhenClosed = function(reopenWhenClosedParam) {
         // This property can be safely altered after logging has started
-        reopenWhenClosed = bool(reopenWhenClosedParam);
+        reopenWhenClosed = toBool(reopenWhenClosedParam);
       };
 
       this.close = function() {
@@ -3047,7 +3047,7 @@ var ConsoleAppender;
             return true;
           } else {
             try {
-              return bool(win) && win.closed;
+              return toBool(win) && win.closed;
             } catch(ex) {}
           }
           return false;
@@ -3081,7 +3081,7 @@ var ConsoleAppender;
                 writeHtml(popUp.document);
               }
               // Check if the pop-up window object is available
-              var popUpLoadedTest = function(win) { return bool(win) && isLoaded(win); };
+              var popUpLoadedTest = function(win) { return toBool(win) && isLoaded(win); };
               if (isLoaded(popUp)) {
                 finalInit();
               } else {
@@ -3356,7 +3356,7 @@ function padWithSpaces(str, len) {
               xhtml += " style=\"" + getStyleAttributeValue(rootNode) + "\"";
             }
           }
-          if (array_contains(emptyElements, tagName) ||
+          if (arrayContains(emptyElements, tagName) ||
             (hasPrefix && !rootNode.hasChildNodes())) {
             xhtml += "/" + gt;
           } else {
@@ -3364,7 +3364,7 @@ function padWithSpaces(str, len) {
             // Add output for childNodes collection (which doesn't include attribute nodes)
             var childStartNewLine = !(rootNode.childNodes.length === 1 &&
               rootNode.childNodes[0].nodeType === nodeTypes.TEXT_NODE);
-            var childPreformatted = array_contains(preFormattedElements, tagName);
+            var childPreformatted = arrayContains(preFormattedElements, tagName);
             for (var i = 0, len = rootNode.childNodes.length; i < len; i++) {
               xhtml += getXhtml(rootNode.childNodes[i], true, indentation + indentationUnit,
                 childStartNewLine, childPreformatted);

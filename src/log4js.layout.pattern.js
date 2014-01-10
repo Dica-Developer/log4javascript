@@ -26,7 +26,7 @@ function formatObjectExpansion(obj, depth, indentation) {
       return "undefined";
     } else if (typeof obj === "string") {
       return formatString(obj);
-    } else if (typeof obj === "object" && array_contains(objectsExpanded, obj)) {
+    } else if (typeof obj === "object" && arrayContains(objectsExpanded, obj)) {
       try {
         expansion = toStr(obj);
       } catch (ex) {

@@ -103,7 +103,7 @@ function AjaxAppender(url) {
   };
   this.setTimed = function (timedParam) {
     if (checkCanConfigure("timed")) {
-      timed = bool(timedParam);
+      timed = toBool(timedParam);
     }
   };
 
@@ -121,7 +121,7 @@ function AjaxAppender(url) {
   };
   this.setWaitForResponse = function (waitForResponseParam) {
     if (checkCanConfigure("waitForResponse")) {
-      waitForResponse = bool(waitForResponseParam);
+      waitForResponse = toBool(waitForResponseParam);
     }
   };
 

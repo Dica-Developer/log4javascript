@@ -46,7 +46,7 @@ Layout.prototype = {
 
   setTimeStampsInMilliseconds: function (timeStampsInMilliseconds) {
     this.overrideTimeStampsSetting = true;
-    this.useTimeStampsInMilliseconds = bool(timeStampsInMilliseconds);
+    this.useTimeStampsInMilliseconds = toBool(timeStampsInMilliseconds);
   },
 
   isTimeStampsInMilliseconds: function () {
