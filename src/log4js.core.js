@@ -98,7 +98,6 @@ var getUUID = function(){
   });
 };
 var uniqueId = "log4javascript_" + getUUID();
-console.log(uniqueId);
 var emptyFunction = function () {
 };
 var newLine = "\r\n";
