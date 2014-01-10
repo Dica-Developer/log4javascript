@@ -30,169 +30,220 @@
  * Website: http://log4javascript.org
  */
 
+/* -------------------------------------------------------------------------- */
+/* ---Utility functions------------------------------------------------------ */
+/* -------------------------------------------------------------------------- */
+
+/**
+ * Helper method to identify undefined objects
+ * @param {*} obj
+ * @returns {boolean}
+ */
 function isUndefined(obj) {
-  return typeof obj === "undefined";
+  'use strict';
+
+  return typeof obj === 'undefined';
 }
 
-/* ---------------------------------------------------------------------- */
-// Custom event support
+/**
+ * Helper method to identify Arrays
+ * @param {*} array
+ * @returns {boolean}
+ */
+function isArray(array) {
+  'use strict';
 
-function EventSupport() {}
-
-EventSupport.prototype = {
-  eventTypes: [],
-  eventListeners: {},
-  setEventTypes: function (eventTypesParam) {
-    if (eventTypesParam instanceof Array) {
-      this.eventTypes = eventTypesParam;
-      this.eventListeners = {};
-      for (var i = 0, len = this.eventTypes.length; i < len; i++) {
-        this.eventListeners[this.eventTypes[i]] = [];
-      }
-    } else {
-      handleError("log4javascript.EventSupport [" + this + "]: setEventTypes: eventTypes parameter must be an Array");
-    }
-  },
-
-  addEventListener: function (eventType, listener) {
-    if (typeof listener === "function") {
-      if (!array_contains(this.eventTypes, eventType)) {
-        handleError("log4javascript.EventSupport [" + this + "]: addEventListener: no event called '" + eventType + "'");
-      }
-      this.eventListeners[eventType].push(listener);
-    } else {
-      handleError("log4javascript.EventSupport [" + this + "]: addEventListener: listener must be a function");
-    }
-  },
-
-  removeEventListener: function (eventType, listener) {
-    if (typeof listener === "function") {
-      if (!array_contains(this.eventTypes, eventType)) {
-        handleError("log4javascript.EventSupport [" + this + "]: removeEventListener: no event called '" + eventType + "'");
-      }
-      array_remove(this.eventListeners[eventType], listener);
-    } else {
-      handleError("log4javascript.EventSupport [" + this + "]: removeEventListener: listener must be a function");
-    }
-  },
-
-  dispatchEvent: function (eventType, eventArgs) {
-    if (array_contains(this.eventTypes, eventType)) {
-      var listeners = this.eventListeners[eventType];
-      for (var i = 0, len = listeners.length; i < len; i++) {
-        listeners[i](this, eventType, eventArgs);
-      }
-    } else {
-      handleError("log4javascript.EventSupport [" + this + "]: dispatchEvent: no event called '" + eventType + "'");
-    }
-  }
-};
-
-/* -------------------------------------------------------------------------- */
-
-var applicationStartDate = new Date();
-var getUUID = function(){
-  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-    var r = Math.random()*16|0, v = c == 'x' ? r : (r&0x3|0x8);
-    return v.toString(16);
-  });
-};
-var uniqueId = "log4javascript_" + getUUID();
-var emptyFunction = function () {
-};
-var newLine = "\r\n";
-var pageLoaded = false;
-
-// Create main log4javascript object; this will be assigned public properties
-function Log4JavaScript() {
+  return array instanceof Array;
 }
 
-Log4JavaScript.prototype = new EventSupport();
+/**
+ * Helper method to identify Functions
+ * @param fn
+ * @returns {boolean}
+ */
+function isFunction(fn) {
+  'use strict';
 
-var log4javascript = new Log4JavaScript();
-log4javascript.version = "1.4.6";
-log4javascript.edition = "log4javascript_production";
+  return typeof fn === 'function';
+}
 
-/* -------------------------------------------------------------------------- */
-// Utility functions
+/**
+ *
+ * @param {*} err
+ * @returns {Boolean}
+ */
+function isError(err) {
+  'use strict';
 
+  return (err instanceof Error);
+}
+
+/**
+ * Helper method
+ * @param {*} obj
+ * @returns {String}
+ */
 function toStr(obj) {
-  if (obj && obj.toString) {
-    return obj.toString();
-  } else {
-    return String(obj);
-  }
+  'use strict';
+
+  return (obj && obj.toString) ? obj.toString() : String(obj);
 }
 
+/**
+ *
+ * @param {Error} ex
+ * @returns {string}
+ */
 function getExceptionMessage(ex) {
+  'use strict';
+  var message = '';
   if (ex.message) {
-    return ex.message;
+    message = ex.message;
   } else if (ex.description) {
-    return ex.description;
+    message = ex.description;
   } else {
-    return toStr(ex);
+    message = toStr(ex);
   }
+  return message;
 }
 
-// Gets the portion of the URL after the last slash
+/**
+ * Gets the portion of the URL after the last slash
+ * @param {String} url
+ * @returns {string}
+ */
 function getUrlFileName(url) {
-  var lastSlashIndex = Math.max(url.lastIndexOf("/"), url.lastIndexOf("\\"));
+  'use strict';
+
+  var lastSlashIndex = Math.max(url.lastIndexOf('/'), url.lastIndexOf('\\'));
   return url.substr(lastSlashIndex + 1);
 }
 
-// Returns a nicely formatted representation of an error
+/**
+ * Returns a nicely formatted representation of an error
+ * @param {Error} ex
+ * @returns {String}
+ */
 function getExceptionStringRep(ex) {
+  'use strict';
+
   if (ex) {
-    var exStr = "Exception: " + getExceptionMessage(ex);
+    var exStr = 'Exception: ' + getExceptionMessage(ex);
     try {
       if (ex.lineNumber) {
-        exStr += " on line number " + ex.lineNumber;
+        exStr += ' on line number ' + ex.lineNumber;
       }
       if (ex.fileName) {
-        exStr += " in file " + getUrlFileName(ex.fileName);
+        exStr += ' in file ' + getUrlFileName(ex.fileName);
       }
     } catch (localEx) {
-      logLog.warn("Unable to obtain file and line information for error");
+      logLog.warn('Unable to obtain file and line information for error');
     }
     if (showStackTraces && ex.stack) {
-      exStr += newLine + "Stack trace:" + newLine + ex.stack;
+      exStr += newLine + 'Stack trace:' + newLine + ex.stack;
     }
     return exStr;
   }
   return null;
 }
 
-function bool(obj) {
+function getUUID(){
+  'use strict';
+
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+    var r = Math.random()*16|0, v = c === 'x' ? r : (r&0x3|0x8);
+    return v.toString(16);
+  });
+}
+
+/**
+ * Helper method to convert an object to Boolean
+ * @param {*} obj
+ * @returns {boolean}
+ */
+function toBool(obj) {
+  'use strict';
+
   return Boolean(obj);
 }
 
+/**
+ *
+ * @param {String} str
+ * @returns {String}
+ */
 function trim(str) {
-  return str.replace(/^\s+/, "").replace(/\s+$/, "");
+  'use strict';
+
+  return str.replace(/^\s+/, '').replace(/\s+$/, '');
 }
 
+/**
+ *
+ * @param {String} text
+ * @returns {Array}
+ */
 function splitIntoLines(text) {
+  'use strict';
+
   // Ensure all line breaks are \n only
-  var text2 = text.replace(/\r\n/g, "\n").replace(/\r/g, "\n");
-  return text2.split("\n");
+  var text2 = text.replace(/\r\n/g, '\n').replace(/\r/g, '\n');
+  return text2.split('\n');
 }
 
-var urlEncode = (typeof window.encodeURIComponent !== "undefined") ?
-  function (str) {
-    return encodeURIComponent(str);
-  } :
-  function (str) {
-    return escape(str).replace(/\+/g, "%2B").replace(/"/g, "%22").replace(/'/g, "%27").replace(/\//g, "%2F").replace(/=/g, "%3D");
-  };
+/**
+ *
+ * @param {String} str
+ * @returns {String}
+ */
+function urlEncode(str){
+  'use strict';
 
-var urlDecode = (typeof window.decodeURIComponent !== "undefined") ?
-  function (str) {
-    return decodeURIComponent(str);
-  } :
-  function (str) {
-    return unescape(str).replace(/%2B/g, "+").replace(/%22/g, "\"").replace(/%27/g, "'").replace(/%2F/g, "/").replace(/%3D/g, "=");
-  };
+  var retString = '';
+  if(isUndefined(window.encodeURIComponent)){
+    retString = escape(str)
+      .replace(/\+/g, '%2B')
+      .replace(/"/g, '%22')
+      .replace(/'/g, '%27')
+      .replace(/\//g, '%2F')
+      .replace(/=/g, '%3D');
+  } else {
+    retString = encodeURIComponent(str);
+  }
+  return retString;
+}
 
-function array_remove(arr, val) {
+/**
+ *
+ * @param {String} str
+ * @returns {String}
+ */
+function urlDecode(str){
+  'use strict';
+
+  var retString = '';
+  if(isUndefined(window.decodeURIComponent)){
+    retString = unescape(str)
+      .replace(/%2B/g, '+')
+      .replace(/%22/g, '"')
+      .replace(/%27/g, '\'')
+      .replace(/%2F/g, '/')
+      .replace(/%3D/g, '=');
+  } else {
+    retString = decodeURIComponent(str);
+  }
+  return retString;
+}
+
+/**
+ *
+ * @param {Array} arr
+ * @param {String} val
+ * @returns {Boolean}
+ */
+function arrayRemove(arr, val) {
+  'use strict';
+
   var index = -1;
   for (var i = 0, len = arr.length; i < len; i++) {
     if (arr[i] === val) {
@@ -208,32 +259,58 @@ function array_remove(arr, val) {
   }
 }
 
-function array_contains(arr, val) {
+/**
+ *
+ * @param {Array} arr
+ * @param {String} val
+ * @returns {Boolean}
+ */
+function arrayContains(arr, val) {
+  'use strict';
+
+  var found = false;
   for (var i = 0, len = arr.length; i < len; i++) {
     if (arr[i] === val) {
-      return true;
+      found = true;
+      break;
     }
   }
-  return false;
+  return found;
 }
 
+/**
+ *
+ * @param {*} param
+ * @param {*} defaultValue
+ * @returns {String|Boolean}
+ */
 function extractBooleanFromParam(param, defaultValue) {
-  if (isUndefined(param)) {
-    return defaultValue;
-  } else {
-    return bool(param);
-  }
+  'use strict';
+
+  return isUndefined(param) ? defaultValue : toBool(param);
 }
 
+/**
+ *
+ * @param {*} param
+ * @param {*} defaultValue
+ * @returns {*|String}
+ */
 function extractStringFromParam(param, defaultValue) {
-  if (isUndefined(param)) {
-    return defaultValue;
-  } else {
-    return String(param);
-  }
+  'use strict';
+
+  return isUndefined(param) ? defaultValue : String(param);
 }
 
+/**
+ *
+ * @param {*} param
+ * @param {*} defaultValue
+ * @returns {*|Boolean}
+ */
 function extractIntFromParam(param, defaultValue) {
+  'use strict';
+
   if (isUndefined(param)) {
     return defaultValue;
   } else {
@@ -241,23 +318,136 @@ function extractIntFromParam(param, defaultValue) {
       var value = parseInt(param, 10);
       return isNaN(value) ? defaultValue : value;
     } catch (ex) {
-      logLog.warn("Invalid int param " + param, ex);
+      logLog.warn('Invalid int param ' + param, ex);
       return defaultValue;
     }
   }
 }
 
+/**
+ *
+ * @param {*} param
+ * @param {*} defaultValue
+ * @returns {*}
+ */
 function extractFunctionFromParam(param, defaultValue) {
-  if (typeof param === "function") {
-    return param;
-  } else {
-    return defaultValue;
-  }
+  'use strict';
+
+  return isFunction(param) ? param : defaultValue;
 }
 
-function isError(err) {
-  return (err instanceof Error);
+/**
+ * Custom event support
+ * @constructor
+ */
+function EventSupport() {
+  'use strict';
+
+  this.eventTypes = [];
+  this.eventListeners = {};
 }
+
+/**
+ *
+ * @param {Array} eventTypesParam
+ */
+EventSupport.prototype.setEventTypes = function (eventTypesParam) {
+  'use strict';
+
+  if (isArray(eventTypesParam)) {
+    this.eventTypes = eventTypesParam;
+    this.eventListeners = {};
+    for (var i = 0, len = this.eventTypes.length; i < len; i++) {
+      this.eventListeners[this.eventTypes[i]] = [];
+    }
+  } else {
+    handleError('log4javascript.EventSupport [' + this + ']: setEventTypes: eventTypes parameter must be an Array');
+  }
+};
+
+/**
+ *
+ * @param {String} eventType
+ * @param {Function} listener
+ */
+EventSupport.prototype.addEventListener = function (eventType, listener) {
+  'use strict';
+
+  if (isFunction(listener)) {
+    if (!arrayContains(this.eventTypes, eventType)) {
+      handleError('log4javascript.EventSupport [' + this + ']: addEventListener: no event called "' + eventType + '"');
+    }
+    this.eventListeners[eventType].push(listener);
+  } else {
+    handleError('log4javascript.EventSupport [' + this + ']: addEventListener: listener must be a function');
+  }
+};
+
+/**
+ *
+ * @param {String} eventType
+ * @param {Array} listener
+ */
+EventSupport.prototype.removeEventListener = function (eventType, listener) {
+  'use strict';
+
+  if (isFunction(listener)) {
+    if (!arrayContains(this.eventTypes, eventType)) {
+      handleError('log4javascript.EventSupport [' + this + ']: removeEventListener: no event called "' + eventType + '"');
+    }
+    arrayRemove(this.eventListeners[eventType], listener);
+  } else {
+    handleError('log4javascript.EventSupport [' + this + ']: removeEventListener: listener must be a function');
+  }
+};
+
+/**
+ *
+ * @param {String} eventType
+ * @param {Array} eventArgs
+ */
+EventSupport.prototype.dispatchEvent = function (eventType, eventArgs) {
+  'use strict';
+
+  if (arrayContains(this.eventTypes, eventType)) {
+    var listeners = this.eventListeners[eventType];
+    for (var i = 0, len = listeners.length; i < len; i++) {
+      listeners[i](this, eventType, eventArgs);
+    }
+  } else {
+    handleError('log4javascript.EventSupport [' + this + ']: dispatchEvent: no event called "' + eventType + '"');
+  }
+};
+
+/* -------------------------------------------------------------------------- */
+
+var applicationStartDate = new Date();
+var uniqueId = "log4javascript_" + getUUID();
+var emptyFunction = function () {
+};
+var newLine = "\r\n";
+var pageLoaded = false;
+
+/**
+ * Create main log4javascript object; this will be assigned public properties
+ * @constructor
+ */
+function Log4JavaScript() {
+  'use strict';
+
+  this.version = '1.4.6';
+  this.edition = 'log4javascript_production';
+}
+
+/**
+ *
+ * @type {EventSupport}
+ */
+Log4JavaScript.prototype = new EventSupport();
+
+var log4javascript = new Log4JavaScript();
+log4javascript.version = "1.4.6";
+log4javascript.edition = "log4javascript_production";
 
 if (!Function.prototype.apply) {
   Function.prototype.apply = function (obj, args) {
@@ -329,7 +519,7 @@ function removeEvent(node, eventName, listener, useCapture) {
   } else {
     var propertyName = getListenersPropertyName(eventName);
     if (node[propertyName]) {
-      array_remove(node[propertyName], listener);
+      arrayRemove(node[propertyName], listener);
     }
   }
 }
@@ -357,7 +547,7 @@ var logLog = {
   debugMessages: [],
 
   setQuietMode: function (quietMode) {
-    this.quietMode = bool(quietMode);
+    this.quietMode = toBool(quietMode);
   },
 
   numberOfErrors: 0,
@@ -408,7 +598,7 @@ var enabled = !((typeof log4javascript_disabled !== "undefined") &&
   log4javascript_disabled);
 
 log4javascript.setEnabled = function (enable) {
-  enabled = bool(enable);
+  enabled = toBool(enable);
 };
 
 log4javascript.isEnabled = function () {
@@ -418,7 +608,7 @@ log4javascript.isEnabled = function () {
 var useTimeStampsInMilliseconds = true;
 
 log4javascript.setTimeStampsInMilliseconds = function (timeStampsInMilliseconds) {
-  useTimeStampsInMilliseconds = bool(timeStampsInMilliseconds);
+  useTimeStampsInMilliseconds = toBool(timeStampsInMilliseconds);
 };
 
 log4javascript.isTimeStampsInMilliseconds = function () {
@@ -435,7 +625,7 @@ log4javascript.evalInScope = function (expr) {
 var showStackTraces = false;
 
 log4javascript.setShowStackTraces = function (show) {
-  showStackTraces = bool(show);
+  showStackTraces = toBool(show);
 };
 
 /* ---------------------------------------------------------------------- */
@@ -529,7 +719,7 @@ function Logger(name) {
       handleError("Logger.addAppender: you may not add an appender to the null logger");
     } else {
       if (appender instanceof log4javascript.Appender) {
-        if (!array_contains(appenders, appender)) {
+        if (!arrayContains(appenders, appender)) {
           appenders.push(appender);
           appender.setAddedToLogger(this);
           this.invalidateAppenderCache();
@@ -542,7 +732,7 @@ function Logger(name) {
   };
 
   this.removeAppender = function (appender) {
-    array_remove(appenders, appender);
+    arrayRemove(appenders, appender);
     appender.setRemovedFromLogger(this);
     this.invalidateAppenderCache();
   };
