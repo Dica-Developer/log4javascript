@@ -1,7 +1,4 @@
-/*global logLog, applicationStartDate, uniqueId, emptyFunction,
-newLine, pageLoaded, enabled, useTimeStampsInMilliseconds, handleError,
- showStackTraces, Logger*/
-
+/*jshint unused:false*/
 /**
  * Copyright 2013 Tim Down.
  *
@@ -54,11 +51,11 @@ function isUndefined(obj) {
  * @param {*} obj
  * @returns {boolean}
  */
-//function isNotUndefined(obj) {
-//  'use strict';
-//
-//  return !isUndefined(obj);
-//}
+function isNotUndefined(obj) {
+  'use strict';
+
+  return !isUndefined(obj);
+}
 
 /**
  * Helper method to identify Arrays
@@ -91,6 +88,17 @@ function isError(err) {
   'use strict';
 
   return (err instanceof Error);
+}
+
+/**
+ *
+ * @param {*} str
+ * @returns {Boolean}
+ */
+function isString(str){
+  'use strict';
+
+  return typeof str === 'string';
 }
 
 /**
@@ -162,15 +170,6 @@ function getExceptionStringRep(ex) {
   return null;
 }
 
-function getUUID(){
-  'use strict';
-
-  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-    var r = Math.random()*16|0, v = c === 'x' ? r : (r&0x3|0x8);
-    return v.toString(16);
-  });
-}
-
 /**
  * Helper method to convert an object to Boolean
  * @param {*} obj
@@ -238,7 +237,7 @@ function urlDecode(str){
 
   var retString = '';
   if(isUndefined(window.decodeURIComponent)){
-    retString = unescape(str)
+    retString = window.unescape(str)
       .replace(/%2B/g, '+')
       .replace(/%22/g, '"')
       .replace(/%27/g, '\'')
@@ -325,6 +324,7 @@ function getEvent(evt, win) {
  * @param {Boolean} useCapture
  * @param {Window} [win]
  */
+/*jshint unused:false */
 function addEvent(node, eventName, listener, useCapture, win) {
   'use strict';
 
@@ -451,11 +451,7 @@ function extractFunctionFromParam(param, defaultValue) {
   return isFunction(param) ? param : defaultValue;
 }
 
-applicationStartDate = new Date();
 uniqueId = 'log4javascript_' + getUUID();
-emptyFunction = function () {};
-newLine = '\r\n';
-pageLoaded = false;
 
 //TODO do we need this???
 //if (!Function.prototype.apply) {
@@ -732,6 +728,8 @@ Level.FATAL = new Level(60000, 'FATAL');
  */
 Level.OFF = new Level(Number.MAX_VALUE, 'OFF');
 
+ROOT_LOGGER_DEFAULT_LEVEL = Level.DEBUG;
+
 /**
  *
  * @param {String} name
@@ -758,6 +756,9 @@ Timer.prototype.getElapsedTime = function () {
 
   return new Date().getTime() - this.start.getTime();
 };
+
+var rootLogger = new Logger(rootLoggerName);
+rootLogger.setLevel(ROOT_LOGGER_DEFAULT_LEVEL);
 
 /**
  * Create main log4javascript object; this will be assigned public properties
@@ -832,7 +833,7 @@ Log4JavaScript.prototype.isTimeStampsInMilliseconds = function () {
  */
 Log4JavaScript.prototype.evalInScope = function (expr) {
   'use strict';
-
+  /* jshint evil:true */
   return eval(expr);
 };
 
@@ -844,6 +845,109 @@ Log4JavaScript.prototype.setShowStackTraces = function (show) {
   'use strict';
 
   showStackTraces = toBool(show);
+};
+
+/**
+ *
+ * @returns {Logger}
+ */
+Log4JavaScript.prototype.getRootLogger = function () {
+  'use strict';
+
+  return rootLogger;
+};
+
+/**
+ *
+ * @param {String} loggerName
+ * @returns {Logger}
+ */
+Log4JavaScript.prototype.getLogger = function (loggerName) {
+  'use strict';
+
+  // Use default logger if loggerName is not specified or invalid
+  if (!isString(loggerName)) {
+    loggerName = anonymousLoggerName;
+    logLog.warn('log4javascript.getLogger: non-string logger name ' +
+      toStr(loggerName) + ' supplied, returning anonymous logger');
+  }
+
+  // Do not allow retrieval of the root logger by name
+  if (loggerName === rootLoggerName) {
+    handleError('log4javascript.getLogger: root logger may not be obtained by name');
+  }
+
+  // Create the logger for this name if it doesn't already exist
+  if (!loggers[loggerName]) {
+    var logger = new Logger(loggerName);
+    loggers[loggerName] = logger;
+    loggerNames.push(loggerName);
+
+    // Set up parent logger, if it doesn't exist
+    var lastDotIndex = loggerName.lastIndexOf('.');
+    var parentLogger;
+    if (lastDotIndex > -1) {
+      var parentLoggerName = loggerName.substring(0, lastDotIndex);
+      parentLogger = log4javascript.getLogger(parentLoggerName); // Recursively sets up grandparents etc.
+    } else {
+      parentLogger = rootLogger;
+    }
+    parentLogger.addChild(logger);
+  }
+  return loggers[loggerName];
+};
+
+var defaultLogger = null;
+
+/**
+ *
+ * @returns {Logger}
+ */
+Log4JavaScript.prototype.getDefaultLogger = function () {
+  'use strict';
+
+  if (!defaultLogger) {
+    defaultLogger = log4javascript.getLogger(defaultLoggerName);
+    var a = new log4javascript.PopUpAppender();
+    defaultLogger.addAppender(a);
+  }
+  return defaultLogger;
+};
+
+var nullLogger = null;
+
+/**
+ *
+ * @returns {Logger}
+ */
+Log4JavaScript.prototype.getNullLogger = function () {
+  'use strict';
+
+  if (!nullLogger) {
+    nullLogger = new Logger(nullLoggerName);
+    nullLogger.setLevel(Level.OFF);
+  }
+  return nullLogger;
+};
+
+/**
+ * Destroys all loggers
+ */
+Log4JavaScript.prototype.resetConfiguration = function () {
+  'use strict';
+
+  rootLogger.setLevel(ROOT_LOGGER_DEFAULT_LEVEL);
+  loggers = {};
+};
+
+/**
+ *
+ */
+Log4JavaScript.prototype.setDocumentReady = function () {
+  'use strict';
+
+  pageLoaded = true;
+  log4javascript.dispatchEvent('load', {});
 };
 
 /**
@@ -863,85 +967,29 @@ handleError = function(message, exception) {
 
 log4javascript.setEventTypes(['load', 'error']);
 
-
-
-/* ---------------------------------------------------------------------- */
-// Logger access methods
-
-// Hashtable of loggers keyed by logger name
-var loggers = {};
-var loggerNames = [];
-
-var ROOT_LOGGER_DEFAULT_LEVEL = Level.DEBUG;
-var rootLogger = new Logger(rootLoggerName);
-rootLogger.setLevel(ROOT_LOGGER_DEFAULT_LEVEL);
-
-log4javascript.getRootLogger = function () {
-  return rootLogger;
-};
-
-log4javascript.getLogger = function (loggerName) {
-  // Use default logger if loggerName is not specified or invalid
-  if (!(typeof loggerName === "string")) {
-    loggerName = anonymousLoggerName;
-    logLog.warn("log4javascript.getLogger: non-string logger name " +
-      toStr(loggerName) + " supplied, returning anonymous logger");
-  }
-
-  // Do not allow retrieval of the root logger by name
-  if (loggerName === rootLoggerName) {
-    handleError("log4javascript.getLogger: root logger may not be obtained by name");
-  }
-
-  // Create the logger for this name if it doesn't already exist
-  if (!loggers[loggerName]) {
-    var logger = new Logger(loggerName);
-    loggers[loggerName] = logger;
-    loggerNames.push(loggerName);
-
-    // Set up parent logger, if it doesn't exist
-    var lastDotIndex = loggerName.lastIndexOf(".");
-    var parentLogger;
-    if (lastDotIndex > -1) {
-      var parentLoggerName = loggerName.substring(0, lastDotIndex);
-      parentLogger = log4javascript.getLogger(parentLoggerName); // Recursively sets up grandparents etc.
-    } else {
-      parentLogger = rootLogger;
-    }
-    parentLogger.addChild(logger);
-  }
-  return loggers[loggerName];
-};
-
-var defaultLogger = null;
-log4javascript.getDefaultLogger = function () {
-  if (!defaultLogger) {
-    defaultLogger = log4javascript.getLogger(defaultLoggerName);
-    var a = new log4javascript.PopUpAppender();
-    defaultLogger.addAppender(a);
-  }
-  return defaultLogger;
-};
-
-var nullLogger = null;
-log4javascript.getNullLogger = function () {
-  if (!nullLogger) {
-    nullLogger = new Logger(nullLoggerName);
-    nullLogger.setLevel(Level.OFF);
-  }
-  return nullLogger;
-};
-
-// Destroys all loggers
-log4javascript.resetConfiguration = function () {
-  rootLogger.setLevel(ROOT_LOGGER_DEFAULT_LEVEL);
-  loggers = {};
-};
-
 /* ---------------------------------------------------------------------- */
 // Logging events
 
+/**
+ *
+ * @param {Logger} logger
+ * @param {Date} timeStamp
+ * @param {Level} level
+ * @param {Array} messages
+ * @param {Error} exception
+ * @property {Logger} logger
+ * @property {Date} timeStamp
+ * @property {Number} timeStampInMilliseconds
+ * @property {Number} timeStampInSeconds
+ * @property {Number} milliseconds
+ * @property {Level} level
+ * @property {Array} messages
+ * @property {Error} exception
+ * @constructor
+ */
 var LoggingEvent = function (logger, timeStamp, level, messages, exception) {
+  'use strict';
+
   this.logger = logger;
   this.timeStamp = timeStamp;
   this.timeStampInMilliseconds = timeStamp.getTime();
@@ -952,18 +1000,35 @@ var LoggingEvent = function (logger, timeStamp, level, messages, exception) {
   this.exception = exception;
 };
 
-LoggingEvent.prototype = {
-  getThrowableStrRep: function () {
-    return this.exception ?
-      getExceptionStringRep(this.exception) : "";
-  },
-  getCombinedMessages: function () {
-    return (this.messages.length === 1) ? this.messages[0] :
-      this.messages.join(newLine);
-  },
-  toString: function () {
-    return "LoggingEvent[" + this.level + "]";
-  }
+/**
+ *
+ * @returns {String}
+ */
+LoggingEvent.prototype.getThrowableStrRep = function () {
+  'use strict';
+
+  return this.exception ? getExceptionStringRep(this.exception) : '';
+};
+
+/**
+ *
+ * @returns {String}
+ */
+LoggingEvent.prototype.getCombinedMessages = function () {
+  'use strict';
+
+  return (this.messages.length === 1) ? this.messages[0] :
+    this.messages.join(newLine);
+};
+
+/**
+ *
+ * @returns {String}
+ */
+LoggingEvent.prototype.toString = function () {
+  'use strict';
+
+  return 'LoggingEvent[' + this.level + ']';
 };
 
 log4javascript.LoggingEvent = LoggingEvent;
@@ -971,21 +1036,18 @@ log4javascript.LoggingEvent = LoggingEvent;
 /* ---------------------------------------------------------------------- */
 // Main load
 
-log4javascript.setDocumentReady = function () {
-  pageLoaded = true;
-  log4javascript.dispatchEvent("load", {});
-};
-
 if (window.addEventListener) {
-  window.addEventListener("load", log4javascript.setDocumentReady, false);
+  window.addEventListener('load', log4javascript.setDocumentReady, false);
 } else if (window.attachEvent) {
-  window.attachEvent("onload", log4javascript.setDocumentReady);
+  window.attachEvent('onload', log4javascript.setDocumentReady);
 } else {
   var oldOnload = window.onload;
-  if (typeof window.onload !== "function") {
+  if (typeof window.onload !== 'function') {
     window.onload = log4javascript.setDocumentReady;
   } else {
     window.onload = function (evt) {
+      'use strict';
+
       if (oldOnload) {
         oldOnload(evt);
       }

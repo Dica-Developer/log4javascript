@@ -1,6 +1,4 @@
-/*global enabled*/
-// Loggers
-
+/*jshint unused:false */
 var anonymousLoggerName = '[anonymous]';
 var defaultLoggerName = '[default]';
 var nullLoggerName = '[null]';
@@ -282,7 +280,7 @@ function Logger(name) {
       for (var i = 1, len = arguments.length; i < len; i++) {
         args.push(arguments[i]);
       }
-      args = (args.length > 0) ? args : ["Assertion Failure"];
+      args = (args.length > 0) ? args : ['Assertion Failure'];
       args.push(newLine);
       args.push(expr);
       this.log(Level.ERROR, args);
