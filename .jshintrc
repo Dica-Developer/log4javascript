@@ -24,6 +24,7 @@
     "exports": true,
     "$": true,
     "module": true,
+    "ActiveXObject": true,
 
     "enabled": true,
     "ROOT_LOGGER_DEFAULT_LEVEL": true,
