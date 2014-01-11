@@ -53,6 +53,7 @@ function isHttpRequestSuccessful(xmlHttp) {
 /**
  * AjaxAppender
  * @param {String} url
+ * @mixes Appender
  * @constructor
  */
 function AjaxAppender(url) {
