@@ -58,6 +58,8 @@
     "urlDecode":true,
     "emptyFunction":true,
     "getExceptionStringRep":true,
+    "splitIntoLines":true,
+    "applicationStartDate":true,
     "loggers":true,
     "loggerNames":true,
     "Logger":true,
