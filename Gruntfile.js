@@ -39,8 +39,8 @@ module.exports = function (grunt) {
       options: {
         jshintrc: '.jshintrc'
       },
-      files: '<%= config.src %>/*.js',
-      afterconcat:  ['<%= config.dist %>/log4javascript.js']
+      afterconcat:  ['<%= config.dist %>/log4javascript.js'],
+      beforeconcat:  ['<%= config.src %>/*.js']
     },
     copy: {
       sample: {
@@ -53,9 +53,7 @@ module.exports = function (grunt) {
       }
     },
     concat: {
-      options: {
-        separator: ';'
-      },
+      options: {},
       dist: {
         options: {
           banner: '(function(window){\n  \'use strict\';\n',
@@ -107,7 +105,7 @@ module.exports = function (grunt) {
   ]);
 
   grunt.registerTask('build', [
-    'jshint',
+    'jshint:beforeconcat',
     'clean:dist',
     'concat:dist',
     'uglify:dist'
