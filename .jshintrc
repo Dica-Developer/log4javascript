@@ -62,6 +62,9 @@
     "loggerNames":true,
     "Logger":true,
     "Appender":true,
+    "EventSupport":true,
+    "PatternLayout":true,
+    "Layout":true,
     "HttpPostDataLayout":true
   }
 }
