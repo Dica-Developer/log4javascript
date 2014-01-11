@@ -252,7 +252,7 @@ function urlDecode(str){
 /**
  *
  * @param {Array} arr
- * @param {String} val
+ * @param {*} val
  * @returns {Boolean}
  */
 function arrayRemove(arr, val) {
@@ -276,7 +276,7 @@ function arrayRemove(arr, val) {
 /**
  *
  * @param {Array} arr
- * @param {String} val
+ * @param {*} val
  * @returns {Boolean}
  */
 function arrayContains(arr, val) {
