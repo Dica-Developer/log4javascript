@@ -95,7 +95,8 @@ module.exports = function (grunt) {
           'src/log4js.logger.js',
           'src/log4js.appender.js',
           'src/log4js.appender.ajax.js',
-          'src/log4js.appender.alert.js'
+          'src/log4js.appender.alert.js',
+          'src/log4js.appender.browserConsole.js'
         ],
         options: {
           destination: 'documentation'

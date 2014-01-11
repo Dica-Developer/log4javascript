@@ -1,15 +1,36 @@
-/* ---------------------------------------------------------------------- */
-// BrowserConsoleAppender (only works in Opera and Safari and Firefox with
-// Firebug extension)
+/**
+ * BrowserConsoleAppender (works in Opera, Safari, Firefox, Firefox with
+ * Firebug extension and Chrome)
+ * @constructor
+ * @mixes Appender
+ */
+function BrowserConsoleAppender() {}
 
-function BrowserConsoleAppender() {
-}
+/**
+ *
+ * @type {Appender}
+ */
+BrowserConsoleAppender.prototype = new Appender();
 
-BrowserConsoleAppender.prototype = new log4javascript.Appender();
+/**
+ *
+ * @type {Layout}
+ */
 BrowserConsoleAppender.prototype.layout = new NullLayout();
+
+/**
+ *
+ * @type {Level}
+ */
 BrowserConsoleAppender.prototype.threshold = Level.DEBUG;
 
+/**
+ *
+ * @param loggingEvent
+ */
 BrowserConsoleAppender.prototype.append = function (loggingEvent) {
+  'use strict';
+
   var appender = this;
 
   var getFormattedMessage = function () {
@@ -21,7 +42,7 @@ BrowserConsoleAppender.prototype.append = function (loggingEvent) {
     return formattedMessage;
   };
 
-  if ((typeof opera !== "undefined") && opera.postError) { // Opera
+  if ((!isUndefined(opera)) && opera.postError) { // Opera
     opera.postError(getFormattedMessage());
   } else if (window.console && window.console.log) { // Safari and Firebug
     var formattedMesage = getFormattedMessage();
@@ -41,20 +62,41 @@ BrowserConsoleAppender.prototype.append = function (loggingEvent) {
   }
 };
 
+/**
+ *
+ * @param {String} name
+ */
 BrowserConsoleAppender.prototype.group = function (name) {
+  'use strict';
+
   if (window.console && window.console.group) {
     window.console.group(name);
   }
 };
 
+/**
+ * @todo document
+ */
 BrowserConsoleAppender.prototype.groupEnd = function () {
+  'use strict';
+
   if (window.console && window.console.groupEnd) {
     window.console.groupEnd();
   }
 };
 
+/**
+ *
+ * @returns {String}
+ */
 BrowserConsoleAppender.prototype.toString = function () {
+  'use strict';
+
   return "BrowserConsoleAppender";
 };
 
+/**
+ *
+ * @type {BrowserConsoleAppender}
+ */
 log4javascript.BrowserConsoleAppender = BrowserConsoleAppender;
