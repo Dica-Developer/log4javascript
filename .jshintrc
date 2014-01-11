@@ -65,6 +65,7 @@
     "EventSupport":true,
     "PatternLayout":true,
     "Layout":true,
+    "SimpleLayout":true,
     "HttpPostDataLayout":true
   }
 }

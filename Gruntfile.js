@@ -90,7 +90,13 @@ module.exports = function (grunt) {
     },
     jsdoc : {
       dev : {
-        src: ['src/log4js.core.js', 'src/log4js.logger.js', 'src/log4js.appender.js', 'src/log4js.appender.ajax.js'],
+        src: [
+          'src/log4js.core.js',
+          'src/log4js.logger.js',
+          'src/log4js.appender.js',
+          'src/log4js.appender.ajax.js',
+          'src/log4js.appender.alert.js'
+        ],
         options: {
           destination: 'documentation'
         }

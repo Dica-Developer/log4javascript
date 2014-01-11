@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Index</title>
+    <title>JSDoc: Source: log4js.appender.alert.js</title>
     
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,30 +17,64 @@
 
 <div id="main">
     
-    <h1 class="page-title">Index</h1>
+    <h1 class="page-title">Source: log4js.appender.alert.js</h1>
     
     
 
 
     
+    <section>
+        <article>
+            <pre class="prettyprint source"><code>/**
+ *
+ * @constructor
+ * @mixes Appender
+ */
+function AlertAppender() {}
 
+/**
+ *
+ * @type {Appender}
+ */
+AlertAppender.prototype = new Appender();
 
-    <h3> </h3>
+/**
+ *
+ * @type {Layout}
+ */
+AlertAppender.prototype.layout = new SimpleLayout();
 
+/**
+ *
+ * @param loggingEvent
+ */
+AlertAppender.prototype.append = function (loggingEvent) {
+  'use strict';
 
+  var formattedMessage = this.getLayout().format(loggingEvent);
+  if (this.getLayout().ignoresThrowable()) {
+    formattedMessage += loggingEvent.getThrowableStrRep();
+  }
+  alert(formattedMessage);
+};
 
+/**
+ *
+ * @returns {string}
+ */
+AlertAppender.prototype.toString = function () {
+  'use strict';
 
+  return 'AlertAppender';
+};
 
-
-
-
-
-    
-
-
-
-
-
+/**
+ *
+ * @type {AlertAppender}
+ */
+log4javascript.AlertAppender = AlertAppender;</code></pre>
+        </article>
+    </section>
 
 
 
