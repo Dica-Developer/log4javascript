@@ -97,6 +97,7 @@ module.exports = function (grunt) {
           'src/log4js.appender.ajax.js',
           'src/log4js.appender.alert.js',
           'src/log4js.appender.browserConsole.js',
+          'src/log4js.layout.js',
           'src/log4js.layout.httpPostData.js'
         ],
         options: {
