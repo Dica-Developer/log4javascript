@@ -12,7 +12,7 @@
   "devDependencies": {
     "grunt-contrib": "~0.8.0",
     "time-grunt": "~0.2.7",
-    "jsdoc": "~3.3.0-alpha3"
+    "grunt-jsdoc": "~0.5.1"
   },
   "engines": {
     "node": ">=0.8.0"

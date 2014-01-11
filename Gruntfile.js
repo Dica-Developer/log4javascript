@@ -2,6 +2,7 @@ module.exports = function (grunt) {
   'use strict';
 
   grunt.loadNpmTasks('grunt-contrib');
+  grunt.loadNpmTasks('grunt-jsdoc');
   require('time-grunt')(grunt);
 
   var getFooter = function(){
@@ -84,6 +85,14 @@ module.exports = function (grunt) {
       dist: {
         files: {
           '<%= config.dist %>/log4javascript.min.js': ['<%= config.dist %>/log4javascript.js']
+        }
+      }
+    },
+    jsdoc : {
+      dev : {
+        src: ['src/log4js.core.js', 'src/log4js.logger.js', 'src/log4js.appender.js', 'src/log4js.appender.ajax.js'],
+        options: {
+          destination: 'documentation'
         }
       }
     }
