@@ -189,88 +189,88 @@ function getXhtml(rootNode, includeRootNode, indentation, startNewLine, preforma
 
   if (includeRootNode && rootNode.nodeType !== nodeTypes.DOCUMENT_FRAGMENT_NODE) {
     switch (rootNode.nodeType) {
-      case nodeTypes.ELEMENT_NODE:
-        var tagName = rootNode.tagName.toLowerCase();
-        xhtml = startNewLine ? newLine + indentation : '';
-        xhtml += lt;
-        // Allow for namespaces, where present
-        var prefix = getNamespace(rootNode);
-        var hasPrefix = !!prefix;
-        if (hasPrefix) {
-          xhtml += prefix + ':';
+    case nodeTypes.ELEMENT_NODE:
+      var tagName = rootNode.tagName.toLowerCase();
+      xhtml = startNewLine ? newLine + indentation : '';
+      xhtml += lt;
+      // Allow for namespaces, where present
+      var prefix = getNamespace(rootNode);
+      var hasPrefix = !!prefix;
+      if (hasPrefix) {
+        xhtml += prefix + ':';
+      }
+      xhtml += tagName;
+      for (var i = 0, len = rootNode.attributes.length; i < len; i++) {
+        var currentAttr = rootNode.attributes[i];
+        // Check the attribute is valid.
+        if (!currentAttr.specified ||
+          currentAttr.nodeValue === null ||
+          currentAttr.nodeName.toLowerCase() === 'style' ||
+          typeof currentAttr.nodeValue !== 'string' ||
+          currentAttr.nodeName.indexOf('_moz') === 0) {
+          continue;
         }
-        xhtml += tagName;
-        for (var i = 0, len = rootNode.attributes.length; i < len; i++) {
-          var currentAttr = rootNode.attributes[i];
-          // Check the attribute is valid.
-          if (!currentAttr.specified ||
-            currentAttr.nodeValue === null ||
-            currentAttr.nodeName.toLowerCase() === 'style' ||
-            typeof currentAttr.nodeValue !== 'string' ||
-            currentAttr.nodeName.indexOf('_moz') === 0) {
-            continue;
-          }
-          xhtml += ' ' + currentAttr.nodeName.toLowerCase() + '="';
-          xhtml += fixAttributeValue(currentAttr.nodeValue);
-          xhtml += '"';
+        xhtml += ' ' + currentAttr.nodeName.toLowerCase() + '="';
+        xhtml += fixAttributeValue(currentAttr.nodeValue);
+        xhtml += '"';
+      }
+      // Style needs to be done separately as it is not reported as an
+      // attribute in IE
+      if (rootNode.style.cssText) {
+        var styleValue = getStyleAttributeValue(rootNode);
+        if (styleValue !== '') {
+          xhtml += ' style="' + getStyleAttributeValue(rootNode) + '"';
         }
-        // Style needs to be done separately as it is not reported as an
-        // attribute in IE
-        if (rootNode.style.cssText) {
-          var styleValue = getStyleAttributeValue(rootNode);
-          if (styleValue !== '') {
-            xhtml += ' style="' + getStyleAttributeValue(rootNode) + '"';
-          }
-        }
-        if (arrayContains(emptyElements, tagName) ||
-          (hasPrefix && !rootNode.hasChildNodes())) {
-          xhtml += '/' + gt;
-        } else {
-          xhtml += gt;
-          // Add output for childNodes collection (which doesn't include attribute nodes)
-          var childStartNewLine = !(rootNode.childNodes.length === 1 &&
-            rootNode.childNodes[0].nodeType === nodeTypes.TEXT_NODE);
-          var childPreformatted = arrayContains(preFormattedElements, tagName);
-          for (var i1 = 0, len1 = rootNode.childNodes.length; i1 < len1; i1++) {
-            xhtml += getXhtml(rootNode.childNodes[i1], true, indentation + indentationUnit,
-              childStartNewLine, childPreformatted);
-          }
-          // Add the end tag
-          var endTag = lt + '/' + tagName + gt;
-          xhtml += childStartNewLine ? newLine + indentation + endTag : endTag;
-        }
-        return xhtml;
-      case nodeTypes.TEXT_NODE:
-        if (isWhitespace(rootNode)) {
-          xhtml = '';
-        } else {
-          if (preformatted) {
-            xhtml = rootNode.nodeValue;
-          } else {
-            // Trim whitespace from each line of the text node
-            var lines = splitIntoLines(trim(rootNode.nodeValue));
-            var trimmedLines = [];
-            for (var i2 = 0, len2 = lines.length; i2 < len2; i2++) {
-              trimmedLines[i2] = trim(lines[i2]);
-            }
-            xhtml = trimmedLines.join(newLine + indentation);
-          }
-          if (startNewLine) {
-            xhtml = newLine + indentation + xhtml;
-          }
-        }
-        return xhtml;
-      case nodeTypes.CDATA_SECTION_NODE:
-        return '<![CDA' + 'TA[' + rootNode.nodeValue + ']' + ']>' + newLine;
-      case nodeTypes.DOCUMENT_NODE:
-        xhtml = '';
+      }
+      if (arrayContains(emptyElements, tagName) ||
+        (hasPrefix && !rootNode.hasChildNodes())) {
+        xhtml += '/' + gt;
+      } else {
+        xhtml += gt;
         // Add output for childNodes collection (which doesn't include attribute nodes)
-        for (var i3 = 0, len3 = rootNode.childNodes.length; i3 < len3; i3++) {
-          xhtml += getXhtml(rootNode.childNodes[i3], true, indentation);
+        var childStartNewLine = !(rootNode.childNodes.length === 1 &&
+          rootNode.childNodes[0].nodeType === nodeTypes.TEXT_NODE);
+        var childPreformatted = arrayContains(preFormattedElements, tagName);
+        for (var i1 = 0, len1 = rootNode.childNodes.length; i1 < len1; i1++) {
+          xhtml += getXhtml(rootNode.childNodes[i1], true, indentation + indentationUnit,
+            childStartNewLine, childPreformatted);
         }
-        return xhtml;
-      default:
-        return '';
+        // Add the end tag
+        var endTag = lt + '/' + tagName + gt;
+        xhtml += childStartNewLine ? newLine + indentation + endTag : endTag;
+      }
+      return xhtml;
+    case nodeTypes.TEXT_NODE:
+      if (isWhitespace(rootNode)) {
+        xhtml = '';
+      } else {
+        if (preformatted) {
+          xhtml = rootNode.nodeValue;
+        } else {
+          // Trim whitespace from each line of the text node
+          var lines = splitIntoLines(trim(rootNode.nodeValue));
+          var trimmedLines = [];
+          for (var i2 = 0, len2 = lines.length; i2 < len2; i2++) {
+            trimmedLines[i2] = trim(lines[i2]);
+          }
+          xhtml = trimmedLines.join(newLine + indentation);
+        }
+        if (startNewLine) {
+          xhtml = newLine + indentation + xhtml;
+        }
+      }
+      return xhtml;
+    case nodeTypes.CDATA_SECTION_NODE:
+      return '<![CDA' + 'TA[' + rootNode.nodeValue + ']' + ']>' + newLine;
+    case nodeTypes.DOCUMENT_NODE:
+      xhtml = '';
+      // Add output for childNodes collection (which doesn't include attribute nodes)
+      for (var i3 = 0, len3 = rootNode.childNodes.length; i3 < len3; i3++) {
+        xhtml += getXhtml(rootNode.childNodes[i3], true, indentation);
+      }
+      return xhtml;
+    default:
+      return '';
     }
   } else {
     xhtml = '';
