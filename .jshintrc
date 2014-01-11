@@ -33,6 +33,7 @@
     "arrayRemove":true,
     "log4javascript":true,
     "toStr":true,
+    "toBool":true,
     "isError":true,
     "LoggingEvent":true,
     "Level":true,
@@ -49,8 +50,18 @@
     "anonymousLoggerName":true,
     "defaultLoggerName":true,
     "nullLoggerName":true,
+    "extractStringFromParam":true,
+    "extractIntFromParam":true,
+    "extractBooleanFromParam":true,
+    "extractFunctionFromParam":true,
+    "urlEncode":true,
+    "urlDecode":true,
+    "emptyFunction":true,
+    "getExceptionStringRep":true,
     "loggers":true,
     "loggerNames":true,
-    "Logger":true
+    "Logger":true,
+    "Appender":true,
+    "HttpPostDataLayout":true
   }
 }
