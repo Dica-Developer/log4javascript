@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: log4js.layout.simple.js</title>
+    <title>JSDoc: Source: log4js.appender.popup.js</title>
     
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">Source: log4js.layout.simple.js</h1>
+    <h1 class="page-title">Source: log4js.appender.popup.js</h1>
     
     
 
@@ -26,58 +26,85 @@
     <section>
         <article>
             <pre class="prettyprint source"><code>/**
- * SimpleLayout
+ *
+ * @param {Boolean} lazyInit
+ * @param {Boolean} initiallyMinimized
+ * @param {Boolean} useDocumentWrite
+ * @param {String} width
+ * @param {String} height
  * @constructor
- * @mixes Layout
+ * @mixes ConsoleAppender
  */
-function SimpleLayout() {
+function PopUpAppender(
+  lazyInit,
+  initiallyMinimized,
+  useDocumentWrite,
+  width,
+  height
+  ) {
   'use strict';
 
-  this.customFields = [];
+  /**
+   * @todo document
+   */
+  this.create(
+    false,
+    null,
+    lazyInit,
+    initiallyMinimized,
+    useDocumentWrite,
+    width,
+    height,
+    this.defaults.focusPopUp
+  );
 }
 
 /**
  *
- * @type {Layout}
+ * @type {ConsoleAppender}
  */
-SimpleLayout.prototype = new Layout();
+PopUpAppender.prototype = new ConsoleAppender();
 
 /**
  *
- * @param loggingEvent
+ * @type {{layout: PatternLayout, initiallyMinimized: boolean, focusPopUp: boolean, lazyInit: boolean, useOldPopUp: boolean, complainAboutPopUpBlocking: boolean, newestMessageAtTop: boolean, scrollToLatestMessage: boolean, width: string, height: string, reopenWhenClosed: boolean, maxMessages: null, showCommandLine: boolean, commandLineObjectExpansionDepth: number, showHideButton: boolean, showCloseButton: boolean, showLogEntryDeleteButtons: boolean, useDocumentWrite: boolean}}
+ */
+PopUpAppender.prototype.defaults = {
+  layout: new PatternLayout('%d{HH:mm:ss} %-5p - %m{1}%n'),
+  initiallyMinimized: false,
+  focusPopUp: false,
+  lazyInit: true,
+  useOldPopUp: true,
+  complainAboutPopUpBlocking: true,
+  newestMessageAtTop: false,
+  scrollToLatestMessage: true,
+  width: '600',
+  height: '400',
+  reopenWhenClosed: false,
+  maxMessages: null,
+  showCommandLine: true,
+  commandLineObjectExpansionDepth: 1,
+  showHideButton: false,
+  showCloseButton: true,
+  showLogEntryDeleteButtons: true,
+  useDocumentWrite: true
+};
+
+/**
+ *
  * @returns {String}
  */
-SimpleLayout.prototype.format = function (loggingEvent) {
+PopUpAppender.prototype.toString = function() {
   'use strict';
 
-  return loggingEvent.level.name + ' - ' + loggingEvent.getCombinedMessages();
+  return 'PopUpAppender';
 };
 
 /**
  *
- * @returns {Boolean}
+ * @type {PopUpAppender}
  */
-SimpleLayout.prototype.ignoresThrowable = function () {
-  'use strict';
-
-  return true;
-};
-
-/**
- *
- * @returns {string}
- */
-SimpleLayout.prototype.toString = function () {
-  'use strict';
-
-  return 'SimpleLayout';
-};
-
-/**
- *
- * @type {SimpleLayout}
- */
-log4javascript.SimpleLayout = SimpleLayout;</code></pre>
+log4javascript.PopUpAppender = PopUpAppender;</code></pre>
         </article>
     </section>
 
