@@ -46,6 +46,7 @@ Appender.prototype.doAppend = function (loggingEvent) {
  *
  * @param {LoggingEvent} loggingEvent
  */
+/*jshint unused:false*/
 Appender.prototype.append = function (loggingEvent) {};
 
 /**

@@ -92,7 +92,7 @@ BrowserConsoleAppender.prototype.groupEnd = function () {
 BrowserConsoleAppender.prototype.toString = function () {
   'use strict';
 
-  return "BrowserConsoleAppender";
+  return 'BrowserConsoleAppender';
 };
 
 /**

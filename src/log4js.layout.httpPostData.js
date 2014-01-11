@@ -40,9 +40,9 @@ HttpPostDataLayout.prototype.format = function (loggingEvent) {
   for (var i = 0, len = dataValues.length; i < len; i++) {
     var val = (dataValues[i][1] instanceof Date) ?
       String(dataValues[i][1].getTime()) : dataValues[i][1];
-    queryBits.push(urlEncode(dataValues[i][0]) + "=" + urlEncode(val));
+    queryBits.push(urlEncode(dataValues[i][0]) + '=' + urlEncode(val));
   }
-  return queryBits.join("&");
+  return queryBits.join('&');
 };
 
 /**

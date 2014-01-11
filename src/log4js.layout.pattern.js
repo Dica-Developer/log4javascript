@@ -306,105 +306,105 @@ var SimpleDateFormat;
         var numberOfLetters = patternLetters.length;
         var rawData = '';
         switch (patternLetter) {
-          case 'G':
-            rawData = 'AD';
-            break;
-          case 'y':
-            rawData = date.getFullYear();
-            break;
-          case 'M':
-            rawData = date.getMonth();
-            break;
-          case 'w':
-            rawData = date.getWeekInYear(this.getMinimalDaysInFirstWeek());
-            break;
-          case 'W':
-            rawData = date.getWeekInMonth(this.getMinimalDaysInFirstWeek());
-            break;
-          case 'D':
-            rawData = date.getDayInYear();
-            break;
-          case 'd':
-            rawData = date.getDate();
-            break;
-          case 'F':
-            rawData = 1 + Math.floor((date.getDate() - 1) / 7);
-            break;
-          case 'E':
-            rawData = dayNames[date.getDay()];
-            break;
-          case 'a':
-            rawData = (date.getHours() >= 12) ? 'PM' : 'AM';
-            break;
-          case 'H':
-            rawData = date.getHours();
-            break;
-          case 'k':
-            rawData = date.getHours() || 24;
-            break;
-          case 'K':
-            rawData = date.getHours() % 12;
-            break;
-          case 'h':
-            rawData = (date.getHours() % 12) || 12;
-            break;
-          case 'm':
-            rawData = date.getMinutes();
-            break;
-          case 's':
-            rawData = date.getSeconds();
-            break;
-          case 'S':
-            rawData = date.getMilliseconds();
-            break;
-          case 'Z':
-            rawData = date.getTimezoneOffset(); // This returns the number of minutes since GMT was this time.
-            break;
+        case 'G':
+          rawData = 'AD';
+          break;
+        case 'y':
+          rawData = date.getFullYear();
+          break;
+        case 'M':
+          rawData = date.getMonth();
+          break;
+        case 'w':
+          rawData = date.getWeekInYear(this.getMinimalDaysInFirstWeek());
+          break;
+        case 'W':
+          rawData = date.getWeekInMonth(this.getMinimalDaysInFirstWeek());
+          break;
+        case 'D':
+          rawData = date.getDayInYear();
+          break;
+        case 'd':
+          rawData = date.getDate();
+          break;
+        case 'F':
+          rawData = 1 + Math.floor((date.getDate() - 1) / 7);
+          break;
+        case 'E':
+          rawData = dayNames[date.getDay()];
+          break;
+        case 'a':
+          rawData = (date.getHours() >= 12) ? 'PM' : 'AM';
+          break;
+        case 'H':
+          rawData = date.getHours();
+          break;
+        case 'k':
+          rawData = date.getHours() || 24;
+          break;
+        case 'K':
+          rawData = date.getHours() % 12;
+          break;
+        case 'h':
+          rawData = (date.getHours() % 12) || 12;
+          break;
+        case 'm':
+          rawData = date.getMinutes();
+          break;
+        case 's':
+          rawData = date.getSeconds();
+          break;
+        case 'S':
+          rawData = date.getMilliseconds();
+          break;
+        case 'Z':
+          rawData = date.getTimezoneOffset(); // This returns the number of minutes since GMT was this time.
+          break;
         }
         // Format the raw data depending on the type
         switch (types[patternLetter]) {
-          case TEXT2:
-            formattedString += formatText(rawData, numberOfLetters, 2);
-            break;
-          case TEXT3:
-            formattedString += formatText(rawData, numberOfLetters, 3);
-            break;
-          case NUMBER:
+        case TEXT2:
+          formattedString += formatText(rawData, numberOfLetters, 2);
+          break;
+        case TEXT3:
+          formattedString += formatText(rawData, numberOfLetters, 3);
+          break;
+        case NUMBER:
+          formattedString += formatNumber(rawData, numberOfLetters);
+          break;
+        case YEAR:
+          if (numberOfLetters <= 3) {
+            // Output a 2-digit year
+            var dataString = '' + rawData;
+            formattedString += dataString.substr(2, 2);
+          } else {
             formattedString += formatNumber(rawData, numberOfLetters);
-            break;
-          case YEAR:
-            if (numberOfLetters <= 3) {
-              // Output a 2-digit year
-              var dataString = '' + rawData;
-              formattedString += dataString.substr(2, 2);
-            } else {
-              formattedString += formatNumber(rawData, numberOfLetters);
-            }
-            break;
-          case MONTH:
-            if (numberOfLetters >= 3) {
-              formattedString += formatText(monthNames[rawData], numberOfLetters, numberOfLetters);
-            } else {
-              // NB. Months returned by getMonth are zero-based
-              formattedString += formatNumber(rawData + 1, numberOfLetters);
-            }
-            break;
-          case TIMEZONE:
-            var isPositive = (rawData > 0);
-            // The following line looks like a mistake but isn't
-            // because of the way getTimezoneOffset measures.
-            var prefix = isPositive ? '-' : '+';
-            var absData = Math.abs(rawData);
+          }
+          break;
+        case MONTH:
+          if (numberOfLetters >= 3) {
+            formattedString += formatText(monthNames[rawData], numberOfLetters, numberOfLetters);
+          } else {
+            // NB. Months returned by getMonth are zero-based
+            formattedString += formatNumber(rawData + 1, numberOfLetters);
+          }
+          break;
+        case TIMEZONE:
+          var isPositive = (rawData > 0);
+          // The following line looks like a mistake but isn't
+          // because of the way getTimezoneOffset measures.
+          var prefix = isPositive ? '-' : '+';
+          var absData = Math.abs(rawData);
 
-            // Hours
-            var hours = '' + Math.floor(absData / 60);
-            hours = padWithZeroes(hours, 2);
-            // Minutes
-            var minutes = '' + (absData % 60);
-            minutes = padWithZeroes(minutes, 2);
+          // Hours
+          var hours = '' + Math.floor(absData / 60);
+          hours = padWithZeroes(hours, 2);
+          // Minutes
+          var minutes = '' + (absData % 60);
+          minutes = padWithZeroes(minutes, 2);
 
-            formattedString += prefix + hours + minutes;
-            break;
+          formattedString += prefix + hours + minutes;
+          break;
         }
       }
       searchString = searchString.substr(result.index + result[0].length);
@@ -500,220 +500,220 @@ PatternLayout.prototype.format = function (loggingEvent) {
       // character and specifier
       var replacement = '';
       switch (conversionCharacter) {
-        case 'l': //Location
-          var error = new Error();
-          if (error.stack) {
-            var column, line, resource, funcBegin, resourceBegin;
-            var stack = error.stack;
-            var lineAccessingLogger = stack.split('\n')[8];
+      case 'l': //Location
+        var error = new Error();
+        if (error.stack) {
+          var column, line, resource, funcBegin, resourceBegin;
+          var stack = error.stack;
+          var lineAccessingLogger = stack.split('\n')[8];
 
-            if (lineAccessingLogger === '') {
-              var lastIndexOfAt = stack.lastIndexOf('@');
-              lineAccessingLogger = stack.substr(lastIndexOfAt);
-              funcBegin = 0;
-              resourceBegin = lineAccessingLogger.indexOf('@') + 1;
-            } else {
-              funcBegin = lineAccessingLogger.indexOf('at ') + 3;
-              resourceBegin = lineAccessingLogger.indexOf(' (') + 2;
-            }
-
-
-            var functionName = funcBegin < resourceBegin ? lineAccessingLogger.substring(funcBegin, resourceBegin - 2) : null;
-
-            var resourceLoc;
-            if (functionName) {
-              resourceLoc = lineAccessingLogger.substring(resourceBegin, lineAccessingLogger.length - 1);
-            } else {
-              functionName = '(anonymous)';
-              resourceLoc = lineAccessingLogger.substring(funcBegin);
-            }
-
-            var resourceLocSplit = resourceLoc.split(':');
-            column = resourceLocSplit.pop();
-            line = resourceLocSplit.pop();
-            if (isNaN(line)) {
-              resourceLocSplit.push(line);
-              resource = resourceLocSplit.join(':');
-              if (resource.indexOf('@') === 0) {
-                resource = resource.substr(1);
-              }
-              line = column;
-              column = NaN;
-            } else {
-              resource = resourceLocSplit.join(':');
-            }
-            var lastSegmentIdx = resource.lastIndexOf('/');
-            var lastSegment = resource.substring(lastSegmentIdx + 1);
-
-            /*
-             var resultObject = {
-             r : resource,
-             l : line,
-             c : column,
-             f : functionName,
-             s : lastSegment
-             };
-             */
-
-            var spec = 's:l';
-            if (specifier){
-              spec = specifier;
-            }
-
-            var specresult = [];
-            var priorNum = '';
-            var int;
-            for (int = 0; int < spec.length; int++) {
-              var l = spec[int];
-              var num = parseInt(l, 10);
-              if (num > -1) {
-                priorNum += l;
-              } else {
-                if (priorNum.length > 0) {
-                  specresult.push(parseInt(priorNum, 10));
-                  priorNum = '';
-                }
-                specresult.push(l);
-              }
-            }
-            if (priorNum.length > 0){
-              specresult.push(parseInt(priorNum, 10));
-            }
-            spec = specresult;
-            for (int = 0; int < spec.length; int++) {
-              var optNum = spec[int + 1], string = '';
-              switch (spec[int]) {
-                case 's':
-                  replacement += lastSegment;
-                  break;
-                case 'r':
-                  string = resource;
-                  if (typeof optNum === 'number') {
-                    string = string.substring(string.length - optNum);
-                    spec.splice(int + 1, 1);
-                  }
-                  replacement += string;
-                  break;
-                case 'l':
-                  replacement += line;
-                  break;
-                case 'c':
-                  if(!isNaN(column)){
-                    replacement += column;
-                  }else{
-                    replacement = replacement.substring(0, replacement.lastIndexOf(spec[int - 1]));
-                  }
-                  break;
-                case 'f':
-                  string = functionName;
-                  if (typeof optNum === 'number') {
-                    string = string.substring(string.length - optNum);
-                    spec.splice(int + 1, 1);
-                  }
-                  replacement += string;
-                  break;
-                default:
-                  replacement += spec[int];
-              }
-            }
+          if (lineAccessingLogger === '') {
+            var lastIndexOfAt = stack.lastIndexOf('@');
+            lineAccessingLogger = stack.substr(lastIndexOfAt);
+            funcBegin = 0;
+            resourceBegin = lineAccessingLogger.indexOf('@') + 1;
           } else {
-            handleError('Could not apply "l" pattern because no stack is available');
+            funcBegin = lineAccessingLogger.indexOf('at ') + 3;
+            resourceBegin = lineAccessingLogger.indexOf(' (') + 2;
           }
-          break;
-        case 'a': // Array of messages
-        case 'm': // Message
-          var depth = 0;
-          if (specifier) {
-            depth = parseInt(specifier, 10);
-            if (isNaN(depth)) {
-              handleError('PatternLayout.format: invalid specifier "' +
-                specifier + '" for conversion character "' + conversionCharacter +
-                '" - should be a number');
-              depth = 0;
-            }
-          }
-          var messages = (conversionCharacter === 'a') ? loggingEvent.messages[0] : loggingEvent.messages;
-          for (var i = 0, len = messages.length; i < len; i++) {
-            if (i > 0 && (replacement.charAt(replacement.length - 1) !== ' ')) {
-              replacement += ' ';
-            }
-            if (depth === 0) {
-              replacement += messages[i];
-            } else {
-              replacement += formatObjectExpansion(messages[i], depth);
-            }
-          }
-          break;
-        case 'c': // Logger name
-          var loggerName = loggingEvent.logger.name;
-          if (specifier) {
-            var precision = parseInt(specifier, 10);
-            var loggerNameBits = loggingEvent.logger.name.split('.');
-            if (precision >= loggerNameBits.length) {
-              replacement = loggerName;
-            } else {
-              replacement = loggerNameBits.slice(loggerNameBits.length - precision).join('.');
-            }
+
+
+          var functionName = funcBegin < resourceBegin ? lineAccessingLogger.substring(funcBegin, resourceBegin - 2) : null;
+
+          var resourceLoc;
+          if (functionName) {
+            resourceLoc = lineAccessingLogger.substring(resourceBegin, lineAccessingLogger.length - 1);
           } else {
+            functionName = '(anonymous)';
+            resourceLoc = lineAccessingLogger.substring(funcBegin);
+          }
+
+          var resourceLocSplit = resourceLoc.split(':');
+          column = resourceLocSplit.pop();
+          line = resourceLocSplit.pop();
+          if (isNaN(line)) {
+            resourceLocSplit.push(line);
+            resource = resourceLocSplit.join(':');
+            if (resource.indexOf('@') === 0) {
+              resource = resource.substr(1);
+            }
+            line = column;
+            column = NaN;
+          } else {
+            resource = resourceLocSplit.join(':');
+          }
+          var lastSegmentIdx = resource.lastIndexOf('/');
+          var lastSegment = resource.substring(lastSegmentIdx + 1);
+
+          /*
+           var resultObject = {
+           r : resource,
+           l : line,
+           c : column,
+           f : functionName,
+           s : lastSegment
+           };
+           */
+
+          var spec = 's:l';
+          if (specifier){
+            spec = specifier;
+          }
+
+          var specresult = [];
+          var priorNum = '';
+          var int;
+          for (int = 0; int < spec.length; int++) {
+            var l = spec[int];
+            var num = parseInt(l, 10);
+            if (num > -1) {
+              priorNum += l;
+            } else {
+              if (priorNum.length > 0) {
+                specresult.push(parseInt(priorNum, 10));
+                priorNum = '';
+              }
+              specresult.push(l);
+            }
+          }
+          if (priorNum.length > 0){
+            specresult.push(parseInt(priorNum, 10));
+          }
+          spec = specresult;
+          for (int = 0; int < spec.length; int++) {
+            var optNum = spec[int + 1], string = '';
+            switch (spec[int]) {
+            case 's':
+              replacement += lastSegment;
+              break;
+            case 'r':
+              string = resource;
+              if (typeof optNum === 'number') {
+                string = string.substring(string.length - optNum);
+                spec.splice(int + 1, 1);
+              }
+              replacement += string;
+              break;
+            case 'l':
+              replacement += line;
+              break;
+            case 'c':
+              if(!isNaN(column)){
+                replacement += column;
+              }else{
+                replacement = replacement.substring(0, replacement.lastIndexOf(spec[int - 1]));
+              }
+              break;
+            case 'f':
+              string = functionName;
+              if (typeof optNum === 'number') {
+                string = string.substring(string.length - optNum);
+                spec.splice(int + 1, 1);
+              }
+              replacement += string;
+              break;
+            default:
+              replacement += spec[int];
+            }
+          }
+        } else {
+          handleError('Could not apply "l" pattern because no stack is available');
+        }
+        break;
+      case 'a': // Array of messages
+      case 'm': // Message
+        var depth = 0;
+        if (specifier) {
+          depth = parseInt(specifier, 10);
+          if (isNaN(depth)) {
+            handleError('PatternLayout.format: invalid specifier "' +
+              specifier + '" for conversion character "' + conversionCharacter +
+              '" - should be a number');
+            depth = 0;
+          }
+        }
+        var messages = (conversionCharacter === 'a') ? loggingEvent.messages[0] : loggingEvent.messages;
+        for (var i = 0, len = messages.length; i < len; i++) {
+          if (i > 0 && (replacement.charAt(replacement.length - 1) !== ' ')) {
+            replacement += ' ';
+          }
+          if (depth === 0) {
+            replacement += messages[i];
+          } else {
+            replacement += formatObjectExpansion(messages[i], depth);
+          }
+        }
+        break;
+      case 'c': // Logger name
+        var loggerName = loggingEvent.logger.name;
+        if (specifier) {
+          var precision = parseInt(specifier, 10);
+          var loggerNameBits = loggingEvent.logger.name.split('.');
+          if (precision >= loggerNameBits.length) {
             replacement = loggerName;
+          } else {
+            replacement = loggerNameBits.slice(loggerNameBits.length - precision).join('.');
           }
-          break;
-        case 'd': // Date
-          var dateFormat = PatternLayout.ISO8601_DATEFORMAT;
+        } else {
+          replacement = loggerName;
+        }
+        break;
+      case 'd': // Date
+        var dateFormat = PatternLayout.ISO8601_DATEFORMAT;
+        if (specifier) {
+          dateFormat = specifier;
+          // Pick up special cases
+          if (dateFormat === 'ISO8601') {
+            dateFormat = PatternLayout.ISO8601_DATEFORMAT;
+          } else if (dateFormat === 'ABSOLUTE') {
+            dateFormat = PatternLayout.ABSOLUTETIME_DATEFORMAT;
+          } else if (dateFormat === 'DATE') {
+            dateFormat = PatternLayout.DATETIME_DATEFORMAT;
+          }
+        }
+        // Format the date
+        replacement = (new SimpleDateFormat(dateFormat)).format(loggingEvent.timeStamp);
+        break;
+      case 'f': // Custom field
+        if (this.hasCustomFields()) {
+          var fieldIndex = 0;
           if (specifier) {
-            dateFormat = specifier;
-            // Pick up special cases
-            if (dateFormat === 'ISO8601') {
-              dateFormat = PatternLayout.ISO8601_DATEFORMAT;
-            } else if (dateFormat === 'ABSOLUTE') {
-              dateFormat = PatternLayout.ABSOLUTETIME_DATEFORMAT;
-            } else if (dateFormat === 'DATE') {
-              dateFormat = PatternLayout.DATETIME_DATEFORMAT;
+            fieldIndex = parseInt(specifier, 10);
+            if (isNaN(fieldIndex)) {
+              handleError('PatternLayout.format: invalid specifier "' +
+                specifier + '" for conversion character "f" - should be a number');
+            } else if (fieldIndex === 0) {
+              handleError('PatternLayout.format: invalid specifier "' +
+                specifier + '" for conversion character "f" - must be greater than zero');
+            } else if (fieldIndex > this.customFields.length) {
+              handleError('PatternLayout.format: invalid specifier "' +
+                specifier + '" for conversion character "f" - there aren\'t that many custom fields');
+            } else {
+              fieldIndex = fieldIndex - 1;
             }
           }
-          // Format the date
-          replacement = (new SimpleDateFormat(dateFormat)).format(loggingEvent.timeStamp);
-          break;
-        case 'f': // Custom field
-          if (this.hasCustomFields()) {
-            var fieldIndex = 0;
-            if (specifier) {
-              fieldIndex = parseInt(specifier, 10);
-              if (isNaN(fieldIndex)) {
-                handleError('PatternLayout.format: invalid specifier "' +
-                  specifier + '" for conversion character "f" - should be a number');
-              } else if (fieldIndex === 0) {
-                handleError('PatternLayout.format: invalid specifier "' +
-                  specifier + '" for conversion character "f" - must be greater than zero');
-              } else if (fieldIndex > this.customFields.length) {
-                handleError('PatternLayout.format: invalid specifier "' +
-                  specifier + '" for conversion character "f" - there aren\'t that many custom fields');
-              } else {
-                fieldIndex = fieldIndex - 1;
-              }
-            }
-            var val = this.customFields[fieldIndex].value;
-            if (typeof val === 'function') {
-              val = val(this, loggingEvent);
-            }
-            replacement = val;
+          var val = this.customFields[fieldIndex].value;
+          if (typeof val === 'function') {
+            val = val(this, loggingEvent);
           }
-          break;
-        case 'n': // New line
-          replacement = newLine;
-          break;
-        case 'p': // Level
-          replacement = loggingEvent.level.name;
-          break;
-        case 'r': // Milliseconds since log4javascript startup
-          replacement = '' + loggingEvent.timeStamp.getDifference(applicationStartDate);
-          break;
-        case '%': // Literal % sign
-          replacement = '%';
-          break;
-        default:
-          replacement = matchedString;
-          break;
+          replacement = val;
+        }
+        break;
+      case 'n': // New line
+        replacement = newLine;
+        break;
+      case 'p': // Level
+        replacement = loggingEvent.level.name;
+        break;
+      case 'r': // Milliseconds since log4javascript startup
+        replacement = '' + loggingEvent.timeStamp.getDifference(applicationStartDate);
+        break;
+      case '%': // Literal % sign
+        replacement = '%';
+        break;
+      default:
+        replacement = matchedString;
+        break;
       }
       // Format the replacement according to any padding or
       // truncation specified
