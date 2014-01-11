@@ -488,8 +488,10 @@ uniqueId = 'log4javascript_' + getUUID();
 //  };
 //}
 
-/* ---------------------------------------------------------------------- */
-// Simple logging for log4javascript itself
+/**
+ * Simple logging for log4javascript itself
+ * @constructor
+ */
 function LogLog() {
   'use strict';
 
@@ -530,7 +532,7 @@ LogLog.prototype.debug = function (message) {
 };
 
 /**
- *
+ * Shows an alert box with collected debug messages
  */
 LogLog.prototype.displayDebug = function () {
   'use strict';
@@ -540,6 +542,11 @@ LogLog.prototype.displayDebug = function () {
 
 LogLog.prototype.warn = function () {};
 
+/**
+ *
+ * @param {String} message
+ * @param {Error} exception
+ */
 LogLog.prototype.error = function (message, exception) {
   'use strict';
 
@@ -940,9 +947,6 @@ Log4JavaScript.prototype.resetConfiguration = function () {
   loggers = {};
 };
 
-/**
- *
- */
 Log4JavaScript.prototype.setDocumentReady = function () {
   'use strict';
 

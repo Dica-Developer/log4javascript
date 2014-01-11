@@ -90,7 +90,7 @@ function Logger(name) {
   };
 
   /**
-   *
+   * Deletes all registred Appenders
    */
   this.removeAllAppenders = function () {
     var appenderCount = appenders.length;
@@ -119,7 +119,7 @@ function Logger(name) {
   };
 
   /**
-   *
+   * TODO
    */
   this.invalidateAppenderCache = function () {
     appenderCacheInvalidated = true;
@@ -221,7 +221,7 @@ function Logger(name) {
   };
 
   /**
-   *
+   * TODO
    */
   this.groupEnd = function () {
     if (enabled) {
@@ -297,7 +297,7 @@ function Logger(name) {
 }
 
 /**
- *
+ * TODO
  */
 Logger.prototype.trace = function () {
   'use strict';
@@ -306,7 +306,7 @@ Logger.prototype.trace = function () {
 };
 
 /**
- *
+ * TODO
  */
 Logger.prototype.debug = function () {
   'use strict';
@@ -315,7 +315,7 @@ Logger.prototype.debug = function () {
 };
 
 /**
- *
+ * TODO
  */
 Logger.prototype.info = function () {
   'use strict';
@@ -324,7 +324,7 @@ Logger.prototype.info = function () {
 };
 
 /**
- *
+ * TODO
  */
 Logger.prototype.warn = function () {
   'use strict';
@@ -333,7 +333,7 @@ Logger.prototype.warn = function () {
 };
 
 /**
- *
+ * TODO
  */
 Logger.prototype.error = function () {
   'use strict';
@@ -342,7 +342,7 @@ Logger.prototype.error = function () {
 };
 
 /**
- *
+ * TODO
  */
 Logger.prototype.fatal = function () {
   'use strict';
