@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: log4js.layout.httpPostData.js</title>
+    <title>JSDoc: Source: log4js.layout.simple.js</title>
     
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">Source: log4js.layout.httpPostData.js</h1>
+    <h1 class="page-title">Source: log4js.layout.simple.js</h1>
     
     
 
@@ -26,77 +26,58 @@
     <section>
         <article>
             <pre class="prettyprint source"><code>/**
- * HttpPostDataLayout
+ * SimpleLayout
  * @constructor
  * @mixes Layout
  */
-function HttpPostDataLayout() {
+function SimpleLayout() {
   'use strict';
 
-  this.setKeys();
   this.customFields = [];
-  this.returnsPostData = true;
 }
 
 /**
  *
  * @type {Layout}
  */
-HttpPostDataLayout.prototype = new Layout();
-
-/**
- * Disable batching
- * @returns {Boolean}
- */
-HttpPostDataLayout.prototype.allowBatching = function () {
-  'use strict';
-
-  return false;
-};
+SimpleLayout.prototype = new Layout();
 
 /**
  *
  * @param loggingEvent
  * @returns {String}
  */
-HttpPostDataLayout.prototype.format = function (loggingEvent) {
+SimpleLayout.prototype.format = function (loggingEvent) {
   'use strict';
 
-  var dataValues = this.getDataValues(loggingEvent);
-  var queryBits = [];
-  for (var i = 0, len = dataValues.length; i &lt; len; i++) {
-    var val = (dataValues[i][1] instanceof Date) ?
-      String(dataValues[i][1].getTime()) : dataValues[i][1];
-    queryBits.push(urlEncode(dataValues[i][0]) + "=" + urlEncode(val));
-  }
-  return queryBits.join("&");
+  return loggingEvent.level.name + ' - ' + loggingEvent.getCombinedMessages();
 };
 
 /**
  *
- * @returns {boolean}
+ * @returns {Boolean}
  */
-HttpPostDataLayout.prototype.ignoresThrowable = function () {
+SimpleLayout.prototype.ignoresThrowable = function () {
   'use strict';
 
-  return false;
+  return true;
 };
 
 /**
  *
- * @returns {String}
+ * @returns {string}
  */
-HttpPostDataLayout.prototype.toString = function () {
+SimpleLayout.prototype.toString = function () {
   'use strict';
 
-  return 'HttpPostDataLayout';
+  return 'SimpleLayout';
 };
 
 /**
  *
- * @type {HttpPostDataLayout}
+ * @type {SimpleLayout}
  */
-log4javascript.HttpPostDataLayout = HttpPostDataLayout;</code></pre>
+log4javascript.SimpleLayout = SimpleLayout;</code></pre>
         </article>
     </section>
 

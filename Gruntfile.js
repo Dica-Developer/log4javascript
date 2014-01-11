@@ -101,6 +101,7 @@ module.exports = function (grunt) {
           'src/log4js.layout.json.js',
           'src/log4js.layout.null.js',
           'src/log4js.layout.pattern.js',
+          'src/log4js.layout.simple.js',
           'src/log4js.layout.httpPostData.js'
         ],
         options: {
