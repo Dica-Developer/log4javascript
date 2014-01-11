@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: log4js.layout.httpPostData.js</title>
+    <title>JSDoc: Source: log4js.layout.xml.js</title>
     
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">Source: log4js.layout.httpPostData.js</h1>
+    <h1 class="page-title">Source: log4js.layout.xml.js</h1>
     
     
 
@@ -26,32 +26,53 @@
     <section>
         <article>
             <pre class="prettyprint source"><code>/**
- * HttpPostDataLayout
+ * XML Layout
+ * @param combineMessages
  * @constructor
  * @mixes Layout
  */
-function HttpPostDataLayout() {
+function XmlLayout(combineMessages) {
   'use strict';
 
-  this.setKeys();
+  this.combineMessages = extractBooleanFromParam(combineMessages, true);
   this.customFields = [];
-  this.returnsPostData = true;
 }
 
 /**
  *
  * @type {Layout}
  */
-HttpPostDataLayout.prototype = new Layout();
+XmlLayout.prototype = new Layout();
 
 /**
- * Disable batching
+ *
  * @returns {Boolean}
  */
-HttpPostDataLayout.prototype.allowBatching = function () {
+XmlLayout.prototype.isCombinedMessages = function () {
   'use strict';
 
-  return false;
+  return this.combineMessages;
+};
+
+/**
+ *
+ * @returns {String}
+ */
+XmlLayout.prototype.getContentType = function () {
+  'use strict';
+
+  return 'text/xml';
+};
+
+/**
+ *
+ * @param {String} str
+ * @returns {String}
+ */
+XmlLayout.prototype.escapeCdata = function (str) {
+  'use strict';
+
+  return str.replace(/\]\]>/, ']]>]]&gt;&lt;![CDATA[');
 };
 
 /**
@@ -59,24 +80,55 @@ HttpPostDataLayout.prototype.allowBatching = function () {
  * @param loggingEvent
  * @returns {String}
  */
-HttpPostDataLayout.prototype.format = function (loggingEvent) {
+XmlLayout.prototype.format = function (loggingEvent) {
   'use strict';
 
-  var dataValues = this.getDataValues(loggingEvent);
-  var queryBits = [];
-  for (var i = 0, len = dataValues.length; i &lt; len; i++) {
-    var val = (dataValues[i][1] instanceof Date) ?
-      String(dataValues[i][1].getTime()) : dataValues[i][1];
-    queryBits.push(urlEncode(dataValues[i][0]) + "=" + urlEncode(val));
+  var layout = this;
+  var i, len;
+
+  function formatMessage(message) {
+    message = (typeof message === 'string') ? message : toStr(message);
+    return '&lt;log4javascript:message>&lt;![CDATA[' +
+      layout.escapeCdata(message) + ']]>&lt;/log4javascript:message>';
   }
-  return queryBits.join("&");
+
+  var str = '&lt;log4javascript:event logger="' + loggingEvent.logger.name +
+    '" timestamp="' + this.getTimeStampValue(loggingEvent) + '"';
+  if (!this.isTimeStampsInMilliseconds()) {
+    str += ' milliseconds="' + loggingEvent.milliseconds + '"';
+  }
+  str += ' level="' + loggingEvent.level.name + '">' + newLine;
+  if (this.combineMessages) {
+    str += formatMessage(loggingEvent.getCombinedMessages());
+  } else {
+    str += '&lt;log4javascript:messages>' + newLine;
+    for (i = 0, len = loggingEvent.messages.length; i &lt; len; i++) {
+      str += formatMessage(loggingEvent.messages[i]) + newLine;
+    }
+    str += '&lt;/log4javascript:messages>' + newLine;
+  }
+  if (this.hasCustomFields()) {
+    for (i = 0, len = this.customFields.length; i &lt; len; i++) {
+      str += '&lt;log4javascript:customfield name="' +
+        this.customFields[i].name + '">&lt;![CDATA[' +
+        this.customFields[i].value.toString() +
+        ']]>&lt;/log4javascript:customfield>' + newLine;
+    }
+  }
+  if (loggingEvent.exception) {
+    str += '&lt;log4javascript:exception>&lt;![CDATA[' +
+      getExceptionStringRep(loggingEvent.exception) +
+      ']]>&lt;/log4javascript:exception>' + newLine;
+  }
+  str += '&lt;/log4javascript:event>' + newLine + newLine;
+  return str;
 };
 
 /**
  *
- * @returns {boolean}
+ * @returns {Boolean}
  */
-HttpPostDataLayout.prototype.ignoresThrowable = function () {
+XmlLayout.prototype.ignoresThrowable = function () {
   'use strict';
 
   return false;
@@ -86,17 +138,17 @@ HttpPostDataLayout.prototype.ignoresThrowable = function () {
  *
  * @returns {String}
  */
-HttpPostDataLayout.prototype.toString = function () {
+XmlLayout.prototype.toString = function () {
   'use strict';
 
-  return 'HttpPostDataLayout';
+  return 'XmlLayout';
 };
 
 /**
  *
- * @type {HttpPostDataLayout}
+ * @type {XmlLayout}
  */
-log4javascript.HttpPostDataLayout = HttpPostDataLayout;</code></pre>
+log4javascript.XmlLayout = XmlLayout;</code></pre>
         </article>
     </section>
 
