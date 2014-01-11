@@ -1,20 +1,40 @@
-/* ---------------------------------------------------------------------- */
-// HttpPostDataLayout
-
+/**
+ * HttpPostDataLayout
+ * @constructor
+ * @mixes Layout
+ */
 function HttpPostDataLayout() {
+  'use strict';
+
   this.setKeys();
   this.customFields = [];
   this.returnsPostData = true;
 }
 
+/**
+ *
+ * @type {Layout}
+ */
 HttpPostDataLayout.prototype = new Layout();
 
-// Disable batching
+/**
+ * Disable batching
+ * @returns {Boolean}
+ */
 HttpPostDataLayout.prototype.allowBatching = function () {
+  'use strict';
+
   return false;
 };
 
+/**
+ *
+ * @param loggingEvent
+ * @returns {String}
+ */
 HttpPostDataLayout.prototype.format = function (loggingEvent) {
+  'use strict';
+
   var dataValues = this.getDataValues(loggingEvent);
   var queryBits = [];
   for (var i = 0, len = dataValues.length; i < len; i++) {
@@ -25,12 +45,28 @@ HttpPostDataLayout.prototype.format = function (loggingEvent) {
   return queryBits.join("&");
 };
 
-HttpPostDataLayout.prototype.ignoresThrowable = function (loggingEvent) {
+/**
+ *
+ * @returns {boolean}
+ */
+HttpPostDataLayout.prototype.ignoresThrowable = function () {
+  'use strict';
+
   return false;
 };
 
+/**
+ *
+ * @returns {String}
+ */
 HttpPostDataLayout.prototype.toString = function () {
-  return "HttpPostDataLayout";
+  'use strict';
+
+  return 'HttpPostDataLayout';
 };
 
+/**
+ *
+ * @type {HttpPostDataLayout}
+ */
 log4javascript.HttpPostDataLayout = HttpPostDataLayout;
