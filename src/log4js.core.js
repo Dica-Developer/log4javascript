@@ -540,6 +540,9 @@ LogLog.prototype.displayDebug = function () {
   alert(this.debugMessages.join(newLine));
 };
 
+/**
+ * @todo document
+ */
 LogLog.prototype.warn = function () {};
 
 /**
@@ -561,6 +564,10 @@ LogLog.prototype.error = function (message, exception) {
   }
 };
 
+/**
+ *
+ * @type {LogLog}
+ */
 logLog = new LogLog();
 
 /**
@@ -735,6 +742,10 @@ Level.FATAL = new Level(60000, 'FATAL');
  */
 Level.OFF = new Level(Number.MAX_VALUE, 'OFF');
 
+/**
+ *
+ * @type {Level|Level.DEBUG}
+ */
 ROOT_LOGGER_DEFAULT_LEVEL = Level.DEBUG;
 
 /**
@@ -947,6 +958,9 @@ Log4JavaScript.prototype.resetConfiguration = function () {
   loggers = {};
 };
 
+/**
+ * @todo document
+ */
 Log4JavaScript.prototype.setDocumentReady = function () {
   'use strict';
 
@@ -960,8 +974,17 @@ Log4JavaScript.prototype.setDocumentReady = function () {
  */
 Log4JavaScript.prototype.Level = Level;
 
+/**
+ *
+ * @type {Log4JavaScript}
+ */
 var log4javascript = new Log4JavaScript();
 
+/**
+ *
+ * @param {String} message
+ * @param {Error} exception
+ */
 handleError = function(message, exception) {
   'use strict';
 
@@ -1035,6 +1058,10 @@ LoggingEvent.prototype.toString = function () {
   return 'LoggingEvent[' + this.level + ']';
 };
 
+/**
+ *
+ * @type {LoggingEvent}
+ */
 log4javascript.LoggingEvent = LoggingEvent;
 
 /* ---------------------------------------------------------------------- */
