@@ -119,7 +119,7 @@ function Logger(name) {
   };
 
   /**
-   * TODO
+   * @todo document
    */
   this.invalidateAppenderCache = function () {
     appenderCacheInvalidated = true;
@@ -221,7 +221,7 @@ function Logger(name) {
   };
 
   /**
-   * TODO
+   * @todo document
    */
   this.groupEnd = function () {
     if (enabled) {
@@ -297,7 +297,7 @@ function Logger(name) {
 }
 
 /**
- * TODO
+ * @todo document
  */
 Logger.prototype.trace = function () {
   'use strict';
@@ -306,7 +306,7 @@ Logger.prototype.trace = function () {
 };
 
 /**
- * TODO
+ * @todo document
  */
 Logger.prototype.debug = function () {
   'use strict';
@@ -315,7 +315,7 @@ Logger.prototype.debug = function () {
 };
 
 /**
- * TODO
+ * @todo document
  */
 Logger.prototype.info = function () {
   'use strict';
@@ -324,7 +324,7 @@ Logger.prototype.info = function () {
 };
 
 /**
- * TODO
+ * @todo document
  */
 Logger.prototype.warn = function () {
   'use strict';
@@ -333,7 +333,7 @@ Logger.prototype.warn = function () {
 };
 
 /**
- * TODO
+ * @todo document
  */
 Logger.prototype.error = function () {
   'use strict';
@@ -342,7 +342,7 @@ Logger.prototype.error = function () {
 };
 
 /**
- * TODO
+ * @todo document
  */
 Logger.prototype.fatal = function () {
   'use strict';
