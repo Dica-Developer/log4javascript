@@ -57,9 +57,18 @@
     "urlEncode":true,
     "urlDecode":true,
     "emptyFunction":true,
+    "getExceptionMessage":true,
     "getExceptionStringRep":true,
     "splitIntoLines":true,
     "applicationStartDate":true,
+    "setCookie":true,
+    "getCookie":true,
+    "formatObjectExpansion":true,
+    "isString":true,
+    "trim":true,
+    "getConsoleHtmlLines":true,
+    "isLoaded":true,
+    "getBaseUrl":true,
     "loggers":true,
     "loggerNames":true,
     "Logger":true,
@@ -69,6 +78,7 @@
     "Layout":true,
     "SimpleLayout":true,
     "NullLayout":true,
-    "HttpPostDataLayout":true
+    "HttpPostDataLayout":true,
+    "ConsoleAppender":true
   }
 }

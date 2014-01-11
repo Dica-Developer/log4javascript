@@ -76,7 +76,11 @@ module.exports = function (grunt) {
           'src/log4js.appender.ajax.js',
           'src/log4js.appender.alert.js',
           'src/log4js.appender.browserConsole.js',
-          'src/log4js.appender.popup.js'
+          'src/log4js.consoleHtmlLines.js',
+          'src/log4js.appender.console.js',
+          'src/log4js.appender.popup.js',
+          'src/log4js.appender.inPage.js',
+          'src/log4js.popupInpage.init.js'
         ],
         dest: 'dist/log4javascript.js'
       }
@@ -117,9 +121,9 @@ module.exports = function (grunt) {
   ]);
 
   grunt.registerTask('build', [
+    'jshint',
     'clean:dist',
     'concat:dist',
-    'jshint:afterconcat',
     'uglify:dist'
   ]);
 };
