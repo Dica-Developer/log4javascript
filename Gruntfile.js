@@ -3,6 +3,7 @@ module.exports = function (grunt) {
 
   grunt.loadNpmTasks('grunt-contrib');
   grunt.loadNpmTasks('grunt-jsdoc');
+  grunt.loadNpmTasks('grunt-karma');
   require('time-grunt')(grunt);
 
   var getFooter = function(){
@@ -22,7 +23,8 @@ module.exports = function (grunt) {
   // configurable paths
   var config = {
     src: 'src',
-    dist: 'dist'
+    dist: 'dist',
+    test: 'test'
   };
 
   grunt.initConfig({
@@ -97,6 +99,11 @@ module.exports = function (grunt) {
           destination: 'documentation'
         }
       }
+    },
+    karma: {
+      dist: {
+        configFile: '<%= config.test %>/dist.karma.conf.js'
+      }
     }
   });
 
@@ -108,6 +115,7 @@ module.exports = function (grunt) {
     'jshint:beforeconcat',
     'clean:dist',
     'concat:dist',
+    'karma:dist',
     'uglify:dist'
   ]);
 };

@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<testsuites>
+  <testsuite name="Firefox 26.0.0 (Mac OS X 10.7)" package="" timestamp="2014-01-12T00:08:48" id="0" hostname="localhost" tests="17" errors="0" failures="0" time="0.003">
+    <properties>
+      <property name="browser.fullName" value="Mozilla/5.0 (Macintosh; Intel Mac OS X 10.7; rv:26.0) Gecko/20100101 Firefox/26.0"/>
+    </properties>
+    <testcase name="log4js should be defined" time="0.001" classname="Firefox 26.0.0 (Mac OS X 10.7).log4js should defined and initiate with all Appender and Layouts"/>
+    <testcase name="log4js.Level should be defined" time="0" classname="Firefox 26.0.0 (Mac OS X 10.7).log4js should defined and initiate with all Appender and Layouts log4js prototypes should defined"/>
+    <testcase name="log4js.evalInScope should be defined" time="0" classname="Firefox 26.0.0 (Mac OS X 10.7).log4js should defined and initiate with all Appender and Layouts log4js prototypes should defined"/>
+    <testcase name="log4js.eventListeners should be defined" time="0" classname="Firefox 26.0.0 (Mac OS X 10.7).log4js should defined and initiate with all Appender and Layouts log4js prototypes should defined"/>
+    <testcase name="log4js.eventTypes should be defined" time="0" classname="Firefox 26.0.0 (Mac OS X 10.7).log4js should defined and initiate with all Appender and Layouts log4js prototypes should defined"/>
+    <testcase name="log4js.getDefaultLogger should be defined" time="0" classname="Firefox 26.0.0 (Mac OS X 10.7).log4js should defined and initiate with all Appender and Layouts log4js prototypes should defined"/>
+    <testcase name="log4js.getLogger should be defined" time="0" classname="Firefox 26.0.0 (Mac OS X 10.7).log4js should defined and initiate with all Appender and Layouts log4js prototypes should defined"/>
+    <testcase name="log4js.getNullLogger should be defined" time="0" classname="Firefox 26.0.0 (Mac OS X 10.7).log4js should defined and initiate with all Appender and Layouts log4js prototypes should defined"/>
+    <testcase name="log4js.getRootLogger should be defined" time="0" classname="Firefox 26.0.0 (Mac OS X 10.7).log4js should defined and initiate with all Appender and Layouts log4js prototypes should defined"/>
+    <testcase name="log4js.isEnabled should be defined" time="0" classname="Firefox 26.0.0 (Mac OS X 10.7).log4js should defined and initiate with all Appender and Layouts log4js prototypes should defined"/>
+    <testcase name="log4js.isTimeStampsInMilliseconds should be defined" time="0.001" classname="Firefox 26.0.0 (Mac OS X 10.7).log4js should defined and initiate with all Appender and Layouts log4js prototypes should defined"/>
+    <testcase name="log4js.logLog should be defined" time="0" classname="Firefox 26.0.0 (Mac OS X 10.7).log4js should defined and initiate with all Appender and Layouts log4js prototypes should defined"/>
+    <testcase name="log4js.resetConfiguration should be defined" time="0" classname="Firefox 26.0.0 (Mac OS X 10.7).log4js should defined and initiate with all Appender and Layouts log4js prototypes should defined"/>
+    <testcase name="log4js.setDocumentReady should be defined" time="0.001" classname="Firefox 26.0.0 (Mac OS X 10.7).log4js should defined and initiate with all Appender and Layouts log4js prototypes should defined"/>
+    <testcase name="log4js.setEnabled should be defined" time="0" classname="Firefox 26.0.0 (Mac OS X 10.7).log4js should defined and initiate with all Appender and Layouts log4js prototypes should defined"/>
+    <testcase name="log4js.setShowStackTraces should be defined" time="0" classname="Firefox 26.0.0 (Mac OS X 10.7).log4js should defined and initiate with all Appender and Layouts log4js prototypes should defined"/>
+    <testcase name="log4js.setTimeStampsInMilliseconds should be defined" time="0" classname="Firefox 26.0.0 (Mac OS X 10.7).log4js should defined and initiate with all Appender and Layouts log4js prototypes should defined"/>
+    <system-out><![CDATA[
+]]></system-out>
+    <system-err/>
+  </testsuite>
+  <testsuite name="Chrome 31.0.1650 (Mac OS X 10.7.5)" package="" timestamp="2014-01-12T00:08:48" id="0" hostname="localhost" tests="17" errors="0" failures="0" time="0.005">
+    <properties>
+      <property name="browser.fullName" value="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/31.0.1650.63 Safari/537.36"/>
+    </properties>
+    <testcase name="log4js should be defined" time="0.004" classname="Chrome 31.0.1650 (Mac OS X 10.7.5).log4js should defined and initiate with all Appender and Layouts"/>
+    <testcase name="log4js.Level should be defined" time="0.001" classname="Chrome 31.0.1650 (Mac OS X 10.7.5).log4js should defined and initiate with all Appender and Layouts log4js prototypes should defined"/>
+    <testcase name="log4js.evalInScope should be defined" time="0" classname="Chrome 31.0.1650 (Mac OS X 10.7.5).log4js should defined and initiate with all Appender and Layouts log4js prototypes should defined"/>
+    <testcase name="log4js.eventListeners should be defined" time="0" classname="Chrome 31.0.1650 (Mac OS X 10.7.5).log4js should defined and initiate with all Appender and Layouts log4js prototypes should defined"/>
+    <testcase name="log4js.eventTypes should be defined" time="0" classname="Chrome 31.0.1650 (Mac OS X 10.7.5).log4js should defined and initiate with all Appender and Layouts log4js prototypes should defined"/>
+    <testcase name="log4js.getDefaultLogger should be defined" time="0" classname="Chrome 31.0.1650 (Mac OS X 10.7.5).log4js should defined and initiate with all Appender and Layouts log4js prototypes should defined"/>
+    <testcase name="log4js.getLogger should be defined" time="0" classname="Chrome 31.0.1650 (Mac OS X 10.7.5).log4js should defined and initiate with all Appender and Layouts log4js prototypes should defined"/>
+    <testcase name="log4js.getNullLogger should be defined" time="0" classname="Chrome 31.0.1650 (Mac OS X 10.7.5).log4js should defined and initiate with all Appender and Layouts log4js prototypes should defined"/>
+    <testcase name="log4js.getRootLogger should be defined" time="0" classname="Chrome 31.0.1650 (Mac OS X 10.7.5).log4js should defined and initiate with all Appender and Layouts log4js prototypes should defined"/>
+    <testcase name="log4js.isEnabled should be defined" time="0" classname="Chrome 31.0.1650 (Mac OS X 10.7.5).log4js should defined and initiate with all Appender and Layouts log4js prototypes should defined"/>
+    <testcase name="log4js.isTimeStampsInMilliseconds should be defined" time="0" classname="Chrome 31.0.1650 (Mac OS X 10.7.5).log4js should defined and initiate with all Appender and Layouts log4js prototypes should defined"/>
+    <testcase name="log4js.logLog should be defined" time="0" classname="Chrome 31.0.1650 (Mac OS X 10.7.5).log4js should defined and initiate with all Appender and Layouts log4js prototypes should defined"/>
+    <testcase name="log4js.resetConfiguration should be defined" time="0" classname="Chrome 31.0.1650 (Mac OS X 10.7.5).log4js should defined and initiate with all Appender and Layouts log4js prototypes should defined"/>
+    <testcase name="log4js.setDocumentReady should be defined" time="0" classname="Chrome 31.0.1650 (Mac OS X 10.7.5).log4js should defined and initiate with all Appender and Layouts log4js prototypes should defined"/>
+    <testcase name="log4js.setEnabled should be defined" time="0" classname="Chrome 31.0.1650 (Mac OS X 10.7.5).log4js should defined and initiate with all Appender and Layouts log4js prototypes should defined"/>
+    <testcase name="log4js.setShowStackTraces should be defined" time="0" classname="Chrome 31.0.1650 (Mac OS X 10.7.5).log4js should defined and initiate with all Appender and Layouts log4js prototypes should defined"/>
+    <testcase name="log4js.setTimeStampsInMilliseconds should be defined" time="0" classname="Chrome 31.0.1650 (Mac OS X 10.7.5).log4js should defined and initiate with all Appender and Layouts log4js prototypes should defined"/>
+    <system-out><![CDATA[
+]]></system-out>
+    <system-err/>
+  </testsuite>
+</testsuites>
