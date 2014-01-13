@@ -225,27 +225,5 @@ define(['log4javascript'], function(log4js){
       }
     });
 
-    it('log4js.Level.ALL should be greater then log4js.Level.FATAL', function () {
-      expect(tmpLevel.ALL.isGreaterOrEqual(tmpLevel.FATAL)).toBe(false);
-    });
-
-    it('log4js.Level.ALL should be greater then log4js.Level.ERROR', function () {
-      expect(tmpLevel.ALL.isGreaterOrEqual(tmpLevel.ERROR)).toBe(false);
-    });
-
-    it('log4js.Level.ALL should be greater then log4js.Level.WARN', function () {
-      expect(tmpLevel.ALL.isGreaterOrEqual(tmpLevel.WARN)).toBe(false);
-    });
-
-    it('log4js.Level.ALL should be greater then log4js.Level.ERROR', function () {
-      expect(tmpLevel.ALL.isGreaterOrEqual(tmpLevel.ERROR)).toBe(false);
-    });
-
-    it('log4js.Level.ALL should be lowest', function () {
-      var length = getLengthForLevelTesting(levelKeys, 'ALL');
-      for(var i = 0; i < length; i++){
-        expect(tmpLevel.ALL.isGreaterOrEqual(tmpLevel[levelKeys[i]])).toBe(false);
-      }
-    });
   });
 });
