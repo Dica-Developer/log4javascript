@@ -12,13 +12,10 @@ requirejs.config({
   baseUrl: '/base/src',
 
   paths: {
-    'log4javascript': '../dist/log4javascript'
-  },
-
-  shim: {
-    'underscore': {
-      exports: '_'
-    }
+    'log4javascript': '../dist/log4javascript',
+    'level': '../src/log4js.level',
+    'logger': '../src/log4js.logger',
+    'lodash': '../test/vendor/lodash/dist/lodash.min'
   },
 
   // ask Require.js to load these files (all our tests)
