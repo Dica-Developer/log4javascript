@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: log4js.layout.simple.js</title>
+    <title>JSDoc: Source: log4js.level.js</title>
     
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">Source: log4js.layout.simple.js</h1>
+    <h1 class="page-title">Source: log4js.level.js</h1>
     
     
 
@@ -26,58 +26,97 @@
     <section>
         <article>
             <pre class="prettyprint source"><code>/**
- * SimpleLayout
+ * Levels
+ * @param {Number} level
+ * @param {String} name
+ * @property {Number} level
+ * @property {String} name
  * @constructor
- * @mixes Layout
  */
-function SimpleLayout() {
+function Level(level, name) {
   'use strict';
-
-  this.customFields = [];
+  this.level = level;
+  this.name = name;
 }
 
 /**
  *
- * @type {Layout}
- */
-SimpleLayout.prototype = new Layout();
-
-/**
- *
- * @param loggingEvent
  * @returns {String}
  */
-SimpleLayout.prototype.format = function (loggingEvent) {
+Level.prototype.toString = function () {
   'use strict';
 
-  return loggingEvent.level.name + ' - ' + loggingEvent.getCombinedMessages();
+  return this.name;
 };
 
 /**
  *
+ * @param {Number} level
  * @returns {Boolean}
  */
-SimpleLayout.prototype.ignoresThrowable = function () {
+Level.prototype.equals = function (level) {
   'use strict';
 
-  return true;
+  return this.level === level.level;
 };
 
 /**
  *
- * @returns {string}
+ * @param {Number} level
+ * @returns {Boolean}
  */
-SimpleLayout.prototype.toString = function () {
+Level.prototype.isGreaterOrEqual = function (level) {
   'use strict';
 
-  return 'SimpleLayout';
+  return this.level >= level.level;
 };
 
 /**
  *
- * @type {SimpleLayout}
+ * @type {Level}
  */
-log4javascript.SimpleLayout = SimpleLayout;</code></pre>
+Level.ALL = new Level(Number.MIN_VALUE, 'ALL');
+/**
+ *
+ * @type {Level}
+ */
+Level.TRACE = new Level(10000, 'TRACE');
+/**
+ *
+ * @type {Level}
+ */
+Level.DEBUG = new Level(20000, 'DEBUG');
+/**
+ *
+ * @type {Level}
+ */
+Level.INFO = new Level(30000, 'INFO');
+/**
+ *
+ * @type {Level}
+ */
+Level.WARN = new Level(40000, 'WARN');
+/**
+ *
+ * @type {Level}
+ */
+Level.ERROR = new Level(50000, 'ERROR');
+/**
+ *
+ * @type {Level}
+ */
+Level.FATAL = new Level(60000, 'FATAL');
+/**
+ *
+ * @type {Level}
+ */
+Level.OFF = new Level(Number.MAX_VALUE, 'OFF');
+
+/**
+ *
+ * @type {Level|Level.DEBUG}
+ */
+ROOT_LOGGER_DEFAULT_LEVEL = Level.DEBUG;</code></pre>
         </article>
     </section>
 
