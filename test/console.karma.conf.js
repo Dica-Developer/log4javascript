@@ -21,10 +21,19 @@ module.exports = function(config) {
       {pattern: 'test/vendor/lodash/dist/*.js', included: false}
     ],
 
+    preprocessors: {
+      'src/*.js': 'coverage',
+      'dist/log4javascript.js': 'coverage'
+    },
+
+    coverageReporter: {
+      type : 'html',
+      dir : 'test/coverage/'
+    },
 
     // test results reporter to use
     // possible values: 'dots', 'progress', 'junit', 'growl', 'coverage'
-    reporters: ['progress'],
+    reporters: ['progress', 'coverage'],
 
 
     // web server port
@@ -52,7 +61,7 @@ module.exports = function(config) {
     // - Safari (only Mac)
     // - PhantomJS
     // - IE (only Windows)
-    browsers: ['Chrome', 'Firefox'],
+    browsers: ['PhantomJS'],
 
 
     // If browser does not capture in given timeout [ms], kill it
