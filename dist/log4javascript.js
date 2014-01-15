@@ -25,7 +25,161 @@ var logLog,
 // Hashtable of loggers keyed by logger name
 var loggers = {};
 var loggerNames = [];
+/**
+ * Levels
+ * @param {Number} level
+ * @param {String} name
+ * @property {Number} level
+ * @property {String} name
+ * @constructor
+ */
+function Level(level, name) {
+  'use strict';
+  this.level = level;
+  this.name = name;
+}
+
+/**
+ *
+ * @returns {String}
+ */
+Level.prototype.toString = function () {
+  'use strict';
+
+  return this.name;
+};
+
+/**
+ *
+ * @param {Number} level
+ * @returns {Boolean}
+ */
+Level.prototype.equals = function (level) {
+  'use strict';
+
+  return this.level === level.level;
+};
+
+/**
+ *
+ * @param {Number} level
+ * @returns {Boolean}
+ */
+Level.prototype.isGreaterOrEqual = function (level) {
+  'use strict';
+
+  return this.level >= level.level;
+};
+
+/**
+ *
+ * @type {Level}
+ */
+Level.ALL = new Level(Number.MIN_VALUE, 'ALL');
+/**
+ *
+ * @type {Level}
+ */
+Level.TRACE = new Level(10000, 'TRACE');
+/**
+ *
+ * @type {Level}
+ */
+Level.DEBUG = new Level(20000, 'DEBUG');
+/**
+ *
+ * @type {Level}
+ */
+Level.INFO = new Level(30000, 'INFO');
+/**
+ *
+ * @type {Level}
+ */
+Level.WARN = new Level(40000, 'WARN');
+/**
+ *
+ * @type {Level}
+ */
+Level.ERROR = new Level(50000, 'ERROR');
+/**
+ *
+ * @type {Level}
+ */
+Level.FATAL = new Level(60000, 'FATAL');
+/**
+ *
+ * @type {Level}
+ */
+Level.OFF = new Level(Number.MAX_VALUE, 'OFF');
+
+/**
+ *
+ * @type {Level|Level.DEBUG}
+ */
+ROOT_LOGGER_DEFAULT_LEVEL = Level.DEBUG;
 /*jshint unused:false */
+
+/**
+ *
+ * @param {Logger} logger
+ * @param {Date} timeStamp
+ * @param {Level} level
+ * @param {Array} messages
+ * @param {Error} exception
+ * @property {Logger} logger
+ * @property {Date} timeStamp
+ * @property {Number} timeStampInMilliseconds
+ * @property {Number} timeStampInSeconds
+ * @property {Number} milliseconds
+ * @property {Level} level
+ * @property {Array} messages
+ * @property {Error} exception
+ * @constructor
+ */
+var LoggingEvent = function (logger, timeStamp, level, messages, exception) {
+  'use strict';
+
+  this.logger = logger;
+  this.timeStamp = timeStamp;
+  this.timeStampInMilliseconds = timeStamp.getTime();
+  this.timeStampInSeconds = Math.floor(this.timeStampInMilliseconds / 1000);
+  this.milliseconds = this.timeStamp.getMilliseconds();
+  this.level = level;
+  this.messages = messages;
+  this.exception = exception;
+};
+
+/**
+ *
+ * @returns {String}
+ */
+LoggingEvent.prototype.getThrowableStrRep = function () {
+  'use strict';
+
+  return this.exception ? getExceptionStringRep(this.exception) : '';
+};
+
+/**
+ *
+ * @returns {String}
+ */
+LoggingEvent.prototype.getCombinedMessages = function () {
+  'use strict';
+
+  return (this.messages.length === 1) ? this.messages[0] :
+    this.messages.join(newLine);
+};
+
+/**
+ *
+ * @returns {String}
+ */
+LoggingEvent.prototype.toString = function () {
+  'use strict';
+
+  return 'LoggingEvent[' + this.level + ']';
+};
+
 var anonymousLoggerName = '[anonymous]';
 var defaultLoggerName = '[default]';
 var nullLoggerName = '[null]';
@@ -33,7 +187,7 @@ var rootLoggerName = 'root';
 
 /**
  *
- * @param {String} name
+ * @param {String} [name]
  * @property {String} name
  * @property {} parent
  * @property {Array} children
@@ -166,7 +320,7 @@ function Logger(name) {
       var exception;
       var finalParamIndex = params.length - 1;
       var lastParam = params[finalParamIndex];
-      if (params.length > 1 && isError(lastParam)) {
+      if (params.length > 1 && lastParam instanceof Error) {
         exception = lastParam;
         finalParamIndex--;
       }
@@ -557,17 +711,6 @@ function isFunction(fn) {
   'use strict';
 
   return typeof fn === 'function';
-}
-
-/**
- *
- * @param {*} err
- * @returns {Boolean}
- */
-function isError(err) {
-  'use strict';
-
-  return (err instanceof Error);
 }
 
 /**
@@ -1133,101 +1276,6 @@ EventSupport.prototype.dispatchEvent = function (eventType, eventArgs) {
   }
 };
 
-/* ---------------------------------------------------------------------- */
-// Levels
-/**
- * Levels
- * @param {Number} level
- * @param {String} name
- * @property {Number} level
- * @property {String} name
- * @constructor
- */
-function Level(level, name) {
-  'use strict';
-  this.level = level;
-  this.name = name;
-}
-
-/**
- *
- * @returns {String}
- */
-Level.prototype.toString = function () {
-  'use strict';
-
-  return this.name;
-};
-
-/**
- *
- * @param {Number} level
- * @returns {Boolean}
- */
-Level.prototype.equals = function (level) {
-  'use strict';
-
-  return this.level === level.level;
-};
-
-/**
- *
- * @param {Number} level
- * @returns {Boolean}
- */
-Level.prototype.isGreaterOrEqual = function (level) {
-  'use strict';
-
-  return this.level >= level.level;
-};
-
-/**
- *
- * @type {Level}
- */
-Level.ALL = new Level(Number.MIN_VALUE, 'ALL');
-/**
- *
- * @type {Level}
- */
-Level.TRACE = new Level(10000, 'TRACE');
-/**
- *
- * @type {Level}
- */
-Level.DEBUG = new Level(20000, 'DEBUG');
-/**
- *
- * @type {Level}
- */
-Level.INFO = new Level(30000, 'INFO');
-/**
- *
- * @type {Level}
- */
-Level.WARN = new Level(40000, 'WARN');
-/**
- *
- * @type {Level}
- */
-Level.ERROR = new Level(50000, 'ERROR');
-/**
- *
- * @type {Level}
- */
-Level.FATAL = new Level(60000, 'FATAL');
-/**
- *
- * @type {Level}
- */
-Level.OFF = new Level(Number.MAX_VALUE, 'OFF');
-
-/**
- *
- * @type {Level|Level.DEBUG}
- */
-ROOT_LOGGER_DEFAULT_LEVEL = Level.DEBUG;
-
 /**
  *
  * @param {String} name
@@ -1474,69 +1522,6 @@ handleError = function(message, exception) {
 
 log4javascript.setEventTypes(['load', 'error']);
 
-/* ---------------------------------------------------------------------- */
-// Logging events
-
-/**
- *
- * @param {Logger} logger
- * @param {Date} timeStamp
- * @param {Level} level
- * @param {Array} messages
- * @param {Error} exception
- * @property {Logger} logger
- * @property {Date} timeStamp
- * @property {Number} timeStampInMilliseconds
- * @property {Number} timeStampInSeconds
- * @property {Number} milliseconds
- * @property {Level} level
- * @property {Array} messages
- * @property {Error} exception
- * @constructor
- */
-var LoggingEvent = function (logger, timeStamp, level, messages, exception) {
-  'use strict';
-
-  this.logger = logger;
-  this.timeStamp = timeStamp;
-  this.timeStampInMilliseconds = timeStamp.getTime();
-  this.timeStampInSeconds = Math.floor(this.timeStampInMilliseconds / 1000);
-  this.milliseconds = this.timeStamp.getMilliseconds();
-  this.level = level;
-  this.messages = messages;
-  this.exception = exception;
-};
-
-/**
- *
- * @returns {String}
- */
-LoggingEvent.prototype.getThrowableStrRep = function () {
-  'use strict';
-
-  return this.exception ? getExceptionStringRep(this.exception) : '';
-};
-
-/**
- *
- * @returns {String}
- */
-LoggingEvent.prototype.getCombinedMessages = function () {
-  'use strict';
-
-  return (this.messages.length === 1) ? this.messages[0] :
-    this.messages.join(newLine);
-};
-
-/**
- *
- * @returns {String}
- */
-LoggingEvent.prototype.toString = function () {
-  'use strict';
-
-  return 'LoggingEvent[' + this.level + ']';
-};
 
 /**
  *
