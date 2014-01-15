@@ -20,10 +20,19 @@ module.exports = function(config) {
       {pattern: 'test/*Spec.js', included: false}
     ],
 
+    preprocessors: {
+      'src/*.js': 'coverage',
+      'dist/log4javascript.js': 'coverage'
+    },
+
+    coverageReporter: {
+      type : 'html',
+      dir : 'test/coverage/'
+    },
 
     // test results reporter to use
     // possible values: 'dots', 'progress', 'junit', 'growl', 'coverage'
-    reporters: ['dots','junit'],
+    reporters: ['dots', 'junit', 'coverage'],
 
     junitReporter: {
       // will be resolved to basePath (in the same way as files/exclude patterns)
