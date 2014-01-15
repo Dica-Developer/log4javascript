@@ -899,69 +899,6 @@ handleError = function(message, exception) {
 
 log4javascript.setEventTypes(['load', 'error']);
 
-/* ---------------------------------------------------------------------- */
-// Logging events
-
-/**
- *
- * @param {Logger} logger
- * @param {Date} timeStamp
- * @param {Level} level
- * @param {Array} messages
- * @param {Error} exception
- * @property {Logger} logger
- * @property {Date} timeStamp
- * @property {Number} timeStampInMilliseconds
- * @property {Number} timeStampInSeconds
- * @property {Number} milliseconds
- * @property {Level} level
- * @property {Array} messages
- * @property {Error} exception
- * @constructor
- */
-var LoggingEvent = function (logger, timeStamp, level, messages, exception) {
-  'use strict';
-
-  this.logger = logger;
-  this.timeStamp = timeStamp;
-  this.timeStampInMilliseconds = timeStamp.getTime();
-  this.timeStampInSeconds = Math.floor(this.timeStampInMilliseconds / 1000);
-  this.milliseconds = this.timeStamp.getMilliseconds();
-  this.level = level;
-  this.messages = messages;
-  this.exception = exception;
-};
-
-/**
- *
- * @returns {String}
- */
-LoggingEvent.prototype.getThrowableStrRep = function () {
-  'use strict';
-
-  return this.exception ? getExceptionStringRep(this.exception) : '';
-};
-
-/**
- *
- * @returns {String}
- */
-LoggingEvent.prototype.getCombinedMessages = function () {
-  'use strict';
-
-  return (this.messages.length === 1) ? this.messages[0] :
-    this.messages.join(newLine);
-};
-
-/**
- *
- * @returns {String}
- */
-LoggingEvent.prototype.toString = function () {
-  'use strict';
-
-  return 'LoggingEvent[' + this.level + ']';
-};
 
 /**
  *
