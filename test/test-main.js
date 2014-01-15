@@ -13,6 +13,8 @@ requirejs.config({
 
   paths: {
     'log4javascript': '../dist/log4javascript',
+    'params': '../src/log4js.params',
+    'core': '../src/log4js.core',
     'level': '../src/log4js.level',
     'logger': '../src/log4js.logger',
     'lodash': '../test/vendor/lodash/dist/lodash.min'
