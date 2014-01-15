@@ -208,6 +208,95 @@ define(['params', 'level', 'logger'], function () {
         expect(callAppendersSpy).toHaveBeenCalled();
       });
 
+      it('If enabled = false should not call .callAppenders', function () {
+        enabled = false;
+        logger.log(Level.TRACE, 1);
+        expect(callAppendersSpy).not.toHaveBeenCalled();
+        enabled = true;
+      });
+
+      //will crash phantomjs maybe because of new Error()
+      xit('If lastParam is an exception .callAppenders should called with exception', function () {
+        var error = new Error();
+        var timeStamp = new Date();
+        var loggingEvent = new LoggingEvent(this, timeStamp, Level.TRACE, [1], error);
+        logger.log(Level.TRACE, 1, error);
+        expect(callAppendersSpy).toHaveBeenCalledWith(loggingEvent);
+      });
+
+    });
+
+    describe('.getEffectiveLevel', function(){
+      var logger = null;
+
+      beforeEach(function () {
+        logger = new Logger();
+      });
+
+      it('should return Level.TRACE', function(){
+        logger.setLevel(Level.TRACE);
+        expect(logger.getEffectiveLevel()).toBe(Level.TRACE);
+      });
+
+      it('should return null', function(){
+        expect(logger.getEffectiveLevel()).toBe(null);
+      });
+    });
+
+    describe('.addChild', function(){
+
+      var logger = null;
+      var childLogger = null;
+
+      beforeEach(function () {
+        logger = new Logger();
+        childLogger = new Logger();
+      });
+
+      it('Should call .invalidateAppenderCache on childLogger', function(){
+        var childLoggerSpy = spyOn(childLogger, 'invalidateAppenderCache');
+
+        logger.addChild(childLogger);
+        expect(childLoggerSpy).toHaveBeenCalled();
+      });
+
+      it('childLogger.parent should be logger', function(){
+        logger.addChild(childLogger);
+        expect(childLogger.parent).toBe(logger);
+      });
+
+      it('logger.children.length should be 1', function(){
+        logger.addChild(childLogger);
+        expect(logger.children.length).toBe(1);
+      });
+
+    });
+
+
+  });
+
+  describe('#LoggingEvent', function(){
+
+    var loggingEvent = null;
+    var logger = null;
+
+    beforeEach(function () {
+      logger = new Logger();
+    });
+
+    it('.getString should return LoggingEvent[TRACE]', function(){
+      loggingEvent = new LoggingEvent(logger, new Date(), Level.TRACE, ['1'], null);
+      expect(loggingEvent.toString()).toBe('LoggingEvent[TRACE]');
+    });
+
+    it('.getCombinedMessages should return "1"', function(){
+      loggingEvent = new LoggingEvent(logger, new Date(), Level.TRACE, ['1'], null);
+      expect(loggingEvent.getCombinedMessages()).toBe('1');
+    });
+
+    it('.getCombinedMessages should return "1 -new Line- 2"', function(){
+      loggingEvent = new LoggingEvent(logger, new Date(), Level.TRACE, ['1', '2'], null);
+      expect(loggingEvent.getCombinedMessages()).toBe('1\r\n2');
     });
 
   });
