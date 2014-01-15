@@ -81,17 +81,6 @@ function isFunction(fn) {
 
 /**
  *
- * @param {*} err
- * @returns {Boolean}
- */
-function isError(err) {
-  'use strict';
-
-  return (err instanceof Error);
-}
-
-/**
- *
  * @param {*} str
  * @returns {Boolean}
  */

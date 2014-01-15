@@ -68,7 +68,7 @@ var rootLoggerName = 'root';
 
 /**
  *
- * @param {String} name
+ * @param {String} [name]
  * @property {String} name
  * @property {} parent
  * @property {Array} children
@@ -201,7 +201,7 @@ function Logger(name) {
       var exception;
       var finalParamIndex = params.length - 1;
       var lastParam = params[finalParamIndex];
-      if (params.length > 1 && isError(lastParam)) {
+      if (params.length > 1 && lastParam instanceof Error) {
         exception = lastParam;
         finalParamIndex--;
       }
