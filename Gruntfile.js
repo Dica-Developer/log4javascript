@@ -104,6 +104,9 @@ module.exports = function (grunt) {
     karma: {
       dist: {
         configFile: '<%= config.test %>/dist.karma.conf.js'
+      },
+      dev: {
+        configFile: '<%= config.test %>/console.karma.conf.js'
       }
     }
   });
@@ -118,5 +121,9 @@ module.exports = function (grunt) {
     'concat:dist',
     'karma:dist',
     'uglify:dist'
+  ]);
+
+  grunt.registerTask('dev', [
+    'karma:dev'
   ]);
 };
