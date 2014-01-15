@@ -4,11 +4,76 @@ define(['level'], function () {
 
   describe('#Level', function () {
     var level = null;
-    beforeEach(function(){
+    beforeEach(function () {
       level = new Level(11111, 'test')
     });
+
     it('.toString', function () {
-      expect(level.toString()).toBe('testa');
+      expect(level.toString()).toBe('test');
+    });
+
+    it('.equal', function () {
+      var equal = new Level(11111, 'testB');
+      expect(level.equals(equal)).toBe(true);
+    });
+
+    it('.isGreaterOrEqual', function () {
+      var equal = new Level(11111, 'equal');
+      var greater = new Level(11110, 'greater');
+      var less = new Level(11112, 'less');
+      expect(level.isGreaterOrEqual(equal)).toBe(true);
+      expect(level.isGreaterOrEqual(greater)).toBe(true);
+      expect(level.isGreaterOrEqual(less)).toBe(false);
+    });
+
+    it('#ALL should be defined', function () {
+      expect(Level.ALL).toBeDefined();
+    });
+
+    it('#FATAL should be defined', function () {
+      expect(Level.FATAL).toBeDefined();
+    });
+
+    it('#ERROR should be defined', function () {
+      expect(Level.ERROR).toBeDefined();
+    });
+
+    it('#WARN should be defined', function () {
+      expect(Level.WARN).toBeDefined();
+    });
+
+    it('#DEBUG should be defined', function () {
+      expect(Level.DEBUG).toBeDefined();
+    });
+
+    it('#TRACE should be defined', function () {
+      expect(Level.TRACE).toBeDefined();
+    });
+
+    it('#INFO should be defined', function () {
+      expect(Level.INFO).toBeDefined();
+    });
+
+    it('#OFF should be defined', function () {
+      expect(Level.OFF).toBeDefined();
+    });
+
+    xit('log4js.Level.<Level>.level should be Number', function () {
+      for (var i = 0, length = levelKeys.length; i < length; i++) {
+        expect(typeof tmpLevel[levelKeys[i]].level).toBe('number');
+      }
+    });
+
+    xit('log4js.Level.<Level>.name should be String', function () {
+      for (var i = 0, length = levelKeys.length; i < length; i++) {
+        expect(typeof tmpLevel[levelKeys[i]].name).toBe('string');
+      }
+    });
+
+    xit('log4js.Level.<Level>.name should be the same as the identifier', function () {
+      for (var i = 0, length = levelKeys.length; i < length; i++) {
+        expect(tmpLevel[levelKeys[i]].name).toBe(levelKeys[i]);
+      }
     });
   });
 });
