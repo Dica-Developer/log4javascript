@@ -57,6 +57,17 @@ function isString(str){
 }
 
 /**
+ * Helper method to identify Arrays
+ * @param {*} array
+ * @returns {boolean}
+ */
+function isArray(array) {
+  'use strict';
+
+  return array instanceof Array;
+}
+
+/**
  *
  * @param {Error} ex
  * @returns {string}

@@ -58,17 +58,6 @@ function isNotUndefined(obj) {
 }
 
 /**
- * Helper method to identify Arrays
- * @param {*} array
- * @returns {boolean}
- */
-function isArray(array) {
-  'use strict';
-
-  return array instanceof Array;
-}
-
-/**
  * Helper method to identify Functions
  * @param fn
  * @returns {boolean}
