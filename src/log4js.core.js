@@ -102,36 +102,6 @@ function toStr(obj) {
 }
 
 /**
- *
- * @param {Error} ex
- * @returns {string}
- */
-function getExceptionMessage(ex) {
-  'use strict';
-  var message = '';
-  if (ex.message) {
-    message = ex.message;
-  } else if (ex.description) {
-    message = ex.description;
-  } else {
-    message = toStr(ex);
-  }
-  return message;
-}
-
-/**
- * Gets the portion of the URL after the last slash
- * @param {String} url
- * @returns {string}
- */
-function getUrlFileName(url) {
-  'use strict';
-
-  var lastSlashIndex = Math.max(url.lastIndexOf('/'), url.lastIndexOf('\\'));
-  return url.substr(lastSlashIndex + 1);
-}
-
-/**
  * Helper method to convert an object to Boolean
  * @param {*} obj
  * @returns {boolean}
@@ -530,89 +500,6 @@ LogLog.prototype.error = function (message, exception) {
  * @type {LogLog}
  */
 logLog = new LogLog();
-
-/**
- * Custom event support
- * @constructor
- */
-function EventSupport() {
-  'use strict';
-
-  this.eventTypes = [];
-  this.eventListeners = {};
-}
-
-/**
- *
- * @param {Array} eventTypesParam
- */
-EventSupport.prototype.setEventTypes = function (eventTypesParam) {
-  'use strict';
-
-  if (isArray(eventTypesParam)) {
-    this.eventTypes = eventTypesParam;
-    this.eventListeners = {};
-    for (var i = 0, len = this.eventTypes.length; i < len; i++) {
-      this.eventListeners[this.eventTypes[i]] = [];
-    }
-  } else {
-    handleError('log4javascript.EventSupport [' + this + ']: setEventTypes: eventTypes parameter must be an Array');
-  }
-};
-
-/**
- *
- * @param {String} eventType
- * @param {Function} listener
- */
-EventSupport.prototype.addEventListener = function (eventType, listener) {
-  'use strict';
-
-  if (isFunction(listener)) {
-    if (!arrayContains(this.eventTypes, eventType)) {
-      handleError('log4javascript.EventSupport [' + this + ']: addEventListener: no event called "' + eventType + '"');
-    }
-    this.eventListeners[eventType].push(listener);
-  } else {
-    handleError('log4javascript.EventSupport [' + this + ']: addEventListener: listener must be a function');
-  }
-};
-
-/**
- *
- * @param {String} eventType
- * @param {Function} listener
- */
-EventSupport.prototype.removeEventListener = function (eventType, listener) {
-  'use strict';
-
-  if (isFunction(listener)) {
-    if (!arrayContains(this.eventTypes, eventType)) {
-      handleError('log4javascript.EventSupport [' + this + ']: removeEventListener: no event called "' + eventType + '"');
-    }
-    arrayRemove(this.eventListeners[eventType], listener);
-  } else {
-    handleError('log4javascript.EventSupport [' + this + ']: removeEventListener: listener must be a function');
-  }
-};
-
-/**
- *
- * @param {String} eventType
- * @param {Array} eventArgs
- */
-EventSupport.prototype.dispatchEvent = function (eventType, eventArgs) {
-  'use strict';
-
-  if (arrayContains(this.eventTypes, eventType)) {
-    var listeners = this.eventListeners[eventType];
-    for (var i = 0, len = listeners.length; i < len; i++) {
-      listeners[i](this, eventType, eventArgs);
-    }
-  } else {
-    handleError('log4javascript.EventSupport [' + this + ']: dispatchEvent: no event called "' + eventType + '"');
-  }
-};
 
 /**
  *

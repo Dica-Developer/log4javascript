@@ -25,6 +25,36 @@ var loggers = {};
 var loggerNames = [];
 
 /**
+ *
+ * @param {Error} ex
+ * @returns {string}
+ */
+function getExceptionMessage(ex) {
+  'use strict';
+  var message = '';
+  if (ex.message) {
+    message = ex.message;
+  } else if (ex.description) {
+    message = ex.description;
+  } else {
+    message = toStr(ex);
+  }
+  return message;
+}
+
+/**
+ * Gets the portion of the URL after the last slash
+ * @param {String} url
+ * @returns {string}
+ */
+function getUrlFileName(url) {
+  'use strict';
+
+  var lastSlashIndex = Math.max(url.lastIndexOf('/'), url.lastIndexOf('\\'));
+  return url.substr(lastSlashIndex + 1);
+}
+
+/**
  * Returns a nicely formatted representation of an error
  * @param {Error} ex
  * @returns {String}
