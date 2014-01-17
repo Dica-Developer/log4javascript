@@ -154,7 +154,7 @@ Layout.prototype.isTimeStampsInMilliseconds = function () {
   'use strict';
 
   return this.overrideTimeStampsSetting ?
-    this.useTimeStampsInMilliseconds : useTimeStampsInMilliseconds;
+    this.useTimeStampsInMilliseconds : this.useTimeStampsInMilliseconds;
 };
 
 /**

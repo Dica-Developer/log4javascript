@@ -565,6 +565,8 @@ Log4JavaScript.prototype.isEnabled = function () {
   return enabled;
 };
 
+Log4JavaScript.prototype.useTimeStampsInMilliseconds = true;
+
 /**
  *
  * @param {Boolean} timeStampsInMilliseconds
@@ -572,7 +574,7 @@ Log4JavaScript.prototype.isEnabled = function () {
 Log4JavaScript.prototype.setTimeStampsInMilliseconds = function (timeStampsInMilliseconds) {
   'use strict';
 
-  useTimeStampsInMilliseconds = toBool(timeStampsInMilliseconds);
+  this.useTimeStampsInMilliseconds = toBool(timeStampsInMilliseconds);
 };
 
 /**
@@ -582,7 +584,7 @@ Log4JavaScript.prototype.setTimeStampsInMilliseconds = function (timeStampsInMil
 Log4JavaScript.prototype.isTimeStampsInMilliseconds = function () {
   'use strict';
 
-  return useTimeStampsInMilliseconds;
+  return this.useTimeStampsInMilliseconds;
 };
 
 /**

@@ -26,6 +26,7 @@
     "module": true,
     "ActiveXObject": true,
 
+    "log4javascript": true,
     "enabled": true,
     "ROOT_LOGGER_DEFAULT_LEVEL": true,
     "handleError": true,
@@ -45,7 +46,6 @@
     "newLine":true,
     "uniqueId":true,
     "pageLoaded":true,
-    "useTimeStampsInMilliseconds":true,
     "showStackTraces":true,
     "getUUID":true,
     "rootLoggerName":true,

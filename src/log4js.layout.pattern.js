@@ -412,11 +412,13 @@ var SimpleDateFormat;
     return formattedString;
   };
 })();
-/**
- *
- * @type {SimpleDateFormat}
- */
-log4javascript.SimpleDateFormat = SimpleDateFormat;
+if(typeof log4javascript !== 'undefined'){
+  /**
+   *
+   * @type {SimpleDateFormat}
+   */
+  log4javascript.SimpleDateFormat = SimpleDateFormat;
+}
 /**
  * PatternLayout
  * @param pattern
