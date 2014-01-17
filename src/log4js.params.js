@@ -34,6 +34,17 @@ function toBool(obj) {
 }
 
 /**
+ * Helper method to identify Functions
+ * @param fn
+ * @returns {boolean}
+ */
+function isFunction(fn) {
+  'use strict';
+
+  return typeof fn === 'function';
+}
+
+/**
  *
  * @param {String} message
  * @param {Error} [exception]
