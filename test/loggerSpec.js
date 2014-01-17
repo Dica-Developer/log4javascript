@@ -1,4 +1,4 @@
-/*global define, describe, it, xit, expect, spyOn, afterEach, beforeEach*/
+/*global define, describe, it, xit, expect, spyOn, beforeEach*/
 define(['params', 'level', 'logger'], function () {
   'use strict';
 
@@ -141,11 +141,27 @@ define(['params', 'level', 'logger'], function () {
 
     describe('.setLevel', function () {
 
-      xit('Should throw exception (call handleError) if Level not instance of Level', function () {
-        var handleErrorSpy = spyOn(handleError);
+      it('Should throw exception (call handleError) if Level not instance of Level', function () {
+        window.handleError = function(){};
+        var handleErrorSpy = spyOn(window, 'handleError');
         logger.setLevel(0);
-        expect(handleErrorSpy).toHaveBeenCalled();
-      })
+        expect(handleErrorSpy).toHaveBeenCalledWith('Logger.setLevel: level supplied to logger undefined is not an instance of log4javascript.Level');
+        window.handleError = null;
+      });
+
+      it('Should throw exception (call handleError) if Level === null && logger is root', function () {
+        var rootLogger = new Logger('root');
+        window.handleError = function(){};
+        var handleErrorSpy = spyOn(window, 'handleError');
+        rootLogger.setLevel(null);
+        expect(handleErrorSpy).toHaveBeenCalledWith('Logger.setLevel: you cannot set the level of the root logger to null');
+        window.handleError = null;
+      });
+
+      it('Should set new Level', function () {
+        logger.setLevel(Level.ALL);
+        expect(logger.getLevel()).toBe(Level.ALL);
+      });
 
     });
 
@@ -215,9 +231,14 @@ define(['params', 'level', 'logger'], function () {
         enabled = true;
       });
 
-      //will crash phantomjs maybe because of new Error()
+      //will crash phantomjs
       xit('If lastParam is an exception .callAppenders should called with exception', function () {
-        var error = new Error();
+        var error = null;
+        try{
+          undefined();
+        }catch(e){
+          error = e;
+        }
         var timeStamp = new Date();
         var loggingEvent = new LoggingEvent(this, timeStamp, Level.TRACE, [1], error);
         logger.log(Level.TRACE, 1, error);
@@ -272,6 +293,46 @@ define(['params', 'level', 'logger'], function () {
 
     });
 
+    describe('.getAdditivity', function(){
+
+      var logger = null;
+
+      beforeEach(function () {
+        logger = new Logger();
+      });
+
+      it('Should return true per default', function(){
+        expect(logger.getAdditivity()).toBe(true);
+      });
+
+    });
+
+    describe('.setAdditivity', function(){
+
+      var logger = null;
+
+      beforeEach(function () {
+        logger = new Logger();
+      });
+
+      it('Should change additivity to false', function(){
+        logger.setAdditivity(false);
+        expect(logger.getAdditivity()).toBe(false);
+      });
+
+      it('Should call .invalidateAppenderCache on change', function(){
+        var invalidateAppenderCacheSpy = spyOn(logger, 'invalidateAppenderCache');
+        logger.setAdditivity(false);
+        expect(invalidateAppenderCacheSpy).toHaveBeenCalled();
+      });
+
+      it('Should not call .invalidateAppenderCache if nothing has changed', function(){
+        var invalidateAppenderCacheSpy = spyOn(logger, 'invalidateAppenderCache');
+        logger.setAdditivity(true);
+        expect(invalidateAppenderCacheSpy).not.toHaveBeenCalled();
+      });
+
+    });
 
   });
 
@@ -297,6 +358,12 @@ define(['params', 'level', 'logger'], function () {
     it('.getCombinedMessages should return "1 -new Line- 2"', function(){
       loggingEvent = new LoggingEvent(logger, new Date(), Level.TRACE, ['1', '2'], null);
       expect(loggingEvent.getCombinedMessages()).toBe('1\r\n2');
+    });
+
+    it('.getThrowableStrRep should return "" if LoggingEvent.exception is null or false', function(){
+      loggingEvent = new LoggingEvent(logger, new Date(), Level.TRACE, ['1'], null);
+      loggingEvent.exception = '';
+      expect(loggingEvent.getThrowableStrRep()).toBe('');
     });
 
   });
