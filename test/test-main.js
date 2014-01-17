@@ -17,6 +17,8 @@ requirejs.config({
     'core': '../src/log4js.core',
     'level': '../src/log4js.level',
     'logger': '../src/log4js.logger',
+    'eventSupport': '../src/log4js.eventSupport',
+    'appender': '../src/log4js.appender',
     'lodash': '../test/vendor/lodash/dist/lodash.min'
   },
 
