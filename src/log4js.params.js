@@ -36,7 +36,7 @@ function toBool(obj) {
 /**
  *
  * @param {String} message
- * @param {Error} exception
+ * @param {Error} [exception]
  */
 function handleError (message, exception) {
   'use strict';
