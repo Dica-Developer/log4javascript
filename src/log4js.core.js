@@ -138,30 +138,6 @@ function urlDecode(str){
 
 /**
  *
- * @param {Array} arr
- * @param {*} val
- * @returns {Boolean}
- */
-function arrayRemove(arr, val) {
-  'use strict';
-
-  var index = -1;
-  for (var i = 0, len = arr.length; i < len; i++) {
-    if (arr[i] === val) {
-      index = i;
-      break;
-    }
-  }
-  if (index >= 0) {
-    arr.splice(index, 1);
-    return true;
-  } else {
-    return false;
-  }
-}
-
-/**
- *
  * @param {String} eventName
  * @returns {String}
  */
