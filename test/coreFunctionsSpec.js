@@ -105,37 +105,6 @@ define(['log4javascript'], function(log4js){
         expect(log4js.PopUpAppender).toBeDefined();
       });
     });
-
-    describe('log4js Layouts should defined', function () {
-
-      it('log4js.Layout should be defined', function () {
-        expect(log4js.Layout).toBeDefined();
-      });
-
-      it('log4js.HttpPostDataLayout should be defined', function () {
-        expect(log4js.HttpPostDataLayout).toBeDefined();
-      });
-
-      it('log4js.JsonLayout should be defined', function () {
-        expect(log4js.JsonLayout).toBeDefined();
-      });
-
-      it('log4js.NullLayout should be defined', function () {
-        expect(log4js.NullLayout).toBeDefined();
-      });
-
-      it('log4js.PatternLayout should be defined', function () {
-        expect(log4js.PatternLayout).toBeDefined();
-      });
-
-      it('log4js.SimpleLayout should be defined', function () {
-        expect(log4js.SimpleLayout).toBeDefined();
-      });
-
-      it('log4js.XmlLayout should be defined', function () {
-        expect(log4js.XmlLayout).toBeDefined();
-      });
-    });
   });
 
   function getLengthForLevelTesting(levelkeys, level) {
