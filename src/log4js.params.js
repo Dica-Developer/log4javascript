@@ -24,6 +24,17 @@ var loggers = {};
 var loggerNames = [];
 
 /**
+ * Helper method to convert an object to Boolean
+ * @param {*} obj
+ * @returns {boolean}
+ */
+function toBool(obj) {
+  'use strict';
+
+  return Boolean(obj);
+}
+
+/**
  *
  * @param {String} message
  * @param {Error} exception
