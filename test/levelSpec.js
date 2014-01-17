@@ -5,7 +5,7 @@ define(['level'], function () {
   describe('#Level', function () {
     var level = null;
     beforeEach(function () {
-      level = new Level(11111, 'test')
+      level = new Level(11111, 'test');
     });
 
     it('.toString', function () {
@@ -58,22 +58,5 @@ define(['level'], function () {
       expect(Level.OFF).toBeDefined();
     });
 
-    xit('log4js.Level.<Level>.level should be Number', function () {
-      for (var i = 0, length = levelKeys.length; i < length; i++) {
-        expect(typeof tmpLevel[levelKeys[i]].level).toBe('number');
-      }
-    });
-
-    xit('log4js.Level.<Level>.name should be String', function () {
-      for (var i = 0, length = levelKeys.length; i < length; i++) {
-        expect(typeof tmpLevel[levelKeys[i]].name).toBe('string');
-      }
-    });
-
-    xit('log4js.Level.<Level>.name should be the same as the identifier', function () {
-      for (var i = 0, length = levelKeys.length; i < length; i++) {
-        expect(tmpLevel[levelKeys[i]].name).toBe(levelKeys[i]);
-      }
-    });
   });
 });
