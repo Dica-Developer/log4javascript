@@ -23,7 +23,7 @@ EventSupport.prototype.setEventTypes = function (eventTypesParam) {
       this.eventListeners[this.eventTypes[i]] = [];
     }
   } else {
-    handleError('log4javascript.EventSupport [' + this + ']: setEventTypes: eventTypes parameter must be an Array');
+    handleError('EventSupport [' + this + ']: setEventTypes: eventTypes parameter must be an Array');
   }
 };
 
@@ -37,11 +37,11 @@ EventSupport.prototype.addEventListener = function (eventType, listener) {
 
   if (isFunction(listener)) {
     if (!arrayContains(this.eventTypes, eventType)) {
-      handleError('log4javascript.EventSupport [' + this + ']: addEventListener: no event called "' + eventType + '"');
+      handleError('EventSupport [' + this + ']: addEventListener: no event called "' + eventType + '"');
     }
     this.eventListeners[eventType].push(listener);
   } else {
-    handleError('log4javascript.EventSupport [' + this + ']: addEventListener: listener must be a function');
+    handleError('EventSupport [' + this + ']: addEventListener: listener must be a function');
   }
 };
 
@@ -55,11 +55,11 @@ EventSupport.prototype.removeEventListener = function (eventType, listener) {
 
   if (isFunction(listener)) {
     if (!arrayContains(this.eventTypes, eventType)) {
-      handleError('log4javascript.EventSupport [' + this + ']: removeEventListener: no event called "' + eventType + '"');
+      handleError('EventSupport [' + this + ']: removeEventListener: no event called "' + eventType + '"');
     }
     arrayRemove(this.eventListeners[eventType], listener);
   } else {
-    handleError('log4javascript.EventSupport [' + this + ']: removeEventListener: listener must be a function');
+    handleError('EventSupport [' + this + ']: removeEventListener: listener must be a function');
   }
 };
 
@@ -77,6 +77,6 @@ EventSupport.prototype.dispatchEvent = function (eventType, eventArgs) {
       listeners[i](this, eventType, eventArgs);
     }
   } else {
-    handleError('log4javascript.EventSupport [' + this + ']: dispatchEvent: no event called "' + eventType + '"');
+    handleError('EventSupport [' + this + ']: dispatchEvent: no event called "' + eventType + '"');
   }
 };
