@@ -162,25 +162,6 @@ function arrayRemove(arr, val) {
 
 /**
  *
- * @param {Array} arr
- * @param {*} val
- * @returns {Boolean}
- */
-function arrayContains(arr, val) {
-  'use strict';
-
-  var found = false;
-  for (var i = 0, len = arr.length; i < len; i++) {
-    if (arr[i] === val) {
-      found = true;
-      break;
-    }
-  }
-  return found;
-}
-
-/**
- *
  * @param {String} eventName
  * @returns {String}
  */
