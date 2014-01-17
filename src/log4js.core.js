@@ -132,34 +132,6 @@ function getUrlFileName(url) {
 }
 
 /**
- * Returns a nicely formatted representation of an error
- * @param {Error} ex
- * @returns {String}
- */
-function getExceptionStringRep(ex) {
-  'use strict';
-
-  if (ex) {
-    var exStr = 'Exception: ' + getExceptionMessage(ex);
-    try {
-      if (ex.lineNumber) {
-        exStr += ' on line number ' + ex.lineNumber;
-      }
-      if (ex.fileName) {
-        exStr += ' in file ' + getUrlFileName(ex.fileName);
-      }
-    } catch (localEx) {
-      logLog.warn('Unable to obtain file and line information for error');
-    }
-    if (showStackTraces && ex.stack) {
-      exStr += newLine + 'Stack trace:' + newLine + ex.stack;
-    }
-    return exStr;
-  }
-  return null;
-}
-
-/**
  * Helper method to convert an object to Boolean
  * @param {*} obj
  * @returns {boolean}
