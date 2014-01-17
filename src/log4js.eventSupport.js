@@ -57,8 +57,9 @@ EventSupport.prototype.removeEventListener = function (eventType, listener) {
   if (isFunction(listener)) {
     if (!arrayContains(this.eventTypes, eventType)) {
       handleError('EventSupport [' + this + ']: removeEventListener: no event called "' + eventType + '"');
+    } else {
+      arrayRemove(this.eventListeners[eventType], listener);
     }
-    arrayRemove(this.eventListeners[eventType], listener);
   } else {
     handleError('EventSupport [' + this + ']: removeEventListener: listener must be a function');
   }
