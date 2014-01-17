@@ -242,15 +242,21 @@ Layout.prototype.setKeys = function (loggerKey, timeStampKey, levelKey, messageK
 Layout.prototype.setCustomField = function (name, value) {
   'use strict';
 
-  var fieldUpdated = false;
-  for (var i = 0, len = this.customFields.length; i < len; i++) {
-    if (this.customFields[i].name === name) {
-      this.customFields[i].value = value;
-      fieldUpdated = true;
+  if(typeof name === 'undefined' || typeof value === 'undefined'){
+    handleError('layout.setCustomFields: name and value must be defined');
+  } else if(!isString(name)) {
+    handleError('layout.setCustomFields: name must be "String"');
+  } else {
+    var fieldUpdated = false;
+    for (var i = 0, len = this.customFields.length; i < len; i++) {
+      if (this.customFields[i].name === name) {
+        this.customFields[i].value = value;
+        fieldUpdated = true;
+      }
     }
-  }
-  if (!fieldUpdated) {
-    this.customFields.push({'name': name, 'value': value});
+    if (!fieldUpdated) {
+      this.customFields.push({'name': name, 'value': value});
+    }
   }
 };
 
