@@ -10,7 +10,6 @@ function getUUID(){
 
 var logLog,
   uniqueId,
-  handleError,
   ROOT_LOGGER_DEFAULT_LEVEL,
   enabled = true,
   useTimeStampsInMilliseconds = true,
@@ -23,6 +22,18 @@ var logLog,
 // Hashtable of loggers keyed by logger name
 var loggers = {};
 var loggerNames = [];
+
+/**
+ *
+ * @param {String} message
+ * @param {Error} exception
+ */
+function handleError (message, exception) {
+  'use strict';
+
+  logLog.error(message, exception);
+  log4javascript.dispatchEvent('error', { 'message': message, 'exception': exception });
+};
 
 /**
  *

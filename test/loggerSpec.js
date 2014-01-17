@@ -151,11 +151,9 @@ define(['params', 'level', 'logger'], function () {
 
       it('Should throw exception (call handleError) if Level === null && logger is root', function () {
         var rootLogger = new Logger('root');
-        window.handleError = function(){};
         var handleErrorSpy = spyOn(window, 'handleError');
         rootLogger.setLevel(null);
         expect(handleErrorSpy).toHaveBeenCalledWith('Logger.setLevel: you cannot set the level of the root logger to null');
-        window.handleError = null;
       });
 
       it('Should set new Level', function () {

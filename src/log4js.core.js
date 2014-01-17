@@ -733,18 +733,6 @@ Log4JavaScript.prototype.Level = Level;
  */
 var log4javascript = new Log4JavaScript();
 
-/**
- *
- * @param {String} message
- * @param {Error} exception
- */
-handleError = function(message, exception) {
-  'use strict';
-
-  logLog.error(message, exception);
-  log4javascript.dispatchEvent('error', { 'message': message, 'exception': exception });
-};
-
 log4javascript.setEventTypes(['load', 'error']);
 
 
