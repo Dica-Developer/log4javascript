@@ -38,8 +38,9 @@ EventSupport.prototype.addEventListener = function (eventType, listener) {
   if (isFunction(listener)) {
     if (!arrayContains(this.eventTypes, eventType)) {
       handleError('EventSupport [' + this + ']: addEventListener: no event called "' + eventType + '"');
+    } else {
+      this.eventListeners[eventType].push(listener);
     }
-    this.eventListeners[eventType].push(listener);
   } else {
     handleError('EventSupport [' + this + ']: addEventListener: listener must be a function');
   }
