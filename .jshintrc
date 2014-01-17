@@ -38,6 +38,8 @@
     "LoggingEvent":true,
     "Level":true,
     "isUndefined":true,
+    "isFunction":true,
+    "isArray":true,
     "Timer":true,
     "logLog":true,
     "newLine":true,
