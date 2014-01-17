@@ -43,7 +43,18 @@ function handleError (message, exception) {
 
   logLog.error(message, exception);
   log4javascript.dispatchEvent('error', { 'message': message, 'exception': exception });
-};
+}
+
+/**
+ *
+ * @param {*} str
+ * @returns {Boolean}
+ */
+function isString(str){
+  'use strict';
+
+  return typeof str === 'string';
+}
 
 /**
  *

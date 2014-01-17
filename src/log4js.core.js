@@ -80,17 +80,6 @@ function isFunction(fn) {
 }
 
 /**
- *
- * @param {*} str
- * @returns {Boolean}
- */
-function isString(str){
-  'use strict';
-
-  return typeof str === 'string';
-}
-
-/**
  * Helper method
  * @param {*} obj
  * @returns {String}
