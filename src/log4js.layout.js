@@ -267,8 +267,10 @@ Layout.prototype.toString = function () {
   handleError('Layout.toString: all layouts must override this method');
 };
 
-/**
- *
- * @type {Layout}
- */
-log4javascript.Layout = Layout;
+if(typeof log4javascript !== 'undefined'){
+  /**
+   *
+   * @type {Layout}
+   */
+  log4javascript.Layout = Layout;
+}

@@ -770,8 +770,10 @@ PatternLayout.prototype.toString = function () {
   return 'PatternLayout';
 };
 
-/**
- *
- * @type {PatternLayout}
- */
-log4javascript.PatternLayout = PatternLayout;
+if(typeof log4javascript !== 'undefined'){
+  /**
+   *
+   * @type {PatternLayout}
+   */
+  log4javascript.PatternLayout = PatternLayout;
+}

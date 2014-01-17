@@ -140,8 +140,10 @@ Appender.prototype.toString = function () {
   handleError('Appender.toString: all appenders must override this method');
 };
 
-/**
- *
- * @type {Appender}
- */
-log4javascript.Appender = Appender;
+if(typeof log4javascript !== 'undefined'){
+  /**
+   *
+   * @type {Appender}
+   */
+  log4javascript.Appender = Appender;
+}
