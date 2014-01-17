@@ -98,6 +98,12 @@ Layout.prototype.overrideTimeStampsSetting = false;
 Layout.prototype.useTimeStampsInMilliseconds = null;
 
 /**
+ *
+ * @type {Array}
+ */
+Layout.prototype.customFields = [];
+
+/**
  * @todo document
  */
 Layout.prototype.format = function () {
