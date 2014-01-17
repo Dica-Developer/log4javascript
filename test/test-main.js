@@ -19,7 +19,17 @@ requirejs.config({
     'logger': '../src/log4js.logger',
     'eventSupport': '../src/log4js.eventSupport',
     'appender': '../src/log4js.appender',
+    'layout': '../src/log4js.layout',
+    'layout.pattern': '../src/log4js.layout.pattern',
     'lodash': '../test/vendor/lodash/dist/lodash.min'
+  },
+
+  shim: {
+    'layout': ['params'],
+    'logger': ['params', 'level'],
+    'appender': ['params', 'level', 'logger', 'eventSupport', 'layout.pattern'],
+    'layout.pattern': ['layout']
+
   },
 
   // ask Require.js to load these files (all our tests)
