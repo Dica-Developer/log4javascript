@@ -24,6 +24,7 @@ requirejs.config({
     'layout.pattern': '../src/log4js.layout.pattern',
     'layout.null': '../src/log4js.layout.null',
     'layout.simple': '../src/log4js.layout.simple',
+    'layout.httpPostData': '../src/log4js.layout.httpPostData',
     'lodash': '../test/vendor/lodash/dist/lodash.min'
   },
 
@@ -31,9 +32,10 @@ requirejs.config({
     'layout': ['params'],
     'logger': ['params', 'level'],
     'appender': ['params', 'level', 'logger', 'eventSupport', 'layout.pattern'],
-    'appender.alert': ['layout.simple'],
+    'appender.alert': ['appender', 'layout.simple'],
     'layout.pattern': ['layout'],
     'layout.simple': ['layout'],
+    'layout.httpPostData': ['layout'],
     'layout.null': ['layout']
 
   },
