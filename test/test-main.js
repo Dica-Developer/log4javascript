@@ -22,6 +22,7 @@ requirejs.config({
     'layout': '../src/log4js.layout',
     'layout.pattern': '../src/log4js.layout.pattern',
     'layout.null': '../src/log4js.layout.null',
+    'layout.simple': '../src/log4js.layout.simple',
     'lodash': '../test/vendor/lodash/dist/lodash.min'
   },
 
@@ -30,6 +31,7 @@ requirejs.config({
     'logger': ['params', 'level'],
     'appender': ['params', 'level', 'logger', 'eventSupport', 'layout.pattern'],
     'layout.pattern': ['layout'],
+    'layout.simple': ['layout'],
     'layout.null': ['layout']
 
   },
