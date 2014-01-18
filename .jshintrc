@@ -75,6 +75,7 @@
     "loggerNames":true,
     "Logger":true,
     "Appender":true,
+    "AlertAppender":true,
     "EventSupport":true,
     "PatternLayout":true,
     "Layout":true,

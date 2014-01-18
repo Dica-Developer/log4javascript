@@ -19,6 +19,7 @@ requirejs.config({
     'logger': '../src/log4js.logger',
     'eventSupport': '../src/log4js.eventSupport',
     'appender': '../src/log4js.appender',
+    'appender.alert': '../src/log4js.appender.alert',
     'layout': '../src/log4js.layout',
     'layout.pattern': '../src/log4js.layout.pattern',
     'layout.null': '../src/log4js.layout.null',
@@ -30,6 +31,7 @@ requirejs.config({
     'layout': ['params'],
     'logger': ['params', 'level'],
     'appender': ['params', 'level', 'logger', 'eventSupport', 'layout.pattern'],
+    'appender.alert': ['layout.simple'],
     'layout.pattern': ['layout'],
     'layout.simple': ['layout'],
     'layout.null': ['layout']
