@@ -17,7 +17,7 @@ module.exports = function(config) {
       'test/test-main.js',
       {pattern: 'dist/*.js', included: false},
       {pattern: 'src/*.js', included: false},
-      {pattern: 'test/*Spec.js', included: false}
+      {pattern: 'test/specs/*Spec.js', included: false}
     ],
 
     preprocessors: {
