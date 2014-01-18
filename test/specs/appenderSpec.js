@@ -1,4 +1,4 @@
-/*global define, describe, it, xit, expect, spyOn, beforeEach*/
+/*global define, describe, it, expect, spyOn, beforeEach*/
 define(['params', 'level', 'logger', 'eventSupport', 'layout.pattern', 'appender'], function () {
   'use strict';
 

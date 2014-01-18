@@ -1,4 +1,4 @@
-/*global define, describe, it, xit, expect, spyOn, beforeEach, jasmine*/
+/*global define, describe, it, expect, spyOn, beforeEach*/
 define([
   'params',
   'level',

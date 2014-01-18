@@ -1,4 +1,4 @@
-/*global define, describe, it, xit, expect, spyOn, beforeEach, jasmine*/
+/*global define, describe, it, expect, beforeEach*/
 define(['params', 'level', 'layout', 'logger', 'layout.null'], function () {
   'use strict';
 

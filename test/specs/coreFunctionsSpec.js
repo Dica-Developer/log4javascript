@@ -1,4 +1,4 @@
-/*global define, describe, it, xit, expect, beforeEach*/
+/*global define, describe, it, expect, beforeEach*/
 define(['log4javascript'], function(log4js){
   'use strict';
 
@@ -106,11 +106,6 @@ define(['log4javascript'], function(log4js){
       });
     });
   });
-
-  function getLengthForLevelTesting(levelkeys, level) {
-    //returns the length of the for loop by finding the level position
-    return levelkeys.indexOf(level);
-  }
 
   describe('log4js.Level', function () {
     var tmpLevel = {

@@ -1,4 +1,4 @@
-/*global define, describe, it, xit, expect, spyOn, afterEach, beforeEach*/
+/*global define, describe, it, expect, beforeEach*/
 define(['level'], function () {
   'use strict';
 
