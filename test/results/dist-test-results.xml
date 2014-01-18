@@ -1,6 +1,140 @@
 <?xml version="1.0"?>
 <testsuites>
-  <testsuite name="Firefox 26.0.0 (Mac OS X 10.7)" package="" timestamp="2014-01-15T20:05:59" id="0" hostname="localhost" tests="77" errors="0" failures="0" time="0.027">
+  <testsuite name="PhantomJS 1.9.2 (Mac OS X)" package="" timestamp="2014-01-18T00:28:57" id="0" hostname="localhost" tests="126" errors="0" failures="0" time="0.036">
+    <properties>
+      <property name="browser.fullName" value="Mozilla/5.0 (Macintosh; Intel Mac OS X) AppleWebKit/534.34 (KHTML, like Gecko) PhantomJS/1.9.2 Safari/534.34"/>
+    </properties>
+    <testcase name=".toString" time="0.004" classname="PhantomJS 1.9.2 (Mac OS X).#Level"/>
+    <testcase name=".equal" time="0.001" classname="PhantomJS 1.9.2 (Mac OS X).#Level"/>
+    <testcase name=".isGreaterOrEqual" time="0" classname="PhantomJS 1.9.2 (Mac OS X).#Level"/>
+    <testcase name="#ALL should be defined" time="0" classname="PhantomJS 1.9.2 (Mac OS X).#Level"/>
+    <testcase name="#FATAL should be defined" time="0" classname="PhantomJS 1.9.2 (Mac OS X).#Level"/>
+    <testcase name="#ERROR should be defined" time="0" classname="PhantomJS 1.9.2 (Mac OS X).#Level"/>
+    <testcase name="#WARN should be defined" time="0" classname="PhantomJS 1.9.2 (Mac OS X).#Level"/>
+    <testcase name="#DEBUG should be defined" time="0" classname="PhantomJS 1.9.2 (Mac OS X).#Level"/>
+    <testcase name="#TRACE should be defined" time="0.001" classname="PhantomJS 1.9.2 (Mac OS X).#Level"/>
+    <testcase name="#INFO should be defined" time="0" classname="PhantomJS 1.9.2 (Mac OS X).#Level"/>
+    <testcase name="#OFF should be defined" time="0" classname="PhantomJS 1.9.2 (Mac OS X).#Level"/>
+    <testcase name=".eventTypes should be &quot;[]&quot;" time="0.001" classname="PhantomJS 1.9.2 (Mac OS X).#EventSupport prototypes"/>
+    <testcase name=".eventListeners should be &quot;{}&quot;" time="0" classname="PhantomJS 1.9.2 (Mac OS X).#EventSupport prototypes"/>
+    <testcase name="parameter must be Array otherwise handleError should be called" time="0.001" classname="PhantomJS 1.9.2 (Mac OS X).#EventSupport _setEventTypes"/>
+    <testcase name="parameter should replace .eventTypes" time="0" classname="PhantomJS 1.9.2 (Mac OS X).#EventSupport _setEventTypes"/>
+    <testcase name=".eventListeners should be empty Array" time="0" classname="PhantomJS 1.9.2 (Mac OS X).#EventSupport _setEventTypes"/>
+    <testcase name="@param listener is function" time="0.001" classname="PhantomJS 1.9.2 (Mac OS X).#EventSupport _addEventListener"/>
+    <testcase name="@param listener is function but event type does not exist" time="0" classname="PhantomJS 1.9.2 (Mac OS X).#EventSupport _addEventListener"/>
+    <testcase name="@param listener must be function otherwise handelError should be called" time="0" classname="PhantomJS 1.9.2 (Mac OS X).#EventSupport _addEventListener"/>
+    <testcase name="@param listener must be function otherwise handelError should be called" time="0.001" classname="PhantomJS 1.9.2 (Mac OS X).#EventSupport _removeEventListener"/>
+    <testcase name="@param listener is function but event type does not exist" time="0" classname="PhantomJS 1.9.2 (Mac OS X).#EventSupport _removeEventListener"/>
+    <testcase name="Should remove listener from .eventListeners" time="0" classname="PhantomJS 1.9.2 (Mac OS X).#EventSupport _removeEventListener"/>
+    <testcase name="@param eventType must exist otherwise handleError should be called" time="0.001" classname="PhantomJS 1.9.2 (Mac OS X).#EventSupport _dispatchEvent"/>
+    <testcase name="if event exist it should be called" time="0" classname="PhantomJS 1.9.2 (Mac OS X).#EventSupport _dispatchEvent"/>
+    <testcase name="All #entryPoints should be true" time="0.004" classname="PhantomJS 1.9.2 (Mac OS X).#Logger"/>
+    <testcase name="TRACE" time="0" classname="PhantomJS 1.9.2 (Mac OS X).#Logger _is&lt;Level&gt;Enabled should call _isEnabledFor"/>
+    <testcase name="DEBUG" time="0" classname="PhantomJS 1.9.2 (Mac OS X).#Logger _is&lt;Level&gt;Enabled should call _isEnabledFor"/>
+    <testcase name="INFO" time="0.001" classname="PhantomJS 1.9.2 (Mac OS X).#Logger _is&lt;Level&gt;Enabled should call _isEnabledFor"/>
+    <testcase name="WARN" time="0" classname="PhantomJS 1.9.2 (Mac OS X).#Logger _is&lt;Level&gt;Enabled should call _isEnabledFor"/>
+    <testcase name="ERROR" time="0" classname="PhantomJS 1.9.2 (Mac OS X).#Logger _is&lt;Level&gt;Enabled should call _isEnabledFor"/>
+    <testcase name="FATAL" time="0" classname="PhantomJS 1.9.2 (Mac OS X).#Logger _is&lt;Level&gt;Enabled should call _isEnabledFor"/>
+    <testcase name="Level.ALL" time="0.001" classname="PhantomJS 1.9.2 (Mac OS X).#Logger _is&lt;Level&gt;Enabled should return correct value"/>
+    <testcase name="Level.TRACE" time="0" classname="PhantomJS 1.9.2 (Mac OS X).#Logger _is&lt;Level&gt;Enabled should return correct value"/>
+    <testcase name="DEBUG" time="0" classname="PhantomJS 1.9.2 (Mac OS X).#Logger _is&lt;Level&gt;Enabled should return correct value"/>
+    <testcase name="INFO" time="0.001" classname="PhantomJS 1.9.2 (Mac OS X).#Logger _is&lt;Level&gt;Enabled should return correct value"/>
+    <testcase name="WARN" time="0" classname="PhantomJS 1.9.2 (Mac OS X).#Logger _is&lt;Level&gt;Enabled should return correct value"/>
+    <testcase name="ERROR" time="0" classname="PhantomJS 1.9.2 (Mac OS X).#Logger _is&lt;Level&gt;Enabled should return correct value"/>
+    <testcase name="FATAL" time="0.001" classname="PhantomJS 1.9.2 (Mac OS X).#Logger _is&lt;Level&gt;Enabled should return correct value"/>
+    <testcase name="Should throw exception (call handleError) if Level not instance of Level" time="0" classname="PhantomJS 1.9.2 (Mac OS X).#Logger _setLevel"/>
+    <testcase name="Should throw exception (call handleError) if Level === null &amp;&amp; logger is root" time="0" classname="PhantomJS 1.9.2 (Mac OS X).#Logger _setLevel"/>
+    <testcase name="Should set new Level" time="0" classname="PhantomJS 1.9.2 (Mac OS X).#Logger _setLevel"/>
+    <testcase name="should return correct name" time="0" classname="PhantomJS 1.9.2 (Mac OS X).#Logger _toString"/>
+    <testcase name="logger.trace" time="0.001" classname="PhantomJS 1.9.2 (Mac OS X).#Logger _&lt;Level&gt; should call _log with correct arguments"/>
+    <testcase name="logger.debug" time="0" classname="PhantomJS 1.9.2 (Mac OS X).#Logger _&lt;Level&gt; should call _log with correct arguments"/>
+    <testcase name="logger.info" time="0" classname="PhantomJS 1.9.2 (Mac OS X).#Logger _&lt;Level&gt; should call _log with correct arguments"/>
+    <testcase name="logger.warn" time="0.001" classname="PhantomJS 1.9.2 (Mac OS X).#Logger _&lt;Level&gt; should call _log with correct arguments"/>
+    <testcase name="logger.error" time="0" classname="PhantomJS 1.9.2 (Mac OS X).#Logger _&lt;Level&gt; should call _log with correct arguments"/>
+    <testcase name="logger.fatal" time="0" classname="PhantomJS 1.9.2 (Mac OS X).#Logger _&lt;Level&gt; should call _log with correct arguments"/>
+    <testcase name="If enabled and called with Level should call .callAppenders" time="0.001" classname="PhantomJS 1.9.2 (Mac OS X).#Logger _log"/>
+    <testcase name="If enabled = false should not call .callAppenders" time="0" classname="PhantomJS 1.9.2 (Mac OS X).#Logger _log"/>
+    <testcase name="should return Level.TRACE" time="0" classname="PhantomJS 1.9.2 (Mac OS X).#Logger _getEffectiveLevel"/>
+    <testcase name="should return null" time="0" classname="PhantomJS 1.9.2 (Mac OS X).#Logger _getEffectiveLevel"/>
+    <testcase name="Should call .invalidateAppenderCache on childLogger" time="0.001" classname="PhantomJS 1.9.2 (Mac OS X).#Logger _addChild"/>
+    <testcase name="childLogger.parent should be logger" time="0" classname="PhantomJS 1.9.2 (Mac OS X).#Logger _addChild"/>
+    <testcase name="logger.children.length should be 1" time="0" classname="PhantomJS 1.9.2 (Mac OS X).#Logger _addChild"/>
+    <testcase name="Should return true per default" time="0" classname="PhantomJS 1.9.2 (Mac OS X).#Logger _getAdditivity"/>
+    <testcase name="Should change additivity to false" time="0" classname="PhantomJS 1.9.2 (Mac OS X).#Logger _setAdditivity"/>
+    <testcase name="Should call .invalidateAppenderCache on change" time="0.001" classname="PhantomJS 1.9.2 (Mac OS X).#Logger _setAdditivity"/>
+    <testcase name="Should not call .invalidateAppenderCache if nothing has changed" time="0" classname="PhantomJS 1.9.2 (Mac OS X).#Logger _setAdditivity"/>
+    <testcase name=".getString should return LoggingEvent[TRACE]" time="0" classname="PhantomJS 1.9.2 (Mac OS X).#LoggingEvent"/>
+    <testcase name=".getCombinedMessages should return &quot;1&quot;" time="0.001" classname="PhantomJS 1.9.2 (Mac OS X).#LoggingEvent"/>
+    <testcase name=".getCombinedMessages should return &quot;1 -new Line- 2&quot;" time="0" classname="PhantomJS 1.9.2 (Mac OS X).#LoggingEvent"/>
+    <testcase name=".getThrowableStrRep should return &quot;&quot; if LoggingEvent.exception is null or false" time="0" classname="PhantomJS 1.9.2 (Mac OS X).#LoggingEvent"/>
+    <testcase name="check defaults" time="0.001" classname="PhantomJS 1.9.2 (Mac OS X).#Layout prototypes"/>
+    <testcase name="prototypes should be same as defaults on initialization" time="0.003" classname="PhantomJS 1.9.2 (Mac OS X).#Layout prototypes"/>
+    <testcase name="check other prototypes" time="0" classname="PhantomJS 1.9.2 (Mac OS X).#Layout prototypes"/>
+    <testcase name=".format should call handle Error if it is not overridden" time="0" classname="PhantomJS 1.9.2 (Mac OS X).#Layout function to override by developing new Appender"/>
+    <testcase name=".ignoresThrowable should call handle Error if it is not overridden" time="0" classname="PhantomJS 1.9.2 (Mac OS X).#Layout function to override by developing new Appender"/>
+    <testcase name=".allowBatching should return true per default" time="0.001" classname="PhantomJS 1.9.2 (Mac OS X).#Layout function to override by developing new Appender"/>
+    <testcase name=".getContentType should return &quot;text/plain&quot; per default" time="0" classname="PhantomJS 1.9.2 (Mac OS X).#Layout function to override by developing new Appender"/>
+    <testcase name=".toString should call handleError if not overridden" time="0" classname="PhantomJS 1.9.2 (Mac OS X).#Layout function to override by developing new Appender"/>
+    <testcase name="Should set .overrideTimeStampsSetting to true if called" time="0" classname="PhantomJS 1.9.2 (Mac OS X).#Layout _setTimeStampsInMilliseconds"/>
+    <testcase name="Should set .useTimeStampsInMilliseconds even if given parameter not a boolean" time="0" classname="PhantomJS 1.9.2 (Mac OS X).#Layout _setTimeStampsInMilliseconds"/>
+    <testcase name="Should return &quot;null&quot; per default" time="0.001" classname="PhantomJS 1.9.2 (Mac OS X).#Layout _isTimeStampsInMilliseconds"/>
+    <testcase name="Should return .useTimeStampsInMilliseconds if .overrideTimeStampsSetting set to true" time="0" classname="PhantomJS 1.9.2 (Mac OS X).#Layout _isTimeStampsInMilliseconds"/>
+    <testcase name="Should return value in seconds if .isTimeStampsInMilliseconds set to false" time="0" classname="PhantomJS 1.9.2 (Mac OS X).#Layout _getTimeStampValue"/>
+    <testcase name="Should return value in milliSeconds if .isTimeStampsInMilliseconds set to true" time="0" classname="PhantomJS 1.9.2 (Mac OS X).#Layout _getTimeStampValue"/>
+    <testcase name="Check default return values" time="0.001" classname="PhantomJS 1.9.2 (Mac OS X).#Layout _getDataValues"/>
+    <testcase name="Check default return values with timestamp in millisecond" time="0.001" classname="PhantomJS 1.9.2 (Mac OS X).#Layout _getDataValues"/>
+    <testcase name="Check default return values with combinedMessages true" time="0" classname="PhantomJS 1.9.2 (Mac OS X).#Layout _getDataValues"/>
+    <testcase name="Check default return values with .customFields" time="0.001" classname="PhantomJS 1.9.2 (Mac OS X).#Layout _getDataValues"/>
+    <testcase name="Check default return values with .customFields as function should call that" time="0" classname="PhantomJS 1.9.2 (Mac OS X).#Layout _getDataValues"/>
+    <testcase name=".setCustomFields should call handleError if name and/or value is not set" time="0" classname="PhantomJS 1.9.2 (Mac OS X).#Layout _setCustomField &amp; _hasCustomFields"/>
+    <testcase name=".setCustomFields should call handleError if name is not &quot;String &quot;" time="0" classname="PhantomJS 1.9.2 (Mac OS X).#Layout _setCustomField &amp; _hasCustomFields"/>
+    <testcase name=".setCustomFields should apply give parameter to .customFields" time="0" classname="PhantomJS 1.9.2 (Mac OS X).#Layout _setCustomField &amp; _hasCustomFields"/>
+    <testcase name=".setCustomFields should update value if name already exist at .customFields" time="0.001" classname="PhantomJS 1.9.2 (Mac OS X).#Layout _setCustomField &amp; _hasCustomFields"/>
+    <testcase name=".setCustomFields should add new customField if name not exist" time="0" classname="PhantomJS 1.9.2 (Mac OS X).#Layout _setCustomField &amp; _hasCustomFields"/>
+    <testcase name=".hasCustomFields should return &quot;true&quot; if one set" time="0" classname="PhantomJS 1.9.2 (Mac OS X).#Layout _setCustomField &amp; _hasCustomFields"/>
+    <testcase name="All #entryPoints should be true" time="0" classname="PhantomJS 1.9.2 (Mac OS X).#Appender"/>
+    <testcase name="log4js should be defined" time="0" classname="PhantomJS 1.9.2 (Mac OS X).log4js should defined and initiate with all Appender and Layouts"/>
+    <testcase name="log4js.Level should be defined" time="0" classname="PhantomJS 1.9.2 (Mac OS X).log4js should defined and initiate with all Appender and Layouts log4js prototypes should defined"/>
+    <testcase name="log4js.evalInScope should be defined" time="0" classname="PhantomJS 1.9.2 (Mac OS X).log4js should defined and initiate with all Appender and Layouts log4js prototypes should defined"/>
+    <testcase name="log4js.eventListeners should be defined" time="0" classname="PhantomJS 1.9.2 (Mac OS X).log4js should defined and initiate with all Appender and Layouts log4js prototypes should defined"/>
+    <testcase name="log4js.eventTypes should be defined" time="0" classname="PhantomJS 1.9.2 (Mac OS X).log4js should defined and initiate with all Appender and Layouts log4js prototypes should defined"/>
+    <testcase name="log4js.getDefaultLogger should be defined" time="0" classname="PhantomJS 1.9.2 (Mac OS X).log4js should defined and initiate with all Appender and Layouts log4js prototypes should defined"/>
+    <testcase name="log4js.getLogger should be defined" time="0.001" classname="PhantomJS 1.9.2 (Mac OS X).log4js should defined and initiate with all Appender and Layouts log4js prototypes should defined"/>
+    <testcase name="log4js.getNullLogger should be defined" time="0" classname="PhantomJS 1.9.2 (Mac OS X).log4js should defined and initiate with all Appender and Layouts log4js prototypes should defined"/>
+    <testcase name="log4js.getRootLogger should be defined" time="0" classname="PhantomJS 1.9.2 (Mac OS X).log4js should defined and initiate with all Appender and Layouts log4js prototypes should defined"/>
+    <testcase name="log4js.isEnabled should be defined" time="0" classname="PhantomJS 1.9.2 (Mac OS X).log4js should defined and initiate with all Appender and Layouts log4js prototypes should defined"/>
+    <testcase name="log4js.isTimeStampsInMilliseconds should be defined" time="0" classname="PhantomJS 1.9.2 (Mac OS X).log4js should defined and initiate with all Appender and Layouts log4js prototypes should defined"/>
+    <testcase name="log4js.logLog should be defined" time="0" classname="PhantomJS 1.9.2 (Mac OS X).log4js should defined and initiate with all Appender and Layouts log4js prototypes should defined"/>
+    <testcase name="log4js.resetConfiguration should be defined" time="0" classname="PhantomJS 1.9.2 (Mac OS X).log4js should defined and initiate with all Appender and Layouts log4js prototypes should defined"/>
+    <testcase name="log4js.setDocumentReady should be defined" time="0" classname="PhantomJS 1.9.2 (Mac OS X).log4js should defined and initiate with all Appender and Layouts log4js prototypes should defined"/>
+    <testcase name="log4js.setEnabled should be defined" time="0" classname="PhantomJS 1.9.2 (Mac OS X).log4js should defined and initiate with all Appender and Layouts log4js prototypes should defined"/>
+    <testcase name="log4js.setShowStackTraces should be defined" time="0" classname="PhantomJS 1.9.2 (Mac OS X).log4js should defined and initiate with all Appender and Layouts log4js prototypes should defined"/>
+    <testcase name="log4js.setTimeStampsInMilliseconds should be defined" time="0" classname="PhantomJS 1.9.2 (Mac OS X).log4js should defined and initiate with all Appender and Layouts log4js prototypes should defined"/>
+    <testcase name="log4js.Appender should be defined" time="0" classname="PhantomJS 1.9.2 (Mac OS X).log4js should defined and initiate with all Appender and Layouts log4js Appender should defined"/>
+    <testcase name="log4js.AlertAppender should be defined" time="0" classname="PhantomJS 1.9.2 (Mac OS X).log4js should defined and initiate with all Appender and Layouts log4js Appender should defined"/>
+    <testcase name="log4js.AjaxAppender should be defined" time="0" classname="PhantomJS 1.9.2 (Mac OS X).log4js should defined and initiate with all Appender and Layouts log4js Appender should defined"/>
+    <testcase name="log4js.BrowserConsoleAppender should be defined" time="0" classname="PhantomJS 1.9.2 (Mac OS X).log4js should defined and initiate with all Appender and Layouts log4js Appender should defined"/>
+    <testcase name="log4js.InPageAppender should be defined" time="0" classname="PhantomJS 1.9.2 (Mac OS X).log4js should defined and initiate with all Appender and Layouts log4js Appender should defined"/>
+    <testcase name="log4js.InlineAppender should be defined" time="0" classname="PhantomJS 1.9.2 (Mac OS X).log4js should defined and initiate with all Appender and Layouts log4js Appender should defined"/>
+    <testcase name="log4js.PopUpAppender should be defined" time="0" classname="PhantomJS 1.9.2 (Mac OS X).log4js should defined and initiate with all Appender and Layouts log4js Appender should defined"/>
+    <testcase name="log4js.Level should be defined" time="0" classname="PhantomJS 1.9.2 (Mac OS X).log4js_Level"/>
+    <testcase name="log4js.Level.ALL should be defined" time="0" classname="PhantomJS 1.9.2 (Mac OS X).log4js_Level"/>
+    <testcase name="log4js.Level.ALL should be defined" time="0" classname="PhantomJS 1.9.2 (Mac OS X).log4js_Level"/>
+    <testcase name="log4js.Level.FATAL should be defined" time="0" classname="PhantomJS 1.9.2 (Mac OS X).log4js_Level"/>
+    <testcase name="log4js.Level.ERROR should be defined" time="0" classname="PhantomJS 1.9.2 (Mac OS X).log4js_Level"/>
+    <testcase name="log4js.Level.WARN should be defined" time="0" classname="PhantomJS 1.9.2 (Mac OS X).log4js_Level"/>
+    <testcase name="log4js.Level.DEBUG should be defined" time="0" classname="PhantomJS 1.9.2 (Mac OS X).log4js_Level"/>
+    <testcase name="log4js.Level.TRACE should be defined" time="0" classname="PhantomJS 1.9.2 (Mac OS X).log4js_Level"/>
+    <testcase name="log4js.Level.INFO should be defined" time="0" classname="PhantomJS 1.9.2 (Mac OS X).log4js_Level"/>
+    <testcase name="log4js.Level.OFF should be defined" time="0" classname="PhantomJS 1.9.2 (Mac OS X).log4js_Level"/>
+    <testcase name="log4js.Level.&lt;Level&gt;.level should be Number" time="0" classname="PhantomJS 1.9.2 (Mac OS X).log4js_Level"/>
+    <testcase name="log4js.Level.&lt;Level&gt;.name should be String" time="0" classname="PhantomJS 1.9.2 (Mac OS X).log4js_Level"/>
+    <testcase name="log4js.Level.&lt;Level&gt;.name should be the same as the identifier" time="0" classname="PhantomJS 1.9.2 (Mac OS X).log4js_Level"/>
+    <system-out><![CDATA[
+]]></system-out>
+    <system-err/>
+  </testsuite>
+  <testsuite name="Firefox 26.0.0 (Mac OS X 10.7)" package="" timestamp="2014-01-18T00:28:57" id="0" hostname="localhost" tests="126" errors="0" failures="0" time="0.061">
     <properties>
       <property name="browser.fullName" value="Mozilla/5.0 (Macintosh; Intel Mac OS X 10.7; rv:26.0) Gecko/20100101 Firefox/26.0"/>
     </properties>
@@ -8,50 +142,105 @@
     <testcase name=".equal" time="0.001" classname="Firefox 26.0.0 (Mac OS X 10.7).#Level"/>
     <testcase name=".isGreaterOrEqual" time="0.001" classname="Firefox 26.0.0 (Mac OS X 10.7).#Level"/>
     <testcase name="#ALL should be defined" time="0" classname="Firefox 26.0.0 (Mac OS X 10.7).#Level"/>
-    <testcase name="#FATAL should be defined" time="0.001" classname="Firefox 26.0.0 (Mac OS X 10.7).#Level"/>
+    <testcase name="#FATAL should be defined" time="0" classname="Firefox 26.0.0 (Mac OS X 10.7).#Level"/>
     <testcase name="#ERROR should be defined" time="0" classname="Firefox 26.0.0 (Mac OS X 10.7).#Level"/>
-    <testcase name="#WARN should be defined" time="0" classname="Firefox 26.0.0 (Mac OS X 10.7).#Level"/>
-    <testcase name="#DEBUG should be defined" time="0.001" classname="Firefox 26.0.0 (Mac OS X 10.7).#Level"/>
-    <testcase name="#TRACE should be defined" time="0" classname="Firefox 26.0.0 (Mac OS X 10.7).#Level"/>
+    <testcase name="#WARN should be defined" time="0.001" classname="Firefox 26.0.0 (Mac OS X 10.7).#Level"/>
+    <testcase name="#DEBUG should be defined" time="0" classname="Firefox 26.0.0 (Mac OS X 10.7).#Level"/>
+    <testcase name="#TRACE should be defined" time="0.001" classname="Firefox 26.0.0 (Mac OS X 10.7).#Level"/>
     <testcase name="#INFO should be defined" time="0" classname="Firefox 26.0.0 (Mac OS X 10.7).#Level"/>
-    <testcase name="#OFF should be defined" time="0.001" classname="Firefox 26.0.0 (Mac OS X 10.7).#Level"/>
-    <testcase name="All #entryPoints should be true" time="0.002" classname="Firefox 26.0.0 (Mac OS X 10.7).#Logger"/>
-    <testcase name="TRACE" time="0.001" classname="Firefox 26.0.0 (Mac OS X 10.7).#Logger _is&lt;Level&gt;Enabled should call _isEnabledFor"/>
-    <testcase name="DEBUG" time="0" classname="Firefox 26.0.0 (Mac OS X 10.7).#Logger _is&lt;Level&gt;Enabled should call _isEnabledFor"/>
+    <testcase name="#OFF should be defined" time="0" classname="Firefox 26.0.0 (Mac OS X 10.7).#Level"/>
+    <testcase name=".eventTypes should be &quot;[]&quot;" time="0" classname="Firefox 26.0.0 (Mac OS X 10.7).#EventSupport prototypes"/>
+    <testcase name=".eventListeners should be &quot;{}&quot;" time="0" classname="Firefox 26.0.0 (Mac OS X 10.7).#EventSupport prototypes"/>
+    <testcase name="parameter must be Array otherwise handleError should be called" time="0.002" classname="Firefox 26.0.0 (Mac OS X 10.7).#EventSupport _setEventTypes"/>
+    <testcase name="parameter should replace .eventTypes" time="0" classname="Firefox 26.0.0 (Mac OS X 10.7).#EventSupport _setEventTypes"/>
+    <testcase name=".eventListeners should be empty Array" time="0.001" classname="Firefox 26.0.0 (Mac OS X 10.7).#EventSupport _setEventTypes"/>
+    <testcase name="@param listener is function" time="0" classname="Firefox 26.0.0 (Mac OS X 10.7).#EventSupport _addEventListener"/>
+    <testcase name="@param listener is function but event type does not exist" time="0.001" classname="Firefox 26.0.0 (Mac OS X 10.7).#EventSupport _addEventListener"/>
+    <testcase name="@param listener must be function otherwise handelError should be called" time="0" classname="Firefox 26.0.0 (Mac OS X 10.7).#EventSupport _addEventListener"/>
+    <testcase name="@param listener must be function otherwise handelError should be called" time="0.001" classname="Firefox 26.0.0 (Mac OS X 10.7).#EventSupport _removeEventListener"/>
+    <testcase name="@param listener is function but event type does not exist" time="0.001" classname="Firefox 26.0.0 (Mac OS X 10.7).#EventSupport _removeEventListener"/>
+    <testcase name="Should remove listener from .eventListeners" time="0" classname="Firefox 26.0.0 (Mac OS X 10.7).#EventSupport _removeEventListener"/>
+    <testcase name="@param eventType must exist otherwise handleError should be called" time="0.001" classname="Firefox 26.0.0 (Mac OS X 10.7).#EventSupport _dispatchEvent"/>
+    <testcase name="if event exist it should be called" time="0" classname="Firefox 26.0.0 (Mac OS X 10.7).#EventSupport _dispatchEvent"/>
+    <testcase name="All #entryPoints should be true" time="0.004" classname="Firefox 26.0.0 (Mac OS X 10.7).#Logger"/>
+    <testcase name="TRACE" time="0" classname="Firefox 26.0.0 (Mac OS X 10.7).#Logger _is&lt;Level&gt;Enabled should call _isEnabledFor"/>
+    <testcase name="DEBUG" time="0.001" classname="Firefox 26.0.0 (Mac OS X 10.7).#Logger _is&lt;Level&gt;Enabled should call _isEnabledFor"/>
     <testcase name="INFO" time="0" classname="Firefox 26.0.0 (Mac OS X 10.7).#Logger _is&lt;Level&gt;Enabled should call _isEnabledFor"/>
-    <testcase name="WARN" time="0.001" classname="Firefox 26.0.0 (Mac OS X 10.7).#Logger _is&lt;Level&gt;Enabled should call _isEnabledFor"/>
-    <testcase name="ERROR" time="0" classname="Firefox 26.0.0 (Mac OS X 10.7).#Logger _is&lt;Level&gt;Enabled should call _isEnabledFor"/>
-    <testcase name="FATAL" time="0.001" classname="Firefox 26.0.0 (Mac OS X 10.7).#Logger _is&lt;Level&gt;Enabled should call _isEnabledFor"/>
+    <testcase name="WARN" time="0" classname="Firefox 26.0.0 (Mac OS X 10.7).#Logger _is&lt;Level&gt;Enabled should call _isEnabledFor"/>
+    <testcase name="ERROR" time="0.001" classname="Firefox 26.0.0 (Mac OS X 10.7).#Logger _is&lt;Level&gt;Enabled should call _isEnabledFor"/>
+    <testcase name="FATAL" time="0" classname="Firefox 26.0.0 (Mac OS X 10.7).#Logger _is&lt;Level&gt;Enabled should call _isEnabledFor"/>
     <testcase name="Level.ALL" time="0.001" classname="Firefox 26.0.0 (Mac OS X 10.7).#Logger _is&lt;Level&gt;Enabled should return correct value"/>
-    <testcase name="Level.TRACE" time="0" classname="Firefox 26.0.0 (Mac OS X 10.7).#Logger _is&lt;Level&gt;Enabled should return correct value"/>
+    <testcase name="Level.TRACE" time="0.001" classname="Firefox 26.0.0 (Mac OS X 10.7).#Logger _is&lt;Level&gt;Enabled should return correct value"/>
     <testcase name="DEBUG" time="0.001" classname="Firefox 26.0.0 (Mac OS X 10.7).#Logger _is&lt;Level&gt;Enabled should return correct value"/>
     <testcase name="INFO" time="0.001" classname="Firefox 26.0.0 (Mac OS X 10.7).#Logger _is&lt;Level&gt;Enabled should return correct value"/>
-    <testcase name="WARN" time="0" classname="Firefox 26.0.0 (Mac OS X 10.7).#Logger _is&lt;Level&gt;Enabled should return correct value"/>
-    <testcase name="ERROR" time="0" classname="Firefox 26.0.0 (Mac OS X 10.7).#Logger _is&lt;Level&gt;Enabled should return correct value"/>
+    <testcase name="WARN" time="0.001" classname="Firefox 26.0.0 (Mac OS X 10.7).#Logger _is&lt;Level&gt;Enabled should return correct value"/>
+    <testcase name="ERROR" time="0.001" classname="Firefox 26.0.0 (Mac OS X 10.7).#Logger _is&lt;Level&gt;Enabled should return correct value"/>
     <testcase name="FATAL" time="0" classname="Firefox 26.0.0 (Mac OS X 10.7).#Logger _is&lt;Level&gt;Enabled should return correct value"/>
+    <testcase name="Should throw exception (call handleError) if Level not instance of Level" time="0.001" classname="Firefox 26.0.0 (Mac OS X 10.7).#Logger _setLevel"/>
+    <testcase name="Should throw exception (call handleError) if Level === null &amp;&amp; logger is root" time="0.001" classname="Firefox 26.0.0 (Mac OS X 10.7).#Logger _setLevel"/>
+    <testcase name="Should set new Level" time="0.001" classname="Firefox 26.0.0 (Mac OS X 10.7).#Logger _setLevel"/>
     <testcase name="should return correct name" time="0" classname="Firefox 26.0.0 (Mac OS X 10.7).#Logger _toString"/>
     <testcase name="logger.trace" time="0.001" classname="Firefox 26.0.0 (Mac OS X 10.7).#Logger _&lt;Level&gt; should call _log with correct arguments"/>
-    <testcase name="logger.debug" time="0.001" classname="Firefox 26.0.0 (Mac OS X 10.7).#Logger _&lt;Level&gt; should call _log with correct arguments"/>
+    <testcase name="logger.debug" time="0" classname="Firefox 26.0.0 (Mac OS X 10.7).#Logger _&lt;Level&gt; should call _log with correct arguments"/>
     <testcase name="logger.info" time="0.001" classname="Firefox 26.0.0 (Mac OS X 10.7).#Logger _&lt;Level&gt; should call _log with correct arguments"/>
-    <testcase name="logger.warn" time="0" classname="Firefox 26.0.0 (Mac OS X 10.7).#Logger _&lt;Level&gt; should call _log with correct arguments"/>
-    <testcase name="logger.error" time="0.001" classname="Firefox 26.0.0 (Mac OS X 10.7).#Logger _&lt;Level&gt; should call _log with correct arguments"/>
+    <testcase name="logger.warn" time="0.001" classname="Firefox 26.0.0 (Mac OS X 10.7).#Logger _&lt;Level&gt; should call _log with correct arguments"/>
+    <testcase name="logger.error" time="0" classname="Firefox 26.0.0 (Mac OS X 10.7).#Logger _&lt;Level&gt; should call _log with correct arguments"/>
     <testcase name="logger.fatal" time="0.001" classname="Firefox 26.0.0 (Mac OS X 10.7).#Logger _&lt;Level&gt; should call _log with correct arguments"/>
     <testcase name="If enabled and called with Level should call .callAppenders" time="0.001" classname="Firefox 26.0.0 (Mac OS X 10.7).#Logger _log"/>
+    <testcase name="If enabled = false should not call .callAppenders" time="0.001" classname="Firefox 26.0.0 (Mac OS X 10.7).#Logger _log"/>
+    <testcase name="should return Level.TRACE" time="0" classname="Firefox 26.0.0 (Mac OS X 10.7).#Logger _getEffectiveLevel"/>
+    <testcase name="should return null" time="0" classname="Firefox 26.0.0 (Mac OS X 10.7).#Logger _getEffectiveLevel"/>
+    <testcase name="Should call .invalidateAppenderCache on childLogger" time="0" classname="Firefox 26.0.0 (Mac OS X 10.7).#Logger _addChild"/>
+    <testcase name="childLogger.parent should be logger" time="0" classname="Firefox 26.0.0 (Mac OS X 10.7).#Logger _addChild"/>
+    <testcase name="logger.children.length should be 1" time="0.001" classname="Firefox 26.0.0 (Mac OS X 10.7).#Logger _addChild"/>
+    <testcase name="Should return true per default" time="0" classname="Firefox 26.0.0 (Mac OS X 10.7).#Logger _getAdditivity"/>
+    <testcase name="Should change additivity to false" time="0" classname="Firefox 26.0.0 (Mac OS X 10.7).#Logger _setAdditivity"/>
+    <testcase name="Should call .invalidateAppenderCache on change" time="0.001" classname="Firefox 26.0.0 (Mac OS X 10.7).#Logger _setAdditivity"/>
+    <testcase name="Should not call .invalidateAppenderCache if nothing has changed" time="0" classname="Firefox 26.0.0 (Mac OS X 10.7).#Logger _setAdditivity"/>
+    <testcase name=".getString should return LoggingEvent[TRACE]" time="0.001" classname="Firefox 26.0.0 (Mac OS X 10.7).#LoggingEvent"/>
+    <testcase name=".getCombinedMessages should return &quot;1&quot;" time="0" classname="Firefox 26.0.0 (Mac OS X 10.7).#LoggingEvent"/>
+    <testcase name=".getCombinedMessages should return &quot;1 -new Line- 2&quot;" time="0" classname="Firefox 26.0.0 (Mac OS X 10.7).#LoggingEvent"/>
+    <testcase name=".getThrowableStrRep should return &quot;&quot; if LoggingEvent.exception is null or false" time="0.001" classname="Firefox 26.0.0 (Mac OS X 10.7).#LoggingEvent"/>
+    <testcase name="check defaults" time="0" classname="Firefox 26.0.0 (Mac OS X 10.7).#Layout prototypes"/>
+    <testcase name="prototypes should be same as defaults on initialization" time="0.001" classname="Firefox 26.0.0 (Mac OS X 10.7).#Layout prototypes"/>
+    <testcase name="check other prototypes" time="0" classname="Firefox 26.0.0 (Mac OS X 10.7).#Layout prototypes"/>
+    <testcase name=".format should call handle Error if it is not overridden" time="0" classname="Firefox 26.0.0 (Mac OS X 10.7).#Layout function to override by developing new Appender"/>
+    <testcase name=".ignoresThrowable should call handle Error if it is not overridden" time="0" classname="Firefox 26.0.0 (Mac OS X 10.7).#Layout function to override by developing new Appender"/>
+    <testcase name=".allowBatching should return true per default" time="0.001" classname="Firefox 26.0.0 (Mac OS X 10.7).#Layout function to override by developing new Appender"/>
+    <testcase name=".getContentType should return &quot;text/plain&quot; per default" time="0" classname="Firefox 26.0.0 (Mac OS X 10.7).#Layout function to override by developing new Appender"/>
+    <testcase name=".toString should call handleError if not overridden" time="0.001" classname="Firefox 26.0.0 (Mac OS X 10.7).#Layout function to override by developing new Appender"/>
+    <testcase name="Should set .overrideTimeStampsSetting to true if called" time="0.005" classname="Firefox 26.0.0 (Mac OS X 10.7).#Layout _setTimeStampsInMilliseconds"/>
+    <testcase name="Should set .useTimeStampsInMilliseconds even if given parameter not a boolean" time="0" classname="Firefox 26.0.0 (Mac OS X 10.7).#Layout _setTimeStampsInMilliseconds"/>
+    <testcase name="Should return &quot;null&quot; per default" time="0" classname="Firefox 26.0.0 (Mac OS X 10.7).#Layout _isTimeStampsInMilliseconds"/>
+    <testcase name="Should return .useTimeStampsInMilliseconds if .overrideTimeStampsSetting set to true" time="0.001" classname="Firefox 26.0.0 (Mac OS X 10.7).#Layout _isTimeStampsInMilliseconds"/>
+    <testcase name="Should return value in seconds if .isTimeStampsInMilliseconds set to false" time="0" classname="Firefox 26.0.0 (Mac OS X 10.7).#Layout _getTimeStampValue"/>
+    <testcase name="Should return value in milliSeconds if .isTimeStampsInMilliseconds set to true" time="0" classname="Firefox 26.0.0 (Mac OS X 10.7).#Layout _getTimeStampValue"/>
+    <testcase name="Check default return values" time="0.001" classname="Firefox 26.0.0 (Mac OS X 10.7).#Layout _getDataValues"/>
+    <testcase name="Check default return values with timestamp in millisecond" time="0.001" classname="Firefox 26.0.0 (Mac OS X 10.7).#Layout _getDataValues"/>
+    <testcase name="Check default return values with combinedMessages true" time="0" classname="Firefox 26.0.0 (Mac OS X 10.7).#Layout _getDataValues"/>
+    <testcase name="Check default return values with .customFields" time="0.001" classname="Firefox 26.0.0 (Mac OS X 10.7).#Layout _getDataValues"/>
+    <testcase name="Check default return values with .customFields as function should call that" time="0" classname="Firefox 26.0.0 (Mac OS X 10.7).#Layout _getDataValues"/>
+    <testcase name=".setCustomFields should call handleError if name and/or value is not set" time="0.001" classname="Firefox 26.0.0 (Mac OS X 10.7).#Layout _setCustomField &amp; _hasCustomFields"/>
+    <testcase name=".setCustomFields should call handleError if name is not &quot;String &quot;" time="0" classname="Firefox 26.0.0 (Mac OS X 10.7).#Layout _setCustomField &amp; _hasCustomFields"/>
+    <testcase name=".setCustomFields should apply give parameter to .customFields" time="0.001" classname="Firefox 26.0.0 (Mac OS X 10.7).#Layout _setCustomField &amp; _hasCustomFields"/>
+    <testcase name=".setCustomFields should update value if name already exist at .customFields" time="0" classname="Firefox 26.0.0 (Mac OS X 10.7).#Layout _setCustomField &amp; _hasCustomFields"/>
+    <testcase name=".setCustomFields should add new customField if name not exist" time="0" classname="Firefox 26.0.0 (Mac OS X 10.7).#Layout _setCustomField &amp; _hasCustomFields"/>
+    <testcase name=".hasCustomFields should return &quot;true&quot; if one set" time="0" classname="Firefox 26.0.0 (Mac OS X 10.7).#Layout _setCustomField &amp; _hasCustomFields"/>
     <testcase name="log4js should be defined" time="0" classname="Firefox 26.0.0 (Mac OS X 10.7).log4js should defined and initiate with all Appender and Layouts"/>
-    <testcase name="log4js.Level should be defined" time="0" classname="Firefox 26.0.0 (Mac OS X 10.7).log4js should defined and initiate with all Appender and Layouts log4js prototypes should defined"/>
+    <testcase name="log4js.Level should be defined" time="0.001" classname="Firefox 26.0.0 (Mac OS X 10.7).log4js should defined and initiate with all Appender and Layouts log4js prototypes should defined"/>
     <testcase name="log4js.evalInScope should be defined" time="0.001" classname="Firefox 26.0.0 (Mac OS X 10.7).log4js should defined and initiate with all Appender and Layouts log4js prototypes should defined"/>
     <testcase name="log4js.eventListeners should be defined" time="0" classname="Firefox 26.0.0 (Mac OS X 10.7).log4js should defined and initiate with all Appender and Layouts log4js prototypes should defined"/>
     <testcase name="log4js.eventTypes should be defined" time="0" classname="Firefox 26.0.0 (Mac OS X 10.7).log4js should defined and initiate with all Appender and Layouts log4js prototypes should defined"/>
-    <testcase name="log4js.getDefaultLogger should be defined" time="0" classname="Firefox 26.0.0 (Mac OS X 10.7).log4js should defined and initiate with all Appender and Layouts log4js prototypes should defined"/>
+    <testcase name="log4js.getDefaultLogger should be defined" time="0.001" classname="Firefox 26.0.0 (Mac OS X 10.7).log4js should defined and initiate with all Appender and Layouts log4js prototypes should defined"/>
     <testcase name="log4js.getLogger should be defined" time="0" classname="Firefox 26.0.0 (Mac OS X 10.7).log4js should defined and initiate with all Appender and Layouts log4js prototypes should defined"/>
-    <testcase name="log4js.getNullLogger should be defined" time="0.001" classname="Firefox 26.0.0 (Mac OS X 10.7).log4js should defined and initiate with all Appender and Layouts log4js prototypes should defined"/>
+    <testcase name="log4js.getNullLogger should be defined" time="0" classname="Firefox 26.0.0 (Mac OS X 10.7).log4js should defined and initiate with all Appender and Layouts log4js prototypes should defined"/>
     <testcase name="log4js.getRootLogger should be defined" time="0" classname="Firefox 26.0.0 (Mac OS X 10.7).log4js should defined and initiate with all Appender and Layouts log4js prototypes should defined"/>
     <testcase name="log4js.isEnabled should be defined" time="0" classname="Firefox 26.0.0 (Mac OS X 10.7).log4js should defined and initiate with all Appender and Layouts log4js prototypes should defined"/>
     <testcase name="log4js.isTimeStampsInMilliseconds should be defined" time="0" classname="Firefox 26.0.0 (Mac OS X 10.7).log4js should defined and initiate with all Appender and Layouts log4js prototypes should defined"/>
     <testcase name="log4js.logLog should be defined" time="0" classname="Firefox 26.0.0 (Mac OS X 10.7).log4js should defined and initiate with all Appender and Layouts log4js prototypes should defined"/>
-    <testcase name="log4js.resetConfiguration should be defined" time="0.001" classname="Firefox 26.0.0 (Mac OS X 10.7).log4js should defined and initiate with all Appender and Layouts log4js prototypes should defined"/>
+    <testcase name="log4js.resetConfiguration should be defined" time="0" classname="Firefox 26.0.0 (Mac OS X 10.7).log4js should defined and initiate with all Appender and Layouts log4js prototypes should defined"/>
     <testcase name="log4js.setDocumentReady should be defined" time="0" classname="Firefox 26.0.0 (Mac OS X 10.7).log4js should defined and initiate with all Appender and Layouts log4js prototypes should defined"/>
-    <testcase name="log4js.setEnabled should be defined" time="0" classname="Firefox 26.0.0 (Mac OS X 10.7).log4js should defined and initiate with all Appender and Layouts log4js prototypes should defined"/>
+    <testcase name="log4js.setEnabled should be defined" time="0.001" classname="Firefox 26.0.0 (Mac OS X 10.7).log4js should defined and initiate with all Appender and Layouts log4js prototypes should defined"/>
     <testcase name="log4js.setShowStackTraces should be defined" time="0" classname="Firefox 26.0.0 (Mac OS X 10.7).log4js should defined and initiate with all Appender and Layouts log4js prototypes should defined"/>
     <testcase name="log4js.setTimeStampsInMilliseconds should be defined" time="0" classname="Firefox 26.0.0 (Mac OS X 10.7).log4js should defined and initiate with all Appender and Layouts log4js prototypes should defined"/>
     <testcase name="log4js.Appender should be defined" time="0" classname="Firefox 26.0.0 (Mac OS X 10.7).log4js should defined and initiate with all Appender and Layouts log4js Appender should defined"/>
@@ -61,99 +250,141 @@
     <testcase name="log4js.InPageAppender should be defined" time="0" classname="Firefox 26.0.0 (Mac OS X 10.7).log4js should defined and initiate with all Appender and Layouts log4js Appender should defined"/>
     <testcase name="log4js.InlineAppender should be defined" time="0" classname="Firefox 26.0.0 (Mac OS X 10.7).log4js should defined and initiate with all Appender and Layouts log4js Appender should defined"/>
     <testcase name="log4js.PopUpAppender should be defined" time="0" classname="Firefox 26.0.0 (Mac OS X 10.7).log4js should defined and initiate with all Appender and Layouts log4js Appender should defined"/>
-    <testcase name="log4js.Layout should be defined" time="0" classname="Firefox 26.0.0 (Mac OS X 10.7).log4js should defined and initiate with all Appender and Layouts log4js Layouts should defined"/>
-    <testcase name="log4js.HttpPostDataLayout should be defined" time="0" classname="Firefox 26.0.0 (Mac OS X 10.7).log4js should defined and initiate with all Appender and Layouts log4js Layouts should defined"/>
-    <testcase name="log4js.JsonLayout should be defined" time="0" classname="Firefox 26.0.0 (Mac OS X 10.7).log4js should defined and initiate with all Appender and Layouts log4js Layouts should defined"/>
-    <testcase name="log4js.NullLayout should be defined" time="0" classname="Firefox 26.0.0 (Mac OS X 10.7).log4js should defined and initiate with all Appender and Layouts log4js Layouts should defined"/>
-    <testcase name="log4js.PatternLayout should be defined" time="0" classname="Firefox 26.0.0 (Mac OS X 10.7).log4js should defined and initiate with all Appender and Layouts log4js Layouts should defined"/>
-    <testcase name="log4js.SimpleLayout should be defined" time="0" classname="Firefox 26.0.0 (Mac OS X 10.7).log4js should defined and initiate with all Appender and Layouts log4js Layouts should defined"/>
-    <testcase name="log4js.XmlLayout should be defined" time="0" classname="Firefox 26.0.0 (Mac OS X 10.7).log4js should defined and initiate with all Appender and Layouts log4js Layouts should defined"/>
-    <testcase name="log4js.Level should be defined" time="0.001" classname="Firefox 26.0.0 (Mac OS X 10.7).log4js_Level"/>
+    <testcase name="log4js.Level should be defined" time="0" classname="Firefox 26.0.0 (Mac OS X 10.7).log4js_Level"/>
     <testcase name="log4js.Level.ALL should be defined" time="0" classname="Firefox 26.0.0 (Mac OS X 10.7).log4js_Level"/>
     <testcase name="log4js.Level.ALL should be defined" time="0" classname="Firefox 26.0.0 (Mac OS X 10.7).log4js_Level"/>
     <testcase name="log4js.Level.FATAL should be defined" time="0" classname="Firefox 26.0.0 (Mac OS X 10.7).log4js_Level"/>
-    <testcase name="log4js.Level.ERROR should be defined" time="0.001" classname="Firefox 26.0.0 (Mac OS X 10.7).log4js_Level"/>
+    <testcase name="log4js.Level.ERROR should be defined" time="0" classname="Firefox 26.0.0 (Mac OS X 10.7).log4js_Level"/>
     <testcase name="log4js.Level.WARN should be defined" time="0" classname="Firefox 26.0.0 (Mac OS X 10.7).log4js_Level"/>
     <testcase name="log4js.Level.DEBUG should be defined" time="0" classname="Firefox 26.0.0 (Mac OS X 10.7).log4js_Level"/>
-    <testcase name="log4js.Level.TRACE should be defined" time="0" classname="Firefox 26.0.0 (Mac OS X 10.7).log4js_Level"/>
+    <testcase name="log4js.Level.TRACE should be defined" time="0.001" classname="Firefox 26.0.0 (Mac OS X 10.7).log4js_Level"/>
     <testcase name="log4js.Level.INFO should be defined" time="0" classname="Firefox 26.0.0 (Mac OS X 10.7).log4js_Level"/>
     <testcase name="log4js.Level.OFF should be defined" time="0" classname="Firefox 26.0.0 (Mac OS X 10.7).log4js_Level"/>
     <testcase name="log4js.Level.&lt;Level&gt;.level should be Number" time="0.001" classname="Firefox 26.0.0 (Mac OS X 10.7).log4js_Level"/>
     <testcase name="log4js.Level.&lt;Level&gt;.name should be String" time="0" classname="Firefox 26.0.0 (Mac OS X 10.7).log4js_Level"/>
-    <testcase name="log4js.Level.&lt;Level&gt;.name should be the same as the identifier" time="0" classname="Firefox 26.0.0 (Mac OS X 10.7).log4js_Level"/>
+    <testcase name="log4js.Level.&lt;Level&gt;.name should be the same as the identifier" time="0.002" classname="Firefox 26.0.0 (Mac OS X 10.7).log4js_Level"/>
+    <testcase name="All #entryPoints should be true" time="0.001" classname="Firefox 26.0.0 (Mac OS X 10.7).#Appender"/>
     <system-out><![CDATA[
 ]]></system-out>
     <system-err/>
   </testsuite>
-  <testsuite name="Chrome 32.0.1700 (Mac OS X 10.7.5)" package="" timestamp="2014-01-15T20:05:59" id="0" hostname="localhost" tests="77" errors="0" failures="0" time="0.046">
+  <testsuite name="Chrome 32.0.1700 (Mac OS X 10.7.5)" package="" timestamp="2014-01-18T00:28:57" id="0" hostname="localhost" tests="126" errors="0" failures="0" time="0.059">
     <properties>
       <property name="browser.fullName" value="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/32.0.1700.77 Safari/537.36"/>
     </properties>
-    <testcase name=".toString" time="0.017" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).#Level"/>
+    <testcase name=".toString" time="0.005" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).#Level"/>
     <testcase name=".equal" time="0.001" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).#Level"/>
-    <testcase name=".isGreaterOrEqual" time="0.001" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).#Level"/>
+    <testcase name=".isGreaterOrEqual" time="0" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).#Level"/>
     <testcase name="#ALL should be defined" time="0" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).#Level"/>
     <testcase name="#FATAL should be defined" time="0" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).#Level"/>
     <testcase name="#ERROR should be defined" time="0" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).#Level"/>
     <testcase name="#WARN should be defined" time="0" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).#Level"/>
-    <testcase name="#DEBUG should be defined" time="0" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).#Level"/>
+    <testcase name="#DEBUG should be defined" time="0.001" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).#Level"/>
     <testcase name="#TRACE should be defined" time="0" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).#Level"/>
     <testcase name="#INFO should be defined" time="0" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).#Level"/>
     <testcase name="#OFF should be defined" time="0" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).#Level"/>
+    <testcase name=".eventTypes should be &quot;[]&quot;" time="0.002" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).#EventSupport prototypes"/>
+    <testcase name=".eventListeners should be &quot;{}&quot;" time="0" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).#EventSupport prototypes"/>
+    <testcase name="parameter must be Array otherwise handleError should be called" time="0.003" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).#EventSupport _setEventTypes"/>
+    <testcase name="parameter should replace .eventTypes" time="0.001" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).#EventSupport _setEventTypes"/>
+    <testcase name=".eventListeners should be empty Array" time="0.001" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).#EventSupport _setEventTypes"/>
+    <testcase name="@param listener is function" time="0.002" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).#EventSupport _addEventListener"/>
+    <testcase name="@param listener is function but event type does not exist" time="0.001" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).#EventSupport _addEventListener"/>
+    <testcase name="@param listener must be function otherwise handelError should be called" time="0" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).#EventSupport _addEventListener"/>
+    <testcase name="@param listener must be function otherwise handelError should be called" time="0.001" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).#EventSupport _removeEventListener"/>
+    <testcase name="@param listener is function but event type does not exist" time="0.001" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).#EventSupport _removeEventListener"/>
+    <testcase name="Should remove listener from .eventListeners" time="0" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).#EventSupport _removeEventListener"/>
+    <testcase name="@param eventType must exist otherwise handleError should be called" time="0.001" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).#EventSupport _dispatchEvent"/>
+    <testcase name="if event exist it should be called" time="0" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).#EventSupport _dispatchEvent"/>
     <testcase name="All #entryPoints should be true" time="0.002" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).#Logger"/>
     <testcase name="TRACE" time="0.002" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).#Logger _is&lt;Level&gt;Enabled should call _isEnabledFor"/>
-    <testcase name="DEBUG" time="0.002" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).#Logger _is&lt;Level&gt;Enabled should call _isEnabledFor"/>
+    <testcase name="DEBUG" time="0.001" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).#Logger _is&lt;Level&gt;Enabled should call _isEnabledFor"/>
     <testcase name="INFO" time="0" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).#Logger _is&lt;Level&gt;Enabled should call _isEnabledFor"/>
-    <testcase name="WARN" time="0.001" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).#Logger _is&lt;Level&gt;Enabled should call _isEnabledFor"/>
+    <testcase name="WARN" time="0" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).#Logger _is&lt;Level&gt;Enabled should call _isEnabledFor"/>
     <testcase name="ERROR" time="0" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).#Logger _is&lt;Level&gt;Enabled should call _isEnabledFor"/>
     <testcase name="FATAL" time="0" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).#Logger _is&lt;Level&gt;Enabled should call _isEnabledFor"/>
     <testcase name="Level.ALL" time="0.001" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).#Logger _is&lt;Level&gt;Enabled should return correct value"/>
     <testcase name="Level.TRACE" time="0.001" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).#Logger _is&lt;Level&gt;Enabled should return correct value"/>
-    <testcase name="DEBUG" time="0.001" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).#Logger _is&lt;Level&gt;Enabled should return correct value"/>
+    <testcase name="DEBUG" time="0" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).#Logger _is&lt;Level&gt;Enabled should return correct value"/>
     <testcase name="INFO" time="0" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).#Logger _is&lt;Level&gt;Enabled should return correct value"/>
     <testcase name="WARN" time="0.001" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).#Logger _is&lt;Level&gt;Enabled should return correct value"/>
-    <testcase name="ERROR" time="0" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).#Logger _is&lt;Level&gt;Enabled should return correct value"/>
-    <testcase name="FATAL" time="0.001" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).#Logger _is&lt;Level&gt;Enabled should return correct value"/>
-    <testcase name="should return correct name" time="0.001" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).#Logger _toString"/>
-    <testcase name="logger.trace" time="0.003" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).#Logger _&lt;Level&gt; should call _log with correct arguments"/>
+    <testcase name="ERROR" time="0.001" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).#Logger _is&lt;Level&gt;Enabled should return correct value"/>
+    <testcase name="FATAL" time="0" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).#Logger _is&lt;Level&gt;Enabled should return correct value"/>
+    <testcase name="Should throw exception (call handleError) if Level not instance of Level" time="0.001" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).#Logger _setLevel"/>
+    <testcase name="Should throw exception (call handleError) if Level === null &amp;&amp; logger is root" time="0" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).#Logger _setLevel"/>
+    <testcase name="Should set new Level" time="0" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).#Logger _setLevel"/>
+    <testcase name="should return correct name" time="0" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).#Logger _toString"/>
+    <testcase name="logger.trace" time="0.001" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).#Logger _&lt;Level&gt; should call _log with correct arguments"/>
     <testcase name="logger.debug" time="0.001" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).#Logger _&lt;Level&gt; should call _log with correct arguments"/>
-    <testcase name="logger.info" time="0.001" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).#Logger _&lt;Level&gt; should call _log with correct arguments"/>
+    <testcase name="logger.info" time="0" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).#Logger _&lt;Level&gt; should call _log with correct arguments"/>
     <testcase name="logger.warn" time="0" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).#Logger _&lt;Level&gt; should call _log with correct arguments"/>
-    <testcase name="logger.error" time="0.001" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).#Logger _&lt;Level&gt; should call _log with correct arguments"/>
-    <testcase name="logger.fatal" time="0" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).#Logger _&lt;Level&gt; should call _log with correct arguments"/>
+    <testcase name="logger.error" time="0" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).#Logger _&lt;Level&gt; should call _log with correct arguments"/>
+    <testcase name="logger.fatal" time="0.001" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).#Logger _&lt;Level&gt; should call _log with correct arguments"/>
     <testcase name="If enabled and called with Level should call .callAppenders" time="0.001" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).#Logger _log"/>
+    <testcase name="If enabled = false should not call .callAppenders" time="0.001" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).#Logger _log"/>
+    <testcase name="should return Level.TRACE" time="0" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).#Logger _getEffectiveLevel"/>
+    <testcase name="should return null" time="0" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).#Logger _getEffectiveLevel"/>
+    <testcase name="Should call .invalidateAppenderCache on childLogger" time="0.001" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).#Logger _addChild"/>
+    <testcase name="childLogger.parent should be logger" time="0" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).#Logger _addChild"/>
+    <testcase name="logger.children.length should be 1" time="0.003" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).#Logger _addChild"/>
+    <testcase name="Should return true per default" time="0" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).#Logger _getAdditivity"/>
+    <testcase name="Should change additivity to false" time="0" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).#Logger _setAdditivity"/>
+    <testcase name="Should call .invalidateAppenderCache on change" time="0.001" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).#Logger _setAdditivity"/>
+    <testcase name="Should not call .invalidateAppenderCache if nothing has changed" time="0" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).#Logger _setAdditivity"/>
+    <testcase name=".getString should return LoggingEvent[TRACE]" time="0.001" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).#LoggingEvent"/>
+    <testcase name=".getCombinedMessages should return &quot;1&quot;" time="0" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).#LoggingEvent"/>
+    <testcase name=".getCombinedMessages should return &quot;1 -new Line- 2&quot;" time="0" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).#LoggingEvent"/>
+    <testcase name=".getThrowableStrRep should return &quot;&quot; if LoggingEvent.exception is null or false" time="0.001" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).#LoggingEvent"/>
+    <testcase name="check defaults" time="0" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).#Layout prototypes"/>
+    <testcase name="prototypes should be same as defaults on initialization" time="0" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).#Layout prototypes"/>
+    <testcase name="check other prototypes" time="0" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).#Layout prototypes"/>
+    <testcase name=".format should call handle Error if it is not overridden" time="0" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).#Layout function to override by developing new Appender"/>
+    <testcase name=".ignoresThrowable should call handle Error if it is not overridden" time="0" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).#Layout function to override by developing new Appender"/>
+    <testcase name=".allowBatching should return true per default" time="0" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).#Layout function to override by developing new Appender"/>
+    <testcase name=".getContentType should return &quot;text/plain&quot; per default" time="0" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).#Layout function to override by developing new Appender"/>
+    <testcase name=".toString should call handleError if not overridden" time="0" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).#Layout function to override by developing new Appender"/>
+    <testcase name="Should set .overrideTimeStampsSetting to true if called" time="0" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).#Layout _setTimeStampsInMilliseconds"/>
+    <testcase name="Should set .useTimeStampsInMilliseconds even if given parameter not a boolean" time="0.001" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).#Layout _setTimeStampsInMilliseconds"/>
+    <testcase name="Should return &quot;null&quot; per default" time="0" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).#Layout _isTimeStampsInMilliseconds"/>
+    <testcase name="Should return .useTimeStampsInMilliseconds if .overrideTimeStampsSetting set to true" time="0.003" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).#Layout _isTimeStampsInMilliseconds"/>
+    <testcase name="Should return value in seconds if .isTimeStampsInMilliseconds set to false" time="0" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).#Layout _getTimeStampValue"/>
+    <testcase name="Should return value in milliSeconds if .isTimeStampsInMilliseconds set to true" time="0.001" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).#Layout _getTimeStampValue"/>
+    <testcase name="Check default return values" time="0.002" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).#Layout _getDataValues"/>
+    <testcase name="Check default return values with timestamp in millisecond" time="0.001" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).#Layout _getDataValues"/>
+    <testcase name="Check default return values with combinedMessages true" time="0" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).#Layout _getDataValues"/>
+    <testcase name="Check default return values with .customFields" time="0.001" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).#Layout _getDataValues"/>
+    <testcase name="Check default return values with .customFields as function should call that" time="0.001" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).#Layout _getDataValues"/>
+    <testcase name=".setCustomFields should call handleError if name and/or value is not set" time="0" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).#Layout _setCustomField &amp; _hasCustomFields"/>
+    <testcase name=".setCustomFields should call handleError if name is not &quot;String &quot;" time="0.001" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).#Layout _setCustomField &amp; _hasCustomFields"/>
+    <testcase name=".setCustomFields should apply give parameter to .customFields" time="0" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).#Layout _setCustomField &amp; _hasCustomFields"/>
+    <testcase name=".setCustomFields should update value if name already exist at .customFields" time="0" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).#Layout _setCustomField &amp; _hasCustomFields"/>
+    <testcase name=".setCustomFields should add new customField if name not exist" time="0" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).#Layout _setCustomField &amp; _hasCustomFields"/>
+    <testcase name=".hasCustomFields should return &quot;true&quot; if one set" time="0" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).#Layout _setCustomField &amp; _hasCustomFields"/>
     <testcase name="log4js should be defined" time="0" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).log4js should defined and initiate with all Appender and Layouts"/>
     <testcase name="log4js.Level should be defined" time="0" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).log4js should defined and initiate with all Appender and Layouts log4js prototypes should defined"/>
     <testcase name="log4js.evalInScope should be defined" time="0" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).log4js should defined and initiate with all Appender and Layouts log4js prototypes should defined"/>
     <testcase name="log4js.eventListeners should be defined" time="0" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).log4js should defined and initiate with all Appender and Layouts log4js prototypes should defined"/>
     <testcase name="log4js.eventTypes should be defined" time="0" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).log4js should defined and initiate with all Appender and Layouts log4js prototypes should defined"/>
     <testcase name="log4js.getDefaultLogger should be defined" time="0" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).log4js should defined and initiate with all Appender and Layouts log4js prototypes should defined"/>
-    <testcase name="log4js.getLogger should be defined" time="0" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).log4js should defined and initiate with all Appender and Layouts log4js prototypes should defined"/>
+    <testcase name="log4js.getLogger should be defined" time="0.001" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).log4js should defined and initiate with all Appender and Layouts log4js prototypes should defined"/>
     <testcase name="log4js.getNullLogger should be defined" time="0" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).log4js should defined and initiate with all Appender and Layouts log4js prototypes should defined"/>
     <testcase name="log4js.getRootLogger should be defined" time="0" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).log4js should defined and initiate with all Appender and Layouts log4js prototypes should defined"/>
     <testcase name="log4js.isEnabled should be defined" time="0" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).log4js should defined and initiate with all Appender and Layouts log4js prototypes should defined"/>
     <testcase name="log4js.isTimeStampsInMilliseconds should be defined" time="0" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).log4js should defined and initiate with all Appender and Layouts log4js prototypes should defined"/>
-    <testcase name="log4js.logLog should be defined" time="0" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).log4js should defined and initiate with all Appender and Layouts log4js prototypes should defined"/>
+    <testcase name="log4js.logLog should be defined" time="0.001" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).log4js should defined and initiate with all Appender and Layouts log4js prototypes should defined"/>
     <testcase name="log4js.resetConfiguration should be defined" time="0" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).log4js should defined and initiate with all Appender and Layouts log4js prototypes should defined"/>
     <testcase name="log4js.setDocumentReady should be defined" time="0" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).log4js should defined and initiate with all Appender and Layouts log4js prototypes should defined"/>
-    <testcase name="log4js.setEnabled should be defined" time="0.001" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).log4js should defined and initiate with all Appender and Layouts log4js prototypes should defined"/>
+    <testcase name="log4js.setEnabled should be defined" time="0" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).log4js should defined and initiate with all Appender and Layouts log4js prototypes should defined"/>
     <testcase name="log4js.setShowStackTraces should be defined" time="0" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).log4js should defined and initiate with all Appender and Layouts log4js prototypes should defined"/>
     <testcase name="log4js.setTimeStampsInMilliseconds should be defined" time="0" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).log4js should defined and initiate with all Appender and Layouts log4js prototypes should defined"/>
-    <testcase name="log4js.Appender should be defined" time="0" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).log4js should defined and initiate with all Appender and Layouts log4js Appender should defined"/>
+    <testcase name="log4js.Appender should be defined" time="0.001" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).log4js should defined and initiate with all Appender and Layouts log4js Appender should defined"/>
     <testcase name="log4js.AlertAppender should be defined" time="0" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).log4js should defined and initiate with all Appender and Layouts log4js Appender should defined"/>
     <testcase name="log4js.AjaxAppender should be defined" time="0" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).log4js should defined and initiate with all Appender and Layouts log4js Appender should defined"/>
     <testcase name="log4js.BrowserConsoleAppender should be defined" time="0" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).log4js should defined and initiate with all Appender and Layouts log4js Appender should defined"/>
     <testcase name="log4js.InPageAppender should be defined" time="0" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).log4js should defined and initiate with all Appender and Layouts log4js Appender should defined"/>
     <testcase name="log4js.InlineAppender should be defined" time="0" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).log4js should defined and initiate with all Appender and Layouts log4js Appender should defined"/>
     <testcase name="log4js.PopUpAppender should be defined" time="0" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).log4js should defined and initiate with all Appender and Layouts log4js Appender should defined"/>
-    <testcase name="log4js.Layout should be defined" time="0.001" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).log4js should defined and initiate with all Appender and Layouts log4js Layouts should defined"/>
-    <testcase name="log4js.HttpPostDataLayout should be defined" time="0" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).log4js should defined and initiate with all Appender and Layouts log4js Layouts should defined"/>
-    <testcase name="log4js.JsonLayout should be defined" time="0" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).log4js should defined and initiate with all Appender and Layouts log4js Layouts should defined"/>
-    <testcase name="log4js.NullLayout should be defined" time="0" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).log4js should defined and initiate with all Appender and Layouts log4js Layouts should defined"/>
-    <testcase name="log4js.PatternLayout should be defined" time="0" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).log4js should defined and initiate with all Appender and Layouts log4js Layouts should defined"/>
-    <testcase name="log4js.SimpleLayout should be defined" time="0" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).log4js should defined and initiate with all Appender and Layouts log4js Layouts should defined"/>
-    <testcase name="log4js.XmlLayout should be defined" time="0" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).log4js should defined and initiate with all Appender and Layouts log4js Layouts should defined"/>
-    <testcase name="log4js.Level should be defined" time="0" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).log4js_Level"/>
+    <testcase name="log4js.Level should be defined" time="0.001" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).log4js_Level"/>
     <testcase name="log4js.Level.ALL should be defined" time="0" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).log4js_Level"/>
     <testcase name="log4js.Level.ALL should be defined" time="0" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).log4js_Level"/>
     <testcase name="log4js.Level.FATAL should be defined" time="0" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).log4js_Level"/>
@@ -164,8 +395,9 @@
     <testcase name="log4js.Level.INFO should be defined" time="0" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).log4js_Level"/>
     <testcase name="log4js.Level.OFF should be defined" time="0" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).log4js_Level"/>
     <testcase name="log4js.Level.&lt;Level&gt;.level should be Number" time="0.001" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).log4js_Level"/>
-    <testcase name="log4js.Level.&lt;Level&gt;.name should be String" time="0.003" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).log4js_Level"/>
+    <testcase name="log4js.Level.&lt;Level&gt;.name should be String" time="0" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).log4js_Level"/>
     <testcase name="log4js.Level.&lt;Level&gt;.name should be the same as the identifier" time="0" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).log4js_Level"/>
+    <testcase name="All #entryPoints should be true" time="0" classname="Chrome 32.0.1700 (Mac OS X 10.7.5).#Appender"/>
     <system-out><![CDATA[
 ]]></system-out>
     <system-err/>
