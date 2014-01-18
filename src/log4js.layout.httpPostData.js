@@ -65,8 +65,10 @@ HttpPostDataLayout.prototype.toString = function () {
   return 'HttpPostDataLayout';
 };
 
-/**
- *
- * @type {HttpPostDataLayout}
- */
-log4javascript.HttpPostDataLayout = HttpPostDataLayout;
+if(typeof log4javascript !== 'undefined'){
+  /**
+   *
+   * @type {HttpPostDataLayout}
+   */
+  log4javascript.HttpPostDataLayout = HttpPostDataLayout;
+}
