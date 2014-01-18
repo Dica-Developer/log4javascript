@@ -12,10 +12,8 @@ function getUUID(){
 
 var logLog,
   uniqueId,
-  handleError,
   ROOT_LOGGER_DEFAULT_LEVEL,
   enabled = true,
-  useTimeStampsInMilliseconds = true,
   showStackTraces = false,
   applicationStartDate = new Date(),
   emptyFunction = function () {},
@@ -25,6 +23,105 @@ var logLog,
 // Hashtable of loggers keyed by logger name
 var loggers = {};
 var loggerNames = [];
+
+/**
+ * Helper method to convert an object to Boolean
+ * @param {*} obj
+ * @returns {boolean}
+ */
+function toBool(obj) {
+  'use strict';
+
+  return Boolean(obj);
+}
+
+/**
+ * Helper method to identify Functions
+ * @param fn
+ * @returns {boolean}
+ */
+function isFunction(fn) {
+  'use strict';
+
+  return typeof fn === 'function';
+}
+
+/**
+ *
+ * @param {Array} arr
+ * @param {*} val
+ * @returns {Boolean}
+ */
+function arrayContains(arr, val) {
+  'use strict';
+
+  var found = false;
+  for (var i = 0, len = arr.length; i < len; i++) {
+    if (arr[i] === val) {
+      found = true;
+      break;
+    }
+  }
+  return found;
+}
+
+/**
+ *
+ * @param {Array} arr
+ * @param {*} val
+ * @returns {Boolean}
+ */
+function arrayRemove(arr, val) {
+  'use strict';
+
+  var index = -1;
+  for (var i = 0, len = arr.length; i < len; i++) {
+    if (arr[i] === val) {
+      index = i;
+      break;
+    }
+  }
+  if (index >= 0) {
+    arr.splice(index, 1);
+    return true;
+  } else {
+    return false;
+  }
+}
+
+/**
+ *
+ * @param {String} message
+ * @param {Error} [exception]
+ */
+function handleError (message, exception) {
+  'use strict';
+
+  logLog.error(message, exception);
+  log4javascript.dispatchEvent('error', { 'message': message, 'exception': exception });
+}
+
+/**
+ *
+ * @param {*} str
+ * @returns {Boolean}
+ */
+function isString(str){
+  'use strict';
+
+  return typeof str === 'string';
+}
+
+/**
+ * Helper method to identify Arrays
+ * @param {*} array
+ * @returns {boolean}
+ */
+function isArray(array) {
+  'use strict';
+
+  return array instanceof Array;
+}
 
 /**
  *
@@ -715,7 +812,7 @@ EventSupport.prototype.setEventTypes = function (eventTypesParam) {
       this.eventListeners[this.eventTypes[i]] = [];
     }
   } else {
-    handleError('log4javascript.EventSupport [' + this + ']: setEventTypes: eventTypes parameter must be an Array');
+    handleError('EventSupport [' + this + ']: setEventTypes: eventTypes parameter must be an Array');
   }
 };
 
@@ -729,11 +826,12 @@ EventSupport.prototype.addEventListener = function (eventType, listener) {
 
   if (isFunction(listener)) {
     if (!arrayContains(this.eventTypes, eventType)) {
-      handleError('log4javascript.EventSupport [' + this + ']: addEventListener: no event called "' + eventType + '"');
+      handleError('EventSupport [' + this + ']: addEventListener: no event called "' + eventType + '"');
+    } else {
+      this.eventListeners[eventType].push(listener);
     }
-    this.eventListeners[eventType].push(listener);
   } else {
-    handleError('log4javascript.EventSupport [' + this + ']: addEventListener: listener must be a function');
+    handleError('EventSupport [' + this + ']: addEventListener: listener must be a function');
   }
 };
 
@@ -747,11 +845,12 @@ EventSupport.prototype.removeEventListener = function (eventType, listener) {
 
   if (isFunction(listener)) {
     if (!arrayContains(this.eventTypes, eventType)) {
-      handleError('log4javascript.EventSupport [' + this + ']: removeEventListener: no event called "' + eventType + '"');
+      handleError('EventSupport [' + this + ']: removeEventListener: no event called "' + eventType + '"');
+    } else {
+      arrayRemove(this.eventListeners[eventType], listener);
     }
-    arrayRemove(this.eventListeners[eventType], listener);
   } else {
-    handleError('log4javascript.EventSupport [' + this + ']: removeEventListener: listener must be a function');
+    handleError('EventSupport [' + this + ']: removeEventListener: listener must be a function');
   }
 };
 
@@ -769,7 +868,7 @@ EventSupport.prototype.dispatchEvent = function (eventType, eventArgs) {
       listeners[i](this, eventType, eventArgs);
     }
   } else {
-    handleError('log4javascript.EventSupport [' + this + ']: dispatchEvent: no event called "' + eventType + '"');
+    handleError('EventSupport [' + this + ']: dispatchEvent: no event called "' + eventType + '"');
   }
 };
 /*jshint unused:false*/
@@ -832,39 +931,6 @@ function isNotUndefined(obj) {
 }
 
 /**
- * Helper method to identify Arrays
- * @param {*} array
- * @returns {boolean}
- */
-function isArray(array) {
-  'use strict';
-
-  return array instanceof Array;
-}
-
-/**
- * Helper method to identify Functions
- * @param fn
- * @returns {boolean}
- */
-function isFunction(fn) {
-  'use strict';
-
-  return typeof fn === 'function';
-}
-
-/**
- *
- * @param {*} str
- * @returns {Boolean}
- */
-function isString(str){
-  'use strict';
-
-  return typeof str === 'string';
-}
-
-/**
  * Helper method
  * @param {*} obj
  * @returns {String}
@@ -873,17 +939,6 @@ function toStr(obj) {
   'use strict';
 
   return (obj && obj.toString) ? obj.toString() : String(obj);
-}
-
-/**
- * Helper method to convert an object to Boolean
- * @param {*} obj
- * @returns {boolean}
- */
-function toBool(obj) {
-  'use strict';
-
-  return Boolean(obj);
 }
 
 /**
@@ -952,49 +1007,6 @@ function urlDecode(str){
     retString = decodeURIComponent(str);
   }
   return retString;
-}
-
-/**
- *
- * @param {Array} arr
- * @param {*} val
- * @returns {Boolean}
- */
-function arrayRemove(arr, val) {
-  'use strict';
-
-  var index = -1;
-  for (var i = 0, len = arr.length; i < len; i++) {
-    if (arr[i] === val) {
-      index = i;
-      break;
-    }
-  }
-  if (index >= 0) {
-    arr.splice(index, 1);
-    return true;
-  } else {
-    return false;
-  }
-}
-
-/**
- *
- * @param {Array} arr
- * @param {*} val
- * @returns {Boolean}
- */
-function arrayContains(arr, val) {
-  'use strict';
-
-  var found = false;
-  for (var i = 0, len = arr.length; i < len; i++) {
-    if (arr[i] === val) {
-      found = true;
-      break;
-    }
-  }
-  return found;
 }
 
 /**
@@ -1350,6 +1362,8 @@ Log4JavaScript.prototype.isEnabled = function () {
   return enabled;
 };
 
+Log4JavaScript.prototype.useTimeStampsInMilliseconds = true;
+
 /**
  *
  * @param {Boolean} timeStampsInMilliseconds
@@ -1357,7 +1371,7 @@ Log4JavaScript.prototype.isEnabled = function () {
 Log4JavaScript.prototype.setTimeStampsInMilliseconds = function (timeStampsInMilliseconds) {
   'use strict';
 
-  useTimeStampsInMilliseconds = toBool(timeStampsInMilliseconds);
+  this.useTimeStampsInMilliseconds = toBool(timeStampsInMilliseconds);
 };
 
 /**
@@ -1367,7 +1381,7 @@ Log4JavaScript.prototype.setTimeStampsInMilliseconds = function (timeStampsInMil
 Log4JavaScript.prototype.isTimeStampsInMilliseconds = function () {
   'use strict';
 
-  return useTimeStampsInMilliseconds;
+  return this.useTimeStampsInMilliseconds;
 };
 
 /**
@@ -1507,18 +1521,6 @@ Log4JavaScript.prototype.Level = Level;
  */
 var log4javascript = new Log4JavaScript();
 
-/**
- *
- * @param {String} message
- * @param {Error} exception
- */
-handleError = function(message, exception) {
-  'use strict';
-
-  logLog.error(message, exception);
-  log4javascript.dispatchEvent('error', { 'message': message, 'exception': exception });
-};
-
 log4javascript.setEventTypes(['load', 'error']);
 
 
@@ -1650,6 +1652,12 @@ Layout.prototype.overrideTimeStampsSetting = false;
 Layout.prototype.useTimeStampsInMilliseconds = null;
 
 /**
+ *
+ * @type {Array}
+ */
+Layout.prototype.customFields = [];
+
+/**
  * @todo document
  */
 Layout.prototype.format = function () {
@@ -1706,7 +1714,7 @@ Layout.prototype.isTimeStampsInMilliseconds = function () {
   'use strict';
 
   return this.overrideTimeStampsSetting ?
-    this.useTimeStampsInMilliseconds : useTimeStampsInMilliseconds;
+    this.useTimeStampsInMilliseconds : this.useTimeStampsInMilliseconds;
 };
 
 /**
@@ -1788,15 +1796,21 @@ Layout.prototype.setKeys = function (loggerKey, timeStampKey, levelKey, messageK
 Layout.prototype.setCustomField = function (name, value) {
   'use strict';
 
-  var fieldUpdated = false;
-  for (var i = 0, len = this.customFields.length; i < len; i++) {
-    if (this.customFields[i].name === name) {
-      this.customFields[i].value = value;
-      fieldUpdated = true;
+  if(typeof name === 'undefined' || typeof value === 'undefined'){
+    handleError('layout.setCustomFields: name and value must be defined');
+  } else if(!isString(name)) {
+    handleError('layout.setCustomFields: name must be "String"');
+  } else {
+    var fieldUpdated = false;
+    for (var i = 0, len = this.customFields.length; i < len; i++) {
+      if (this.customFields[i].name === name) {
+        this.customFields[i].value = value;
+        fieldUpdated = true;
+      }
     }
-  }
-  if (!fieldUpdated) {
-    this.customFields.push({'name': name, 'value': value});
+    if (!fieldUpdated) {
+      this.customFields.push({'name': name, 'value': value});
+    }
   }
 };
 
@@ -1819,11 +1833,14 @@ Layout.prototype.toString = function () {
   handleError('Layout.toString: all layouts must override this method');
 };
 
-/**
- *
- * @type {Layout}
- */
-log4javascript.Layout = Layout;
+if(typeof log4javascript !== 'undefined'){
+  /**
+   *
+   * @type {Layout}
+   */
+  log4javascript.Layout = Layout;
+}
+
 /**
  * HttpPostDataLayout
  * @constructor
@@ -2517,11 +2534,13 @@ var SimpleDateFormat;
     return formattedString;
   };
 })();
-/**
- *
- * @type {SimpleDateFormat}
- */
-log4javascript.SimpleDateFormat = SimpleDateFormat;
+if(typeof log4javascript !== 'undefined'){
+  /**
+   *
+   * @type {SimpleDateFormat}
+   */
+  log4javascript.SimpleDateFormat = SimpleDateFormat;
+}
 /**
  * PatternLayout
  * @param pattern
@@ -2875,11 +2894,14 @@ PatternLayout.prototype.toString = function () {
   return 'PatternLayout';
 };
 
-/**
- *
- * @type {PatternLayout}
- */
-log4javascript.PatternLayout = PatternLayout;
+if(typeof log4javascript !== 'undefined'){
+  /**
+   *
+   * @type {PatternLayout}
+   */
+  log4javascript.PatternLayout = PatternLayout;
+}
+
 /**
  * SimpleLayout
  * @constructor
@@ -3199,11 +3221,14 @@ Appender.prototype.toString = function () {
   handleError('Appender.toString: all appenders must override this method');
 };
 
-/**
- *
- * @type {Appender}
- */
-log4javascript.Appender = Appender;
+if(typeof log4javascript !== 'undefined'){
+  /**
+   *
+   * @type {Appender}
+   */
+  log4javascript.Appender = Appender;
+}
+
 // AjaxAppender related
 
 var xmlHttpFactories = [
