@@ -123,6 +123,64 @@ function isArray(array) {
 
 /**
  *
+ * @param {*} param
+ * @param {*} defaultValue
+ * @returns {String|Boolean}
+ */
+function extractBooleanFromParam(param, defaultValue) {
+  'use strict';
+
+  return isUndefined(param) ? defaultValue : toBool(param);
+}
+
+/**
+ *
+ * @param {*} param
+ * @param {*} defaultValue
+ * @returns {*|String}
+ */
+function extractStringFromParam(param, defaultValue) {
+  'use strict';
+
+  return isUndefined(param) ? defaultValue : String(param);
+}
+
+/**
+ *
+ * @param {*} param
+ * @param {*} defaultValue
+ * @returns {*|Boolean}
+ */
+function extractIntFromParam(param, defaultValue) {
+  'use strict';
+
+  if (isUndefined(param)) {
+    return defaultValue;
+  } else {
+    try {
+      var value = parseInt(param, 10);
+      return isNaN(value) ? defaultValue : value;
+    } catch (ex) {
+      logLog.warn('Invalid int param ' + param, ex);
+      return defaultValue;
+    }
+  }
+}
+
+/**
+ *
+ * @param {*} param
+ * @param {*} defaultValue
+ * @returns {*}
+ */
+function extractFunctionFromParam(param, defaultValue) {
+  'use strict';
+
+  return isFunction(param) ? param : defaultValue;
+}
+
+/**
+ *
  * @param {Error} ex
  * @returns {string}
  */
