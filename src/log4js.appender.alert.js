@@ -41,8 +41,10 @@ AlertAppender.prototype.toString = function () {
   return 'AlertAppender';
 };
 
-/**
- *
- * @type {AlertAppender}
- */
-log4javascript.AlertAppender = AlertAppender;
+if(typeof log4javascript !== 'undefined'){
+  /**
+   *
+   * @type {AlertAppender}
+   */
+  log4javascript.AlertAppender = AlertAppender;
+}

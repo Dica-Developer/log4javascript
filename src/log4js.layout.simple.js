@@ -46,8 +46,10 @@ SimpleLayout.prototype.toString = function () {
   return 'SimpleLayout';
 };
 
-/**
- *
- * @type {SimpleLayout}
- */
-log4javascript.SimpleLayout = SimpleLayout;
+if(typeof log4javascript !== 'undefined'){
+  /**
+   *
+   * @type {SimpleLayout}
+   */
+  log4javascript.SimpleLayout = SimpleLayout;
+}

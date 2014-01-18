@@ -46,8 +46,10 @@ NullLayout.prototype.toString = function () {
   return 'NullLayout';
 };
 
-/**
- *
- * @type {NullLayout}
- */
-log4javascript.NullLayout = NullLayout;
+if(typeof log4javascript !== 'undefined'){
+  /**
+   *
+   * @type {NullLayout}
+   */
+  log4javascript.NullLayout = NullLayout;
+}
