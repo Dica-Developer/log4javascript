@@ -206,7 +206,11 @@ define(['params', 'level', 'layout', 'logger'], function () {
 
       //TODO this test affects next test setup ".hasCustomFields should return "false" per default"
       it('Check default return values with .customFields', function(){
-        layout.setCustomField('test', 'bla');
+        loggingEvent.exception = {
+          message: 'Test message',
+          lineNumber: 23,
+          fileName: 'test.js'
+        };
         //TODO url could force failing tests on other machines
         expect(layout.getDataValues(loggingEvent, false)).toEqual([
           [ 'logger', 'test' ],
@@ -215,12 +219,22 @@ define(['params', 'level', 'layout', 'logger'], function () {
           [ 'url', 'http://localhost:9876/context.html' ],
           [ 'message', ['1'] ],
           [ 'milliseconds', loggingEvent.milliseconds ],
-          [ 'test', 'bla' ]
+          [ 'exception', 'Exception: Test message on line number 23 in file test.js' ]
         ]);
       });
 
       //TODO this test affects next test setup ".hasCustomFields should return "false" per default"
       it('Check default return values with .customFields as function should call that', function(){
+        var customFieldAsFunction = jasmine.createSpy('customField');
+
+        layout.setCustomField('test', customFieldAsFunction);
+        layout.getDataValues(loggingEvent, false);
+        //TODO url could force failing tests on other machines
+        expect(customFieldAsFunction).toHaveBeenCalled();
+      });
+
+      //TODO this test affects next test setup ".hasCustomFields should return "false" per default"
+      it('Check default return values with exception set to loggingEvent', function(){
         var customFieldAsFunction = jasmine.createSpy('customField');
 
         layout.setCustomField('test', customFieldAsFunction);
