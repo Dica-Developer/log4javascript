@@ -348,3 +348,93 @@ function getExceptionStringRep(ex) {
   }
   return null;
 }
+
+/**
+ *
+ * @param {*} evt
+ * @param {Window} win
+ * @returns {*}
+ */
+function getEvent(evt, win) {
+  'use strict';
+
+  win = win ? win : window;
+  return evt ? evt : win.event;
+}
+
+/**
+ *
+ * @param {HTMLElement} node
+ * @param {String} eventName
+ * @param {String|Function} listener
+ * @param {Boolean} useCapture
+ * @param {Window} [win]
+ */
+/*jshint unused:false */
+function addEvent(node, eventName, listener, useCapture, win) {
+  'use strict';
+
+  win = win ? win : window;
+  if (node.addEventListener) {
+    node.addEventListener(eventName, listener, useCapture);
+  } else if (node.attachEvent) {
+    node.attachEvent('on' + eventName, listener);
+  } else {
+    var propertyName = getListenersPropertyName(eventName);
+    if (!node[propertyName]) {
+      node[propertyName] = [];
+      // Set event handler
+      node['on' + eventName] = function (evt) {
+        evt = getEvent(evt, win);
+        var listenersPropertyName = getListenersPropertyName(eventName);
+
+        // Clone the array of listeners to leave the original untouched
+        var listeners = this[listenersPropertyName].concat([]);
+        var currentListener;
+
+        // Call each listener in turn
+        while ((currentListener = listeners.shift())) {
+          currentListener.call(this, evt);
+        }
+      };
+    }
+    node[propertyName].push(listener);
+  }
+}
+
+/**
+ *
+ * @param {HTMLElement} node
+ * @param {String} eventName
+ * @param {String|Function} listener
+ * @param {Boolean} useCapture
+ */
+function removeEvent(node, eventName, listener, useCapture) {
+  'use strict';
+
+  if (node.removeEventListener) {
+    node.removeEventListener(eventName, listener, useCapture);
+  } else if (node.detachEvent) {
+    node.detachEvent('on' + eventName, listener);
+  } else {
+    var propertyName = getListenersPropertyName(eventName);
+    if (node[propertyName]) {
+      arrayRemove(node[propertyName], listener);
+    }
+  }
+}
+
+/**
+ *
+ * @param evt
+ */
+function stopEventPropagation(evt) {
+  'use strict';
+
+  if (evt.stopPropagation) {
+    evt.stopPropagation();
+  } else if (isUndefined(evt.cancelBubble)) {
+    evt.cancelBubble = true;
+  }
+  evt.returnValue = false;
+}
