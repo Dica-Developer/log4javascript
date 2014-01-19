@@ -63,6 +63,7 @@ module.exports = function (grunt) {
         },
         src: [
           'src/log4js.params.js',
+          'src/log4js.simpleDateFormat.js',
           'src/log4js.level.js',
           'src/log4js.logger.js',
           'src/log4js.eventSupport.js',

@@ -80,6 +80,7 @@
     "PatternLayout":true,
     "Layout":true,
     "SimpleLayout":true,
+    "SimpleDateFormat":true,
     "JsonLayout":true,
     "NullLayout":true,
     "HttpPostDataLayout":true,
