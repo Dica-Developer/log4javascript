@@ -147,8 +147,10 @@ JsonLayout.prototype.getContentType = function () {
   return 'application/json';
 };
 
-/**
- *
- * @type {JsonLayout}
- */
-log4javascript.JsonLayout = JsonLayout;
+if(typeof log4javascript !== 'undefined'){
+  /**
+   *
+   * @type {JsonLayout}
+   */
+  log4javascript.JsonLayout = JsonLayout;
+}

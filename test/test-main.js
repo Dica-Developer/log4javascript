@@ -25,6 +25,7 @@ requirejs.config({
     'layout.null': '../src/log4js.layout.null',
     'layout.simple': '../src/log4js.layout.simple',
     'layout.httpPostData': '../src/log4js.layout.httpPostData',
+    'layout.json': '../src/log4js.layout.json',
     'lodash': '../test/vendor/lodash/dist/lodash.min'
   },
 
@@ -36,6 +37,7 @@ requirejs.config({
     'layout.pattern': ['layout'],
     'layout.simple': ['layout'],
     'layout.httpPostData': ['layout'],
+    'layout.json': ['layout'],
     'layout.null': ['layout']
 
   },
