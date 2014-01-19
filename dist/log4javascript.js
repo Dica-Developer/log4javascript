@@ -124,6 +124,176 @@ function isArray(array) {
 }
 
 /**
+ * Helper method to identify undefined objects
+ * @param {*} obj
+ * @returns {boolean}
+ */
+function isUndefined(obj) {
+  'use strict';
+
+  return typeof obj === 'undefined';
+}
+
+/**
+ *
+ * @param {*} obj
+ * @returns {boolean}
+ */
+function isNotUndefined(obj) {
+  'use strict';
+
+  return !isUndefined(obj);
+}
+
+/**
+ * Helper method
+ * @param {*} obj
+ * @returns {String}
+ */
+function toStr(obj) {
+  'use strict';
+
+  return (obj && obj.toString) ? obj.toString() : String(obj);
+}
+
+/**
+ *
+ * @param {String} str
+ * @returns {String}
+ */
+function trim(str) {
+  'use strict';
+
+  return str.replace(/^\s+/, '').replace(/\s+$/, '');
+}
+
+/**
+ *
+ * @param {String} text
+ * @returns {Array}
+ */
+function splitIntoLines(text) {
+  'use strict';
+
+  // Ensure all line breaks are \n only
+  var text2 = text.replace(/\r\n/g, '\n').replace(/\r/g, '\n');
+  return text2.split('\n');
+}
+
+/**
+ *
+ * @param {String} str
+ * @returns {String}
+ */
+function urlEncode(str){
+  'use strict';
+
+  var retString = '';
+  if(isUndefined(window.encodeURIComponent)){
+    retString = window.escape(str)
+      .replace(/\+/g, '%2B')
+      .replace(/"/g, '%22')
+      .replace(/'/g, '%27')
+      .replace(/\//g, '%2F')
+      .replace(/=/g, '%3D');
+  } else {
+    retString = encodeURIComponent(str);
+  }
+  return retString;
+}
+
+/**
+ *
+ * @param {String} str
+ * @returns {String}
+ */
+function urlDecode(str){
+  'use strict';
+
+  var retString = '';
+  if(isUndefined(window.decodeURIComponent)){
+    retString = window.unescape(str)
+      .replace(/%2B/g, '+')
+      .replace(/%22/g, '"')
+      .replace(/%27/g, '\'')
+      .replace(/%2F/g, '/')
+      .replace(/%3D/g, '=');
+  } else {
+    retString = decodeURIComponent(str);
+  }
+  return retString;
+}
+
+/**
+ *
+ * @param {String} eventName
+ * @returns {String}
+ */
+function getListenersPropertyName(eventName) {
+  'use strict';
+
+  return '__log4javascript_listeners__' + eventName;
+}
+
+/**
+ *
+ * @param {*} param
+ * @param {*} defaultValue
+ * @returns {String|Boolean}
+ */
+function extractBooleanFromParam(param, defaultValue) {
+  'use strict';
+
+  return isUndefined(param) ? defaultValue : toBool(param);
+}
+
+/**
+ *
+ * @param {*} param
+ * @param {*} defaultValue
+ * @returns {*|String}
+ */
+function extractStringFromParam(param, defaultValue) {
+  'use strict';
+
+  return isUndefined(param) ? defaultValue : String(param);
+}
+
+/**
+ *
+ * @param {*} param
+ * @param {*} defaultValue
+ * @returns {*|Boolean}
+ */
+function extractIntFromParam(param, defaultValue) {
+  'use strict';
+
+  if (isUndefined(param)) {
+    return defaultValue;
+  } else {
+    try {
+      var value = parseInt(param, 10);
+      return isNaN(value) ? defaultValue : value;
+    } catch (ex) {
+      logLog.warn('Invalid int param ' + param, ex);
+      return defaultValue;
+    }
+  }
+}
+
+/**
+ *
+ * @param {*} param
+ * @param {*} defaultValue
+ * @returns {*}
+ */
+function extractFunctionFromParam(param, defaultValue) {
+  'use strict';
+
+  return isFunction(param) ? param : defaultValue;
+}
+
+/**
  *
  * @param {Error} ex
  * @returns {string}
@@ -179,6 +349,430 @@ function getExceptionStringRep(ex) {
     return exStr;
   }
   return null;
+}
+
+/**
+ *
+ * @param {*} evt
+ * @param {Window} win
+ * @returns {*}
+ */
+function getEvent(evt, win) {
+  'use strict';
+
+  win = win ? win : window;
+  return evt ? evt : win.event;
+}
+
+/**
+ *
+ * @param {HTMLElement} node
+ * @param {String} eventName
+ * @param {String|Function} listener
+ * @param {Boolean} useCapture
+ * @param {Window} [win]
+ */
+/*jshint unused:false */
+function addEvent(node, eventName, listener, useCapture, win) {
+  'use strict';
+
+  win = win ? win : window;
+  if (node.addEventListener) {
+    node.addEventListener(eventName, listener, useCapture);
+  } else if (node.attachEvent) {
+    node.attachEvent('on' + eventName, listener);
+  } else {
+    var propertyName = getListenersPropertyName(eventName);
+    if (!node[propertyName]) {
+      node[propertyName] = [];
+      // Set event handler
+      node['on' + eventName] = function (evt) {
+        evt = getEvent(evt, win);
+        var listenersPropertyName = getListenersPropertyName(eventName);
+
+        // Clone the array of listeners to leave the original untouched
+        var listeners = this[listenersPropertyName].concat([]);
+        var currentListener;
+
+        // Call each listener in turn
+        while ((currentListener = listeners.shift())) {
+          currentListener.call(this, evt);
+        }
+      };
+    }
+    node[propertyName].push(listener);
+  }
+}
+
+/**
+ *
+ * @param {HTMLElement} node
+ * @param {String} eventName
+ * @param {String|Function} listener
+ * @param {Boolean} useCapture
+ */
+function removeEvent(node, eventName, listener, useCapture) {
+  'use strict';
+
+  if (node.removeEventListener) {
+    node.removeEventListener(eventName, listener, useCapture);
+  } else if (node.detachEvent) {
+    node.detachEvent('on' + eventName, listener);
+  } else {
+    var propertyName = getListenersPropertyName(eventName);
+    if (node[propertyName]) {
+      arrayRemove(node[propertyName], listener);
+    }
+  }
+}
+
+/**
+ *
+ * @param evt
+ */
+function stopEventPropagation(evt) {
+  'use strict';
+
+  if (evt.stopPropagation) {
+    evt.stopPropagation();
+  } else if (isUndefined(evt.cancelBubble)) {
+    evt.cancelBubble = true;
+  }
+  evt.returnValue = false;
+}
+var SimpleDateFormat;
+
+(function () {
+  'use strict';
+
+  var regex = /('[^']*')|(G+|y+|M+|w+|W+|D+|d+|F+|E+|a+|H+|k+|K+|h+|m+|s+|S+|Z+)|([a-zA-Z]+)|([^a-zA-Z']+)/;
+  var monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
+    'July', 'August', 'September', 'October', 'November', 'December'];
+  var dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+  var TEXT2 = 0, TEXT3 = 1, NUMBER = 2, YEAR = 3, MONTH = 4, TIMEZONE = 5;
+  var types = {
+    G: TEXT2,
+    y: YEAR,
+    M: MONTH,
+    w: NUMBER,
+    W: NUMBER,
+    D: NUMBER,
+    d: NUMBER,
+    F: NUMBER,
+    E: TEXT3,
+    a: TEXT2,
+    H: NUMBER,
+    k: NUMBER,
+    K: NUMBER,
+    h: NUMBER,
+    m: NUMBER,
+    s: NUMBER,
+    S: NUMBER,
+    Z: TIMEZONE
+  };
+  var ONE_DAY = 24 * 60 * 60 * 1000;
+  var ONE_WEEK = 7 * ONE_DAY;
+  var DEFAULT_MINIMAL_DAYS_IN_FIRST_WEEK = 1;
+
+  var newDateAtMidnight = function (year, month, day) {
+    var d = new Date(year, month, day, 0, 0, 0);
+    d.setMilliseconds(0);
+    return d;
+  };
+
+  /**
+   *
+   * @param {Date} date
+   * @returns {Number}
+   */
+  Date.prototype.getDifference = function (date) {
+    return this.getTime() - date.getTime();
+  };
+
+  /**
+   *
+   * @param {Date} d
+   * @returns {boolean}
+   */
+  Date.prototype.isBefore = function (d) {
+    return this.getTime() < d.getTime();
+  };
+
+  /**
+   *
+   * @returns {Number}
+   */
+  Date.prototype.getUTCTime = function () {
+    return Date.UTC(this.getFullYear(), this.getMonth(), this.getDate(), this.getHours(), this.getMinutes(),
+      this.getSeconds(), this.getMilliseconds());
+  };
+
+  /**
+   *
+   * @param {Date} d
+   * @returns {number}
+   */
+  Date.prototype.getTimeSince = function (d) {
+    return this.getUTCTime() - d.getUTCTime();
+  };
+
+  /**
+   *
+   * @returns {Date}
+   */
+  Date.prototype.getPreviousSunday = function () {
+    // Using midday avoids any possibility of DST messing things up
+    var midday = new Date(this.getFullYear(), this.getMonth(), this.getDate(), 12, 0, 0);
+    var previousSunday = new Date(midday.getTime() - this.getDay() * ONE_DAY);
+    return newDateAtMidnight(previousSunday.getFullYear(), previousSunday.getMonth(),
+      previousSunday.getDate());
+  };
+
+  /**
+   *
+   * @extends Date
+   * @param {Number} minimalDaysInFirstWeek
+   * @returns {Number}
+   */
+  Date.prototype.getWeekInYear = function (minimalDaysInFirstWeek) {
+    if (isUndefined(this.minimalDaysInFirstWeek)) {
+      minimalDaysInFirstWeek = DEFAULT_MINIMAL_DAYS_IN_FIRST_WEEK;
+    }
+    var previousSunday = this.getPreviousSunday();
+    var startOfYear = newDateAtMidnight(this.getFullYear(), 0, 1);
+    var numberOfSundays = previousSunday.isBefore(startOfYear) ?
+      0 : 1 + Math.floor(previousSunday.getTimeSince(startOfYear) / ONE_WEEK);
+    var numberOfDaysInFirstWeek = 7 - startOfYear.getDay();
+    var weekInYear = numberOfSundays;
+    if (numberOfDaysInFirstWeek < minimalDaysInFirstWeek) {
+      weekInYear--;
+    }
+    return weekInYear;
+  };
+
+  /**
+   *
+   * @param {Number} minimalDaysInFirstWeek
+   * @returns {Number}
+   */
+  Date.prototype.getWeekInMonth = function (minimalDaysInFirstWeek) {
+    if (isUndefined(this.minimalDaysInFirstWeek)) {
+      minimalDaysInFirstWeek = DEFAULT_MINIMAL_DAYS_IN_FIRST_WEEK;
+    }
+    var previousSunday = this.getPreviousSunday();
+    var startOfMonth = newDateAtMidnight(this.getFullYear(), this.getMonth(), 1);
+    var numberOfSundays = previousSunday.isBefore(startOfMonth) ?
+      0 : 1 + Math.floor(previousSunday.getTimeSince(startOfMonth) / ONE_WEEK);
+    var numberOfDaysInFirstWeek = 7 - startOfMonth.getDay();
+    var weekInMonth = numberOfSundays;
+    if (numberOfDaysInFirstWeek >= minimalDaysInFirstWeek) {
+      weekInMonth++;
+    }
+    return weekInMonth;
+  };
+
+  /**
+   *
+   * @returns {Number}
+   * @this {Date}
+   */
+  Date.prototype.getDayInYear = function () {
+    var startOfYear = newDateAtMidnight(this.getFullYear(), 0, 1);
+    return 1 + Math.floor(this.getTimeSince(startOfYear) / ONE_DAY);
+  };
+
+  /* ------------------------------------------------------------------ */
+
+  /**
+   *
+   * @param formatString
+   * @this {SimpleDateFormat}
+   * @constructor
+   */
+  SimpleDateFormat = function (formatString) {
+    this.formatString = formatString;
+  };
+
+  /**
+   * Sets the minimum number of days in a week in order for that week to
+   * be considered as belonging to a particular month or year
+   * @param {Number} days
+   */
+  SimpleDateFormat.prototype.setMinimalDaysInFirstWeek = function (days) {
+    this.minimalDaysInFirstWeek = days;
+  };
+
+  /**
+   *
+   * @returns {Number}
+   */
+  SimpleDateFormat.prototype.getMinimalDaysInFirstWeek = function () {
+    return isUndefined(this.minimalDaysInFirstWeek) ?
+      DEFAULT_MINIMAL_DAYS_IN_FIRST_WEEK : this.minimalDaysInFirstWeek;
+  };
+
+  var padWithZeroes = function (str, len) {
+    while (str.length < len) {
+      str = '0' + str;
+    }
+    return str;
+  };
+
+  var formatText = function (data, numberOfLetters, minLength) {
+    return (numberOfLetters >= 4) ? data : data.substr(0, Math.max(minLength, numberOfLetters));
+  };
+
+  var formatNumber = function (data, numberOfLetters) {
+    var dataString = '' + data;
+    // Pad with 0s as necessary
+    return padWithZeroes(dataString, numberOfLetters);
+  };
+
+  /**
+   *
+   * @param {Date} date
+   * @returns {string}
+   */
+  SimpleDateFormat.prototype.format = function (date) {
+    var formattedString = '';
+    var result;
+    var searchString = this.formatString;
+    while ((result = regex.exec(searchString))) {
+      var quotedString = result[1];
+      var patternLetters = result[2];
+      var otherLetters = result[3];
+      var otherCharacters = result[4];
+
+      // If the pattern matched is quoted string, output the text between the quotes
+      if (quotedString) {
+        if (quotedString === '\'\'') {
+          formattedString += '\'';
+        } else {
+          formattedString += quotedString.substring(1, quotedString.length - 1);
+        }
+      } else if (otherLetters) {
+        // Swallow non-pattern letters by doing nothing here
+      } else if (otherCharacters) {
+        // Simply output other characters
+        formattedString += otherCharacters;
+      } else if (patternLetters) {
+        // Replace pattern letters
+        var patternLetter = patternLetters.charAt(0);
+        var numberOfLetters = patternLetters.length;
+        var rawData = '';
+        switch (patternLetter) {
+        case 'G':
+          rawData = 'AD';
+          break;
+        case 'y':
+          rawData = date.getFullYear();
+          break;
+        case 'M':
+          rawData = date.getMonth();
+          break;
+        case 'w':
+          rawData = date.getWeekInYear(this.getMinimalDaysInFirstWeek());
+          break;
+        case 'W':
+          rawData = date.getWeekInMonth(this.getMinimalDaysInFirstWeek());
+          break;
+        case 'D':
+          rawData = date.getDayInYear();
+          break;
+        case 'd':
+          rawData = date.getDate();
+          break;
+        case 'F':
+          rawData = 1 + Math.floor((date.getDate() - 1) / 7);
+          break;
+        case 'E':
+          rawData = dayNames[date.getDay()];
+          break;
+        case 'a':
+          rawData = (date.getHours() >= 12) ? 'PM' : 'AM';
+          break;
+        case 'H':
+          rawData = date.getHours();
+          break;
+        case 'k':
+          rawData = date.getHours() || 24;
+          break;
+        case 'K':
+          rawData = date.getHours() % 12;
+          break;
+        case 'h':
+          rawData = (date.getHours() % 12) || 12;
+          break;
+        case 'm':
+          rawData = date.getMinutes();
+          break;
+        case 's':
+          rawData = date.getSeconds();
+          break;
+        case 'S':
+          rawData = date.getMilliseconds();
+          break;
+        case 'Z':
+          rawData = date.getTimezoneOffset(); // This returns the number of minutes since GMT was this time.
+          break;
+        }
+        // Format the raw data depending on the type
+        switch (types[patternLetter]) {
+        case TEXT2:
+          formattedString += formatText(rawData, numberOfLetters, 2);
+          break;
+        case TEXT3:
+          formattedString += formatText(rawData, numberOfLetters, 3);
+          break;
+        case NUMBER:
+          formattedString += formatNumber(rawData, numberOfLetters);
+          break;
+        case YEAR:
+          if (numberOfLetters <= 3) {
+            // Output a 2-digit year
+            var dataString = '' + rawData;
+            formattedString += dataString.substr(2, 2);
+          } else {
+            formattedString += formatNumber(rawData, numberOfLetters);
+          }
+          break;
+        case MONTH:
+          if (numberOfLetters >= 3) {
+            formattedString += formatText(monthNames[rawData], numberOfLetters, numberOfLetters);
+          } else {
+            // NB. Months returned by getMonth are zero-based
+            formattedString += formatNumber(rawData + 1, numberOfLetters);
+          }
+          break;
+        case TIMEZONE:
+          var isPositive = (rawData > 0);
+          // The following line looks like a mistake but isn't
+          // because of the way getTimezoneOffset measures.
+          var prefix = isPositive ? '-' : '+';
+          var absData = Math.abs(rawData);
+
+          // Hours
+          var hours = '' + Math.floor(absData / 60);
+          hours = padWithZeroes(hours, 2);
+          // Minutes
+          var minutes = '' + (absData % 60);
+          minutes = padWithZeroes(minutes, 2);
+
+          formattedString += prefix + hours + minutes;
+          break;
+        }
+      }
+      searchString = searchString.substr(result.index + result[0].length);
+    }
+    return formattedString;
+  };
+})();
+if (typeof log4javascript !== 'undefined') {
+  /**
+   *
+   * @type {SimpleDateFormat}
+   */
+  log4javascript.SimpleDateFormat = SimpleDateFormat;
 }
 /**
  * Levels
@@ -903,270 +1497,6 @@ EventSupport.prototype.dispatchEvent = function (eventType, eventArgs) {
  * Build date: 19 March 2013
  * Website: http://log4javascript.org
  */
-
-/* -------------------------------------------------------------------------- */
-/* ---Utility functions------------------------------------------------------ */
-/* -------------------------------------------------------------------------- */
-
-/**
- * Helper method to identify undefined objects
- * @param {*} obj
- * @returns {boolean}
- */
-function isUndefined(obj) {
-  'use strict';
-
-  return typeof obj === 'undefined';
-}
-
-/**
- *
- * @param {*} obj
- * @returns {boolean}
- */
-function isNotUndefined(obj) {
-  'use strict';
-
-  return !isUndefined(obj);
-}
-
-/**
- * Helper method
- * @param {*} obj
- * @returns {String}
- */
-function toStr(obj) {
-  'use strict';
-
-  return (obj && obj.toString) ? obj.toString() : String(obj);
-}
-
-/**
- *
- * @param {String} str
- * @returns {String}
- */
-function trim(str) {
-  'use strict';
-
-  return str.replace(/^\s+/, '').replace(/\s+$/, '');
-}
-
-/**
- *
- * @param {String} text
- * @returns {Array}
- */
-function splitIntoLines(text) {
-  'use strict';
-
-  // Ensure all line breaks are \n only
-  var text2 = text.replace(/\r\n/g, '\n').replace(/\r/g, '\n');
-  return text2.split('\n');
-}
-
-/**
- *
- * @param {String} str
- * @returns {String}
- */
-function urlEncode(str){
-  'use strict';
-
-  var retString = '';
-  if(isUndefined(window.encodeURIComponent)){
-    retString = window.escape(str)
-      .replace(/\+/g, '%2B')
-      .replace(/"/g, '%22')
-      .replace(/'/g, '%27')
-      .replace(/\//g, '%2F')
-      .replace(/=/g, '%3D');
-  } else {
-    retString = encodeURIComponent(str);
-  }
-  return retString;
-}
-
-/**
- *
- * @param {String} str
- * @returns {String}
- */
-function urlDecode(str){
-  'use strict';
-
-  var retString = '';
-  if(isUndefined(window.decodeURIComponent)){
-    retString = window.unescape(str)
-      .replace(/%2B/g, '+')
-      .replace(/%22/g, '"')
-      .replace(/%27/g, '\'')
-      .replace(/%2F/g, '/')
-      .replace(/%3D/g, '=');
-  } else {
-    retString = decodeURIComponent(str);
-  }
-  return retString;
-}
-
-/**
- *
- * @param {String} eventName
- * @returns {String}
- */
-function getListenersPropertyName(eventName) {
-  'use strict';
-
-  return '__log4javascript_listeners__' + eventName;
-}
-
-/**
- *
- * @param {*} evt
- * @param {Window} win
- * @returns {*}
- */
-function getEvent(evt, win) {
-  'use strict';
-
-  win = win ? win : window;
-  return evt ? evt : win.event;
-}
-
-/**
- *
- * @param {HTMLElement} node
- * @param {String} eventName
- * @param {String|Function} listener
- * @param {Boolean} useCapture
- * @param {Window} [win]
- */
-/*jshint unused:false */
-function addEvent(node, eventName, listener, useCapture, win) {
-  'use strict';
-
-  win = win ? win : window;
-  if (node.addEventListener) {
-    node.addEventListener(eventName, listener, useCapture);
-  } else if (node.attachEvent) {
-    node.attachEvent('on' + eventName, listener);
-  } else {
-    var propertyName = getListenersPropertyName(eventName);
-    if (!node[propertyName]) {
-      node[propertyName] = [];
-      // Set event handler
-      node['on' + eventName] = function (evt) {
-        evt = getEvent(evt, win);
-        var listenersPropertyName = getListenersPropertyName(eventName);
-
-        // Clone the array of listeners to leave the original untouched
-        var listeners = this[listenersPropertyName].concat([]);
-        var currentListener;
-
-        // Call each listener in turn
-        while ((currentListener = listeners.shift())) {
-          currentListener.call(this, evt);
-        }
-      };
-    }
-    node[propertyName].push(listener);
-  }
-}
-
-/**
- *
- * @param {HTMLElement} node
- * @param {String} eventName
- * @param {String|Function} listener
- * @param {Boolean} useCapture
- */
-function removeEvent(node, eventName, listener, useCapture) {
-  'use strict';
-
-  if (node.removeEventListener) {
-    node.removeEventListener(eventName, listener, useCapture);
-  } else if (node.detachEvent) {
-    node.detachEvent('on' + eventName, listener);
-  } else {
-    var propertyName = getListenersPropertyName(eventName);
-    if (node[propertyName]) {
-      arrayRemove(node[propertyName], listener);
-    }
-  }
-}
-
-/**
- *
- * @param evt
- */
-function stopEventPropagation(evt) {
-  'use strict';
-
-  if (evt.stopPropagation) {
-    evt.stopPropagation();
-  } else if (isUndefined(evt.cancelBubble)) {
-    evt.cancelBubble = true;
-  }
-  evt.returnValue = false;
-}
-
-/**
- *
- * @param {*} param
- * @param {*} defaultValue
- * @returns {String|Boolean}
- */
-function extractBooleanFromParam(param, defaultValue) {
-  'use strict';
-
-  return isUndefined(param) ? defaultValue : toBool(param);
-}
-
-/**
- *
- * @param {*} param
- * @param {*} defaultValue
- * @returns {*|String}
- */
-function extractStringFromParam(param, defaultValue) {
-  'use strict';
-
-  return isUndefined(param) ? defaultValue : String(param);
-}
-
-/**
- *
- * @param {*} param
- * @param {*} defaultValue
- * @returns {*|Boolean}
- */
-function extractIntFromParam(param, defaultValue) {
-  'use strict';
-
-  if (isUndefined(param)) {
-    return defaultValue;
-  } else {
-    try {
-      var value = parseInt(param, 10);
-      return isNaN(value) ? defaultValue : value;
-    } catch (ex) {
-      logLog.warn('Invalid int param ' + param, ex);
-      return defaultValue;
-    }
-  }
-}
-
-/**
- *
- * @param {*} param
- * @param {*} defaultValue
- * @returns {*}
- */
-function extractFunctionFromParam(param, defaultValue) {
-  'use strict';
-
-  return isFunction(param) ? param : defaultValue;
-}
 
 uniqueId = 'log4javascript_' + getUUID();
 
@@ -1908,11 +2238,14 @@ HttpPostDataLayout.prototype.toString = function () {
   return 'HttpPostDataLayout';
 };
 
-/**
- *
- * @type {HttpPostDataLayout}
- */
-log4javascript.HttpPostDataLayout = HttpPostDataLayout;
+if(typeof log4javascript !== 'undefined'){
+  /**
+   *
+   * @type {HttpPostDataLayout}
+   */
+  log4javascript.HttpPostDataLayout = HttpPostDataLayout;
+}
+
 /**
  * NullLayout
  * @constructor
@@ -1961,11 +2294,14 @@ NullLayout.prototype.toString = function () {
   return 'NullLayout';
 };
 
-/**
- *
- * @type {NullLayout}
- */
-log4javascript.NullLayout = NullLayout;
+if(typeof log4javascript !== 'undefined'){
+  /**
+   *
+   * @type {NullLayout}
+   */
+  log4javascript.NullLayout = NullLayout;
+}
+
 /**
  *
  * @param {String} str
@@ -2115,11 +2451,14 @@ JsonLayout.prototype.getContentType = function () {
   return 'application/json';
 };
 
-/**
- *
- * @type {JsonLayout}
- */
-log4javascript.JsonLayout = JsonLayout;
+if(typeof log4javascript !== 'undefined'){
+  /**
+   *
+   * @type {JsonLayout}
+   */
+  log4javascript.JsonLayout = JsonLayout;
+}
+
 // formatObjectExpansion
 
 /**
@@ -2207,340 +2546,6 @@ function formatObjectExpansion(obj, depth, indentation) {
   return doFormat(obj, depth, indentation);
 }
 
-var SimpleDateFormat;
-
-(function () {
-  'use strict';
-
-  var regex = /('[^']*')|(G+|y+|M+|w+|W+|D+|d+|F+|E+|a+|H+|k+|K+|h+|m+|s+|S+|Z+)|([a-zA-Z]+)|([^a-zA-Z']+)/;
-  var monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
-    'July', 'August', 'September', 'October', 'November', 'December'];
-  var dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-  var TEXT2 = 0, TEXT3 = 1, NUMBER = 2, YEAR = 3, MONTH = 4, TIMEZONE = 5;
-  var types = {
-    G: TEXT2,
-    y: YEAR,
-    M: MONTH,
-    w: NUMBER,
-    W: NUMBER,
-    D: NUMBER,
-    d: NUMBER,
-    F: NUMBER,
-    E: TEXT3,
-    a: TEXT2,
-    H: NUMBER,
-    k: NUMBER,
-    K: NUMBER,
-    h: NUMBER,
-    m: NUMBER,
-    s: NUMBER,
-    S: NUMBER,
-    Z: TIMEZONE
-  };
-  var ONE_DAY = 24 * 60 * 60 * 1000;
-  var ONE_WEEK = 7 * ONE_DAY;
-  var DEFAULT_MINIMAL_DAYS_IN_FIRST_WEEK = 1;
-
-  var newDateAtMidnight = function (year, month, day) {
-    var d = new Date(year, month, day, 0, 0, 0);
-    d.setMilliseconds(0);
-    return d;
-  };
-
-  /**
-   *
-   * @param {Date} date
-   * @returns {Number}
-   */
-  Date.prototype.getDifference = function (date) {
-    return this.getTime() - date.getTime();
-  };
-
-  /**
-   *
-   * @param {Date} d
-   * @returns {boolean}
-   */
-  Date.prototype.isBefore = function (d) {
-    return this.getTime() < d.getTime();
-  };
-
-  /**
-   *
-   * @returns {Number}
-   */
-  Date.prototype.getUTCTime = function () {
-    return Date.UTC(this.getFullYear(), this.getMonth(), this.getDate(), this.getHours(), this.getMinutes(),
-      this.getSeconds(), this.getMilliseconds());
-  };
-
-  /**
-   *
-   * @param {Date} d
-   * @returns {number}
-   */
-  Date.prototype.getTimeSince = function (d) {
-    return this.getUTCTime() - d.getUTCTime();
-  };
-
-  /**
-   *
-   * @returns {Date}
-   */
-  Date.prototype.getPreviousSunday = function () {
-    // Using midday avoids any possibility of DST messing things up
-    var midday = new Date(this.getFullYear(), this.getMonth(), this.getDate(), 12, 0, 0);
-    var previousSunday = new Date(midday.getTime() - this.getDay() * ONE_DAY);
-    return newDateAtMidnight(previousSunday.getFullYear(), previousSunday.getMonth(),
-      previousSunday.getDate());
-  };
-
-  /**
-   *
-   * @extends Date
-   * @param {Number} minimalDaysInFirstWeek
-   * @returns {Number}
-   */
-  Date.prototype.getWeekInYear = function (minimalDaysInFirstWeek) {
-    if (isUndefined(this.minimalDaysInFirstWeek)) {
-      minimalDaysInFirstWeek = DEFAULT_MINIMAL_DAYS_IN_FIRST_WEEK;
-    }
-    var previousSunday = this.getPreviousSunday();
-    var startOfYear = newDateAtMidnight(this.getFullYear(), 0, 1);
-    var numberOfSundays = previousSunday.isBefore(startOfYear) ?
-      0 : 1 + Math.floor(previousSunday.getTimeSince(startOfYear) / ONE_WEEK);
-    var numberOfDaysInFirstWeek = 7 - startOfYear.getDay();
-    var weekInYear = numberOfSundays;
-    if (numberOfDaysInFirstWeek < minimalDaysInFirstWeek) {
-      weekInYear--;
-    }
-    return weekInYear;
-  };
-
-  /**
-   *
-   * @param {Number} minimalDaysInFirstWeek
-   * @returns {Number}
-   */
-  Date.prototype.getWeekInMonth = function (minimalDaysInFirstWeek) {
-    if (isUndefined(this.minimalDaysInFirstWeek)) {
-      minimalDaysInFirstWeek = DEFAULT_MINIMAL_DAYS_IN_FIRST_WEEK;
-    }
-    var previousSunday = this.getPreviousSunday();
-    var startOfMonth = newDateAtMidnight(this.getFullYear(), this.getMonth(), 1);
-    var numberOfSundays = previousSunday.isBefore(startOfMonth) ?
-      0 : 1 + Math.floor(previousSunday.getTimeSince(startOfMonth) / ONE_WEEK);
-    var numberOfDaysInFirstWeek = 7 - startOfMonth.getDay();
-    var weekInMonth = numberOfSundays;
-    if (numberOfDaysInFirstWeek >= minimalDaysInFirstWeek) {
-      weekInMonth++;
-    }
-    return weekInMonth;
-  };
-
-  /**
-   *
-   * @returns {Number}
-   * @this {Date}
-   */
-  Date.prototype.getDayInYear = function () {
-    var startOfYear = newDateAtMidnight(this.getFullYear(), 0, 1);
-    return 1 + Math.floor(this.getTimeSince(startOfYear) / ONE_DAY);
-  };
-
-  /* ------------------------------------------------------------------ */
-
-  /**
-   *
-   * @param formatString
-   * @this {SimpleDateFormat}
-   * @constructor
-   */
-  SimpleDateFormat = function (formatString) {
-    this.formatString = formatString;
-  };
-
-  /**
-   * Sets the minimum number of days in a week in order for that week to
-   * be considered as belonging to a particular month or year
-   * @param {Number} days
-   */
-  SimpleDateFormat.prototype.setMinimalDaysInFirstWeek = function (days) {
-    this.minimalDaysInFirstWeek = days;
-  };
-
-  /**
-   *
-   * @returns {Number}
-   */
-  SimpleDateFormat.prototype.getMinimalDaysInFirstWeek = function () {
-    return isUndefined(this.minimalDaysInFirstWeek) ?
-      DEFAULT_MINIMAL_DAYS_IN_FIRST_WEEK : this.minimalDaysInFirstWeek;
-  };
-
-  var padWithZeroes = function (str, len) {
-    while (str.length < len) {
-      str = '0' + str;
-    }
-    return str;
-  };
-
-  var formatText = function (data, numberOfLetters, minLength) {
-    return (numberOfLetters >= 4) ? data : data.substr(0, Math.max(minLength, numberOfLetters));
-  };
-
-  var formatNumber = function (data, numberOfLetters) {
-    var dataString = '' + data;
-    // Pad with 0s as necessary
-    return padWithZeroes(dataString, numberOfLetters);
-  };
-
-  /**
-   *
-   * @param {Date} date
-   * @returns {string}
-   */
-  SimpleDateFormat.prototype.format = function (date) {
-    var formattedString = '';
-    var result;
-    var searchString = this.formatString;
-    while ((result = regex.exec(searchString))) {
-      var quotedString = result[1];
-      var patternLetters = result[2];
-      var otherLetters = result[3];
-      var otherCharacters = result[4];
-
-      // If the pattern matched is quoted string, output the text between the quotes
-      if (quotedString) {
-        if (quotedString === '\'\'') {
-          formattedString += '\'';
-        } else {
-          formattedString += quotedString.substring(1, quotedString.length - 1);
-        }
-      } else if (otherLetters) {
-        // Swallow non-pattern letters by doing nothing here
-      } else if (otherCharacters) {
-        // Simply output other characters
-        formattedString += otherCharacters;
-      } else if (patternLetters) {
-        // Replace pattern letters
-        var patternLetter = patternLetters.charAt(0);
-        var numberOfLetters = patternLetters.length;
-        var rawData = '';
-        switch (patternLetter) {
-        case 'G':
-          rawData = 'AD';
-          break;
-        case 'y':
-          rawData = date.getFullYear();
-          break;
-        case 'M':
-          rawData = date.getMonth();
-          break;
-        case 'w':
-          rawData = date.getWeekInYear(this.getMinimalDaysInFirstWeek());
-          break;
-        case 'W':
-          rawData = date.getWeekInMonth(this.getMinimalDaysInFirstWeek());
-          break;
-        case 'D':
-          rawData = date.getDayInYear();
-          break;
-        case 'd':
-          rawData = date.getDate();
-          break;
-        case 'F':
-          rawData = 1 + Math.floor((date.getDate() - 1) / 7);
-          break;
-        case 'E':
-          rawData = dayNames[date.getDay()];
-          break;
-        case 'a':
-          rawData = (date.getHours() >= 12) ? 'PM' : 'AM';
-          break;
-        case 'H':
-          rawData = date.getHours();
-          break;
-        case 'k':
-          rawData = date.getHours() || 24;
-          break;
-        case 'K':
-          rawData = date.getHours() % 12;
-          break;
-        case 'h':
-          rawData = (date.getHours() % 12) || 12;
-          break;
-        case 'm':
-          rawData = date.getMinutes();
-          break;
-        case 's':
-          rawData = date.getSeconds();
-          break;
-        case 'S':
-          rawData = date.getMilliseconds();
-          break;
-        case 'Z':
-          rawData = date.getTimezoneOffset(); // This returns the number of minutes since GMT was this time.
-          break;
-        }
-        // Format the raw data depending on the type
-        switch (types[patternLetter]) {
-        case TEXT2:
-          formattedString += formatText(rawData, numberOfLetters, 2);
-          break;
-        case TEXT3:
-          formattedString += formatText(rawData, numberOfLetters, 3);
-          break;
-        case NUMBER:
-          formattedString += formatNumber(rawData, numberOfLetters);
-          break;
-        case YEAR:
-          if (numberOfLetters <= 3) {
-            // Output a 2-digit year
-            var dataString = '' + rawData;
-            formattedString += dataString.substr(2, 2);
-          } else {
-            formattedString += formatNumber(rawData, numberOfLetters);
-          }
-          break;
-        case MONTH:
-          if (numberOfLetters >= 3) {
-            formattedString += formatText(monthNames[rawData], numberOfLetters, numberOfLetters);
-          } else {
-            // NB. Months returned by getMonth are zero-based
-            formattedString += formatNumber(rawData + 1, numberOfLetters);
-          }
-          break;
-        case TIMEZONE:
-          var isPositive = (rawData > 0);
-          // The following line looks like a mistake but isn't
-          // because of the way getTimezoneOffset measures.
-          var prefix = isPositive ? '-' : '+';
-          var absData = Math.abs(rawData);
-
-          // Hours
-          var hours = '' + Math.floor(absData / 60);
-          hours = padWithZeroes(hours, 2);
-          // Minutes
-          var minutes = '' + (absData % 60);
-          minutes = padWithZeroes(minutes, 2);
-
-          formattedString += prefix + hours + minutes;
-          break;
-        }
-      }
-      searchString = searchString.substr(result.index + result[0].length);
-    }
-    return formattedString;
-  };
-})();
-if(typeof log4javascript !== 'undefined'){
-  /**
-   *
-   * @type {SimpleDateFormat}
-   */
-  log4javascript.SimpleDateFormat = SimpleDateFormat;
-}
 /**
  * PatternLayout
  * @param pattern
@@ -2950,11 +2955,14 @@ SimpleLayout.prototype.toString = function () {
   return 'SimpleLayout';
 };
 
-/**
- *
- * @type {SimpleLayout}
- */
-log4javascript.SimpleLayout = SimpleLayout;
+if(typeof log4javascript !== 'undefined'){
+  /**
+   *
+   * @type {SimpleLayout}
+   */
+  log4javascript.SimpleLayout = SimpleLayout;
+}
+
 /**
  * XML Layout
  * @param combineMessages
@@ -3816,11 +3824,14 @@ AlertAppender.prototype.toString = function () {
   return 'AlertAppender';
 };
 
-/**
- *
- * @type {AlertAppender}
- */
-log4javascript.AlertAppender = AlertAppender;
+if(typeof log4javascript !== 'undefined'){
+  /**
+   *
+   * @type {AlertAppender}
+   */
+  log4javascript.AlertAppender = AlertAppender;
+}
+
 /**
  * BrowserConsoleAppender (works in Opera, Safari, Firefox, Firefox with
  * Firebug extension and Chrome)
