@@ -14,6 +14,7 @@ requirejs.config({
   paths: {
     'log4javascript': '../dist/log4javascript',
     'params': '../src/log4js.params',
+    'simpleDateFormat': '../src/log4js.simpleDateFormat',
     'core': '../src/log4js.core',
     'level': '../src/log4js.level',
     'logger': '../src/log4js.logger',
@@ -31,6 +32,7 @@ requirejs.config({
 
   shim: {
     'layout': ['params'],
+    'simpleDateFormat': ['params'],
     'logger': ['params', 'level'],
     'appender': ['params', 'level', 'logger', 'eventSupport', 'layout.pattern'],
     'appender.alert': ['appender', 'layout.simple'],
