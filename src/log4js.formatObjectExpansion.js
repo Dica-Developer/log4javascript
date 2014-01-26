@@ -3,7 +3,7 @@
  *
  * @param {Object} obj
  * @param {Number} depth
- * @param {Number} indentation
+ * @param {Number} [indentation]
  * @returns {*}
  */
 function formatObjectExpansion(obj, depth, indentation) {
@@ -15,9 +15,7 @@ function formatObjectExpansion(obj, depth, indentation) {
     var i, len, childDepth, childIndentation, childLines, expansion,
       childExpansion;
 
-    if (!indentation) {
-      indentation = '';
-    }
+    indentation = indentation || '';
 
     function formatString(text) {
       var lines = splitIntoLines(text);
