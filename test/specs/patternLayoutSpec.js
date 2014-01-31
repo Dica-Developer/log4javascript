@@ -157,7 +157,7 @@ define(['params', 'level', 'layout', 'logger', 'layout.pattern'], function () {
         expect(layout.format(loggingEvent)).toBe('%M');
       });
 
-      it('%f', function(){
+      xit('%f', function(){
         var layout = new PatternLayout('%f');
         expect(layout.format(loggingEvent)).toBe('%f');
       });
