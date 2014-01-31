@@ -6,20 +6,6 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-karma');
   require('time-grunt')(grunt);
 
-  var getFooter = function(){
-    return '\nif (typeof module === "object" && module && typeof module.exports === "object") {\n' +
-      'module.exports = log4javascript;\n' +
-      '} else {\n' +
-      'window.log4javascript = log4javascript;\n'+
-      'if (typeof define === "function" && define.amd) {\n' +
-      '  define("log4javascript", [], function() {\n'+
-      '    return log4javascript;\n'+
-      ' });\n'+
-      '}\n'+
-      '}\n'+
-      '}(window));\n';
-  };
-
   // configurable paths
   var config = {
     src: 'src',
@@ -58,8 +44,8 @@ module.exports = function (grunt) {
       options: {},
       dist: {
         options: {
-          banner: '(function(window){\n  \'use strict\';\n',
-          footer: getFooter()
+          banner: 'define(\'log4javascript\', [], function() {\n \'use strict\';\n ',
+          footer: '\nreturn log4javascript;\n});'
         },
         src: [
           'src/log4js.params.js',
