@@ -1,6 +1,6 @@
-(function(window){
-  'use strict';
-/*jshint unused:false */
+define('log4javascript', [], function() {
+ 'use strict';
+ /*jshint unused:false */
 function getUUID(){
   'use strict';
 
@@ -445,7 +445,7 @@ function stopEventPropagation(evt) {
  *
  * @param {Object} obj
  * @param {Number} depth
- * @param {Number} indentation
+ * @param {Number} [indentation]
  * @returns {*}
  */
 function formatObjectExpansion(obj, depth, indentation) {
@@ -457,9 +457,7 @@ function formatObjectExpansion(obj, depth, indentation) {
     var i, len, childDepth, childIndentation, childLines, expansion,
       childExpansion;
 
-    if (!indentation) {
-      indentation = '';
-    }
+    indentation = indentation || '';
 
     function formatString(text) {
       var lines = splitIntoLines(text);
@@ -7936,14 +7934,5 @@ function init() {
 }
 
 init();
-if (typeof module === "object" && module && typeof module.exports === "object") {
-module.exports = log4javascript;
-} else {
-window.log4javascript = log4javascript;
-if (typeof define === "function" && define.amd) {
-  define("log4javascript", [], function() {
-    return log4javascript;
- });
-}
-}
-}(window));
+return log4javascript;
+});
