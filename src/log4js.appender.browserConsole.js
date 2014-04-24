@@ -1,4 +1,4 @@
-/*global window, opera*/
+/*global window*/
 define(['log4js.core', 'log4js.appender', 'log4js.layout.null'], function (log4js) {
   'use strict';
 
@@ -45,12 +45,8 @@ define(['log4js.core', 'log4js.appender', 'log4js.layout.null'], function (log4j
       return formattedMessage;
     };
 
-    if (typeof opera !== 'undefined' && opera.postError) { // Opera
-      opera.postError(getFormattedMessage());
-    } else if (window.console && window.console.log) { // Safari and Firebug
+    if (window.console && window.console.log) {
       var formattedMesage = getFormattedMessage();
-      // Log to Firebug using its logging methods or revert to the console.log
-      // method in Safari
       if (window.console.debug && log4js.Level.DEBUG.isGreaterOrEqual(loggingEvent.level)) {
         window.console.debug(formattedMesage);
       } else if (window.console.info && log4js.Level.INFO.equals(loggingEvent.level)) {
