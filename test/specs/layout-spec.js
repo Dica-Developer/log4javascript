@@ -1,5 +1,5 @@
 /*global define, describe, it, xit, expect, spyOn, beforeEach, jasmine*/
-define(['params', 'level', 'layout', 'logger'], function () {
+define(['helper', 'level', 'log4js', 'logger', 'layout'], function (helper, Level, log4js, Logger) {
   'use strict';
 
   describe('#Layout', function () {
@@ -17,7 +17,7 @@ define(['params', 'level', 'layout', 'logger'], function () {
       };
 
       beforeEach(function () {
-        layout = new Layout();
+        layout = new log4js.Layout();
       });
 
       it('check defaults', function () {
@@ -51,17 +51,17 @@ define(['params', 'level', 'layout', 'logger'], function () {
       var layout = null;
 
       beforeEach(function () {
-        layout = new Layout();
+        layout = new log4js.Layout();
       });
 
       it('.format should call handle Error if it is not overridden', function(){
-        var handleErrorSpy = spyOn(window, 'handleError');
+        var handleErrorSpy = spyOn(helper, 'handleError');
         layout.format();
         expect(handleErrorSpy).toHaveBeenCalledWith('Layout.format: layout supplied has no format() method');
       });
 
       it('.ignoresThrowable should call handle Error if it is not overridden', function(){
-        var handleErrorSpy = spyOn(window, 'handleError');
+        var handleErrorSpy = spyOn(helper, 'handleError');
         layout.ignoresThrowable();
         expect(handleErrorSpy).toHaveBeenCalledWith('Layout.ignoresThrowable = layout supplied has no ignoresThrowable() method');
       });
@@ -75,7 +75,7 @@ define(['params', 'level', 'layout', 'logger'], function () {
       });
 
       it('.toString should call handleError if not overridden', function(){
-        var handleErrorSpy = spyOn(window, 'handleError');
+        var handleErrorSpy = spyOn(helper, 'handleError');
         layout.toString();
         expect(handleErrorSpy).toHaveBeenCalledWith('Layout.toString: all layouts must override this method');
       });
@@ -86,7 +86,7 @@ define(['params', 'level', 'layout', 'logger'], function () {
       var layout = null;
 
       beforeEach(function () {
-        layout = new Layout();
+        layout = new log4js.Layout();
       });
 
       it('Should set .overrideTimeStampsSetting to true if called', function(){
@@ -107,7 +107,7 @@ define(['params', 'level', 'layout', 'logger'], function () {
       var layout = null;
 
       beforeEach(function () {
-        layout = new Layout();
+        layout = new log4js.Layout();
       });
 
       it('Should return "null" per default', function(){
@@ -132,12 +132,12 @@ define(['params', 'level', 'layout', 'logger'], function () {
         milliSeconds = null;
 
       beforeEach(function () {
-        layout = new Layout();
+        layout = new log4js.Layout();
         logger = new Logger('test');
         date = new Date();
         milliSeconds = date.getTime();
         seconds = Math.floor(milliSeconds / 1000);
-        loggingEvent = new LoggingEvent(logger, date, Level.TRACE, ['1'], null);
+        loggingEvent = new Logger.LoggingEvent(logger, date, Level.TRACE, ['1'], null);
       });
 
       it('Should return value in seconds if .isTimeStampsInMilliseconds set to false', function(){
@@ -160,12 +160,12 @@ define(['params', 'level', 'layout', 'logger'], function () {
         milliSeconds = null;
 
       beforeEach(function () {
-        layout = new Layout();
+        layout = new log4js.Layout();
         logger = new Logger('test');
         date = new Date();
         milliSeconds = date.getTime();
         seconds = Math.floor(milliSeconds / 1000);
-        loggingEvent = new LoggingEvent(logger, date, Level.TRACE, ['1'], null);
+        loggingEvent = new Logger.LoggingEvent(logger, date, Level.TRACE, ['1'], null);
       });
 
       it('Check default return values', function(){
@@ -249,7 +249,7 @@ define(['params', 'level', 'layout', 'logger'], function () {
       var layout = null;
 
       beforeEach(function () {
-        layout = new Layout();
+        layout = new log4js.Layout();
       });
       //TODO affected by previous test "Check default return values with .customFields"
       xit('.hasCustomFields should return "false" per default', function(){
@@ -257,13 +257,13 @@ define(['params', 'level', 'layout', 'logger'], function () {
       });
 
       it('.setCustomFields should call handleError if name and/or value is not set', function(){
-        var handleErrorSpy = spyOn(window, 'handleError');
+        var handleErrorSpy = spyOn(helper, 'handleError');
         layout.setCustomField();
         expect(handleErrorSpy).toHaveBeenCalledWith('layout.setCustomFields: name and value must be defined');
       });
 
       it('.setCustomFields should call handleError if name is not "String "', function(){
-        var handleErrorSpy = spyOn(window, 'handleError');
+        var handleErrorSpy = spyOn(helper, 'handleError');
         layout.setCustomField([], {});
         expect(handleErrorSpy).toHaveBeenCalledWith('layout.setCustomFields: name must be "String"');
       });

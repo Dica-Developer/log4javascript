@@ -1,5 +1,5 @@
 /*global define, describe, it, expect, spyOn, beforeEach,jasmine*/
-define(['params', 'eventSupport'], function () {
+define(['helper', 'eventSupport'], function (helper, EventSupport) {
   'use strict';
 
   describe('#EventSupport', function () {
@@ -31,7 +31,7 @@ define(['params', 'eventSupport'], function () {
       });
 
       it('parameter must be Array otherwise handleError should be called', function () {
-        var handleErrorSpy = spyOn(window, 'handleError');
+        var handleErrorSpy = spyOn(helper, 'handleError');
         eventSupport.setEventTypes('');
         expect(handleErrorSpy).toHaveBeenCalledWith('EventSupport ['+ eventSupport +']: setEventTypes: eventTypes parameter must be an Array');
       });
@@ -57,20 +57,20 @@ define(['params', 'eventSupport'], function () {
       });
 
       it('@param listener is function', function () {
-        var handleErrorSpy = spyOn(window, 'handleError');
+        var handleErrorSpy = spyOn(helper, 'handleError');
         eventSupport.setEventTypes(['test']);
         eventSupport.addEventListener('test', function(){});
         expect(handleErrorSpy).not.toHaveBeenCalled();
       });
 
       it('@param listener is function but event type does not exist', function () {
-        var handleErrorSpy = spyOn(window, 'handleError');
+        var handleErrorSpy = spyOn(helper, 'handleError');
         eventSupport.addEventListener('test1', function(){});
         expect(handleErrorSpy).toHaveBeenCalledWith('EventSupport [' + eventSupport + ']: addEventListener: no event called "test1"');
       });
 
       it('@param listener must be function otherwise handelError should be called', function () {
-        var handleErrorSpy = spyOn(window, 'handleError');
+        var handleErrorSpy = spyOn(helper, 'handleError');
         eventSupport.setEventTypes(['test']);
         eventSupport.addEventListener('test', null);
         expect(handleErrorSpy).toHaveBeenCalledWith('EventSupport [' + eventSupport + ']: addEventListener: listener must be a function');
@@ -87,14 +87,14 @@ define(['params', 'eventSupport'], function () {
       });
 
       it('@param listener must be function otherwise handelError should be called', function () {
-        var handleErrorSpy = spyOn(window, 'handleError');
+        var handleErrorSpy = spyOn(helper, 'handleError');
         eventSupport.setEventTypes(['test', function(){}]);
         eventSupport.removeEventListener('test', null);
         expect(handleErrorSpy).toHaveBeenCalledWith('EventSupport [' + eventSupport + ']: removeEventListener: listener must be a function');
       });
 
       it('@param listener is function but event type does not exist', function () {
-        var handleErrorSpy = spyOn(window, 'handleError');
+        var handleErrorSpy = spyOn(helper, 'handleError');
         eventSupport.removeEventListener('test1', function(){});
         expect(handleErrorSpy).toHaveBeenCalledWith('EventSupport [' + eventSupport + ']: removeEventListener: no event called "test1"');
       });
@@ -118,7 +118,7 @@ define(['params', 'eventSupport'], function () {
       });
 
       it('@param eventType must exist otherwise handleError should be called', function () {
-        var handleErrorSpy = spyOn(window, 'handleError');
+        var handleErrorSpy = spyOn(helper, 'handleError');
         eventSupport.dispatchEvent('test');
         expect(handleErrorSpy).toHaveBeenCalledWith('EventSupport [' + eventSupport + ']: dispatchEvent: no event called "test"');
       });

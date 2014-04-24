@@ -1,5 +1,5 @@
 /*global define, describe, it, xit, expect, spyOn, beforeEach*/
-define(['params', 'level', 'logger'], function () {
+define(['helper', 'log4js', 'level', 'logger'], function (helper, log4js, Level, Logger) {
   'use strict';
 
   describe('#Logger', function () {
@@ -7,7 +7,7 @@ define(['params', 'level', 'logger'], function () {
     var logger = null;
 
     beforeEach(function () {
-      logger = new Logger();
+      logger = new Logger(void 0, log4js);
     });
 
     it('All #entryPoints should be true', function () {
@@ -142,16 +142,14 @@ define(['params', 'level', 'logger'], function () {
     describe('.setLevel', function () {
 
       it('Should throw exception (call handleError) if Level not instance of Level', function () {
-        window.handleError = function(){};
-        var handleErrorSpy = spyOn(window, 'handleError');
+        var handleErrorSpy = spyOn(helper, 'handleError');
         logger.setLevel(0);
-        expect(handleErrorSpy).toHaveBeenCalledWith('Logger.setLevel: level supplied to logger undefined is not an instance of log4javascript.Level');
-        window.handleError = null;
+        expect(handleErrorSpy).toHaveBeenCalledWith('Logger.setLevel: level supplied to logger undefined is not an instance of log4js.Level');
       });
 
       it('Should throw exception (call handleError) if Level === null && logger is root', function () {
         var rootLogger = new Logger('root');
-        var handleErrorSpy = spyOn(window, 'handleError');
+        var handleErrorSpy = spyOn(helper, 'handleError');
         rootLogger.setLevel(null);
         expect(handleErrorSpy).toHaveBeenCalledWith('Logger.setLevel: you cannot set the level of the root logger to null');
       });
@@ -212,7 +210,7 @@ define(['params', 'level', 'logger'], function () {
       var callAppendersSpy = null;
 
       beforeEach(function () {
-        logger = new Logger();
+        logger = new Logger(void 0, log4js);
         logger.setLevel(Level.TRACE);
         callAppendersSpy = spyOn(logger, 'callAppenders');
       });
@@ -223,10 +221,10 @@ define(['params', 'level', 'logger'], function () {
       });
 
       it('If enabled = false should not call .callAppenders', function () {
-        enabled = false;
+        log4js.setEnabled(false);
         logger.log(Level.TRACE, 1);
         expect(callAppendersSpy).not.toHaveBeenCalled();
-        enabled = true;
+        log4js.setEnabled(true);
       });
 
       //will crash phantomjs
@@ -238,7 +236,7 @@ define(['params', 'level', 'logger'], function () {
           error = e;
         }
         var timeStamp = new Date();
-        var loggingEvent = new LoggingEvent(this, timeStamp, Level.TRACE, [1], error);
+        var loggingEvent = new Logger.LoggingEvent(this, timeStamp, Level.TRACE, [1], error);
         logger.log(Level.TRACE, 1, error);
         expect(callAppendersSpy).toHaveBeenCalledWith(loggingEvent);
       });
@@ -344,22 +342,22 @@ define(['params', 'level', 'logger'], function () {
     });
 
     it('.getString should return LoggingEvent[TRACE]', function(){
-      loggingEvent = new LoggingEvent(logger, new Date(), Level.TRACE, ['1'], null);
+      loggingEvent = new Logger.LoggingEvent(logger, new Date(), Level.TRACE, ['1'], null);
       expect(loggingEvent.toString()).toBe('LoggingEvent[TRACE]');
     });
 
     it('.getCombinedMessages should return "1"', function(){
-      loggingEvent = new LoggingEvent(logger, new Date(), Level.TRACE, ['1'], null);
+      loggingEvent = new Logger.LoggingEvent(logger, new Date(), Level.TRACE, ['1'], null);
       expect(loggingEvent.getCombinedMessages()).toBe('1');
     });
 
     it('.getCombinedMessages should return "1 -new Line- 2"', function(){
-      loggingEvent = new LoggingEvent(logger, new Date(), Level.TRACE, ['1', '2'], null);
+      loggingEvent = new Logger.LoggingEvent(logger, new Date(), Level.TRACE, ['1', '2'], null);
       expect(loggingEvent.getCombinedMessages()).toBe('1\r\n2');
     });
 
     it('.getThrowableStrRep should return "" if LoggingEvent.exception is null or false', function(){
-      loggingEvent = new LoggingEvent(logger, new Date(), Level.TRACE, ['1'], null);
+      loggingEvent = new Logger.LoggingEvent(logger, new Date(), Level.TRACE, ['1'], null);
       loggingEvent.exception = '';
       expect(loggingEvent.getThrowableStrRep()).toBe('');
     });

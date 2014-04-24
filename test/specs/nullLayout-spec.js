@@ -1,5 +1,5 @@
 /*global define, describe, it, expect, beforeEach*/
-define(['params', 'level', 'layout', 'logger', 'layout.null'], function () {
+define(['log4js', 'logger', 'layout.null'], function (log4js, Logger) {
   'use strict';
 
   describe('#NullLayout', function () {
@@ -7,9 +7,9 @@ define(['params', 'level', 'layout', 'logger', 'layout.null'], function () {
     var layout = null, logger = null, loggingEvent = null;
 
     beforeEach(function () {
-      layout = new NullLayout();
-      logger = new Logger('test');
-      loggingEvent = new LoggingEvent(logger, new Date(), Level.TRACE, ['1'], null);
+      layout = new log4js.NullLayout();
+      logger = log4js.getLogger('test');
+      loggingEvent = new Logger.LoggingEvent(logger, new Date(), log4js.Level.TRACE, ['1'], null);
     });
 
     it('.toString', function () {

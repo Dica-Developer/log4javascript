@@ -1,5 +1,5 @@
 /*global define, describe, it, expect, beforeEach*/
-define(['level'], function () {
+define(['level'], function (Level) {
   'use strict';
 
   describe('#Level', function () {

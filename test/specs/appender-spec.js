@@ -1,5 +1,5 @@
 /*global define, describe, it, expect, spyOn, beforeEach*/
-define(['params', 'level', 'logger', 'eventSupport', 'layout.pattern', 'appender'], function () {
+define(['log4js', 'helper', 'level', 'logger', 'appender', 'layout.pattern'], function (log4js, helper, Level, Logger) {
   'use strict';
 
   describe('#Appender', function () {
@@ -8,17 +8,17 @@ define(['params', 'level', 'logger', 'eventSupport', 'layout.pattern', 'appender
     var logger = new Logger();
 
     beforeEach(function () {
-      appender = new Appender();
+      appender = new log4js.Appender();
     });
 
     it('.toString calls handleError if not overridden', function () {
-      var handleErrorSpy = spyOn(window, 'handleError');
+      var handleErrorSpy = spyOn(helper, 'handleError');
       appender.toString();
       expect(handleErrorSpy).toHaveBeenCalledWith('Appender.toString: all appenders must override this method');
     });
 
     it('.getLayout should return #PatternLayout per default', function () {
-      expect(appender.getLayout()).toEqual(new PatternLayout());
+      expect(appender.getLayout()).toEqual(new log4js.PatternLayout());
     });
 
     it('.getThreshold should return #Level.ALL per default', function () {
@@ -26,7 +26,7 @@ define(['params', 'level', 'logger', 'eventSupport', 'layout.pattern', 'appender
     });
 
     it('.setThreshold should call handleError if give parameter not instance of #Level', function () {
-      var handleErrorSpy = spyOn(window, 'handleError');
+      var handleErrorSpy = spyOn(helper, 'handleError');
       appender.toString = function(){
         return 'test';
       };
@@ -40,7 +40,7 @@ define(['params', 'level', 'logger', 'eventSupport', 'layout.pattern', 'appender
     });
 
     it('.setLayout should call handleError if give parameter not instance of #Layout', function () {
-      var handleErrorSpy = spyOn(window, 'handleError');
+      var handleErrorSpy = spyOn(helper, 'handleError');
       appender.toString = function(){
         return 'test';
       };
@@ -49,7 +49,7 @@ define(['params', 'level', 'logger', 'eventSupport', 'layout.pattern', 'appender
     });
 
     it('.setLayout should override .layout with given parameter', function () {
-      var layout = new Layout();
+      var layout = new log4js.Layout();
       appender.setLayout(layout);
       expect(appender.layout).toBe(layout);
     });
@@ -72,17 +72,17 @@ define(['params', 'level', 'logger', 'eventSupport', 'layout.pattern', 'appender
       var logger = null;
       var loggingEvent =null;
       beforeEach(function () {
-        appender = new Appender();
+        appender = new log4js.Appender();
         appendSpy = spyOn(appender, 'append');
         logger = new Logger();
-        loggingEvent = new LoggingEvent(logger, new Date(), Level.TRACE, ['1'], null);
+        loggingEvent = new log4js.LoggingEvent(logger, new Date(), Level.TRACE, ['1'], null);
       });
 
       it('Should not call #Appender.append if enabled false', function(){
-        enabled = false;
+        log4js.setEnabled(false);
         appender.doAppend(loggingEvent);
         expect(appendSpy).not.toHaveBeenCalled();
-        enabled = true;
+        log4js.setEnabled(true);
       });
 
       it('Should not call #Appender.append if Level lower then treshhold', function(){
