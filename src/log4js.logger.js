@@ -3,6 +3,29 @@ define(['log4js.helper', 'log4js.level'], function (helper, Level) {
 
   /**
    *
+   * @param {String} name
+   * @param {Level} level
+   * @property {String} name
+   * @property {Level} [level]
+   * @property {Date} start
+   * @constructor
+   */
+  function Timer(name, level) {
+    this.name = name;
+    this.level = helper.isUndefined(level) ? Level.INFO : level;
+    this.start = new Date();
+  }
+
+  /**
+   *
+   * @returns {Number}
+   */
+  Timer.prototype.getElapsedTime = function () {
+    return new Date().getTime() - this.start.getTime();
+  };
+
+  /**
+   *
    * @param {Logger} logger
    * @param {Date} timeStamp
    * @param {Level} level
@@ -294,7 +317,7 @@ define(['log4js.helper', 'log4js.level'], function (helper, Level) {
         } else if (level && !(level instanceof Level)) {
           helper.handleError('Logger.time: level supplied to timer ' + name + ' is not an instance of log4javascript.Level');
         } else {
-          timers[name] = new helper.Timer(name, level); //TODO
+          timers[name] = new Timer(name, level);
         }
       }
     };
