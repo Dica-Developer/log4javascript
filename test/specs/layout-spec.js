@@ -1,5 +1,5 @@
 /*global define, describe, it, xit, expect, spyOn, beforeEach, jasmine*/
-define(['helper', 'level', 'log4js', 'logger', 'layout'], function (helper, Level, log4js, Logger) {
+define(['helper', 'log4js', 'logger', 'layout'], function (helper, log4js, Logger) {
   'use strict';
 
   describe('#Layout', function () {
@@ -137,7 +137,7 @@ define(['helper', 'level', 'log4js', 'logger', 'layout'], function (helper, Leve
         date = new Date();
         milliSeconds = date.getTime();
         seconds = Math.floor(milliSeconds / 1000);
-        loggingEvent = new Logger.LoggingEvent(logger, date, Level.TRACE, ['1'], null);
+        loggingEvent = new Logger.LoggingEvent(logger, date, log4js.Level.TRACE, ['1'], null);
       });
 
       it('Should return value in seconds if .isTimeStampsInMilliseconds set to false', function(){
@@ -165,7 +165,7 @@ define(['helper', 'level', 'log4js', 'logger', 'layout'], function (helper, Leve
         date = new Date();
         milliSeconds = date.getTime();
         seconds = Math.floor(milliSeconds / 1000);
-        loggingEvent = new Logger.LoggingEvent(logger, date, Level.TRACE, ['1'], null);
+        loggingEvent = new Logger.LoggingEvent(logger, date, log4js.Level.TRACE, ['1'], null);
       });
 
       it('Check default return values', function(){
