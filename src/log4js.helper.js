@@ -22,6 +22,9 @@ define(function () {
     isBoolean: function isBoolean(bool){
       return typeof bool === 'boolean';
     },
+    toBoolean: function isBoolean(bool){
+      return Boolean(bool);
+    },
     isString: function isString(str) {
       return typeof str === 'string';
     },
