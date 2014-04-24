@@ -1,6 +1,6 @@
 /*global require, requirejs*/
 requirejs.config({
-  baseUrl: 'src/'
+  baseUrl: '../../src/'
 });
 require(['log4js.core', 'log4js.appender.browserConsole'], function(log4js){
   'use strict';
