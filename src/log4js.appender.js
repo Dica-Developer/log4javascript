@@ -62,7 +62,7 @@ define([
    * @param {Layout} layout
    */
   Appender.prototype.setLayout = function (layout) {
-    if (layout instanceof log4js.Layout) { //TODO
+    if (layout instanceof log4js.Layout) {
       this.layout = layout;
     } else {
       helper.handleError('Appender.setLayout: layout supplied to ' +
