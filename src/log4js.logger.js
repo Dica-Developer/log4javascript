@@ -115,7 +115,7 @@ define(['log4js.helper', 'log4js.level'], function (helper, Level) {
       if (isNull) {
         helper.handleError('Logger.addAppender: you may not add an appender to the null logger');
       } else {
-        if (appender instanceof log4js.Appender) { //TODO
+        if (appender instanceof log4js.Appender) {
           if (!helper.arrayContains(appenders, appender)) {
             appenders.push(appender);
             appender.setAddedToLogger(this);
