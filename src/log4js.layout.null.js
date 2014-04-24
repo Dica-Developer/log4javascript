@@ -1,55 +1,45 @@
-/**
- * NullLayout
- * @constructor
- * @mixes Layout
- */
-function NullLayout() {
+define(['log4js.core', 'log4js.layout'], function (log4js) {
   'use strict';
 
-  this.customFields = [];
-}
+  /**
+   * NullLayout
+   * @constructor
+   * @mixes Layout
+   */
+  function NullLayout() {
+    this.customFields = [];
+  }
 
-/**
- *
- * @type {Layout}
- */
-NullLayout.prototype = new Layout();
-
-/**
- *
- * @param loggingEvent
- * @returns {Array}
- */
-NullLayout.prototype.format = function (loggingEvent) {
-  'use strict';
-
-  return loggingEvent.messages;
-};
-
-/**
- *
- * @returns {Boolean}
- */
-NullLayout.prototype.ignoresThrowable = function () {
-  'use strict';
-
-  return true;
-};
-
-/**
- *
- * @returns {String}
- */
-NullLayout.prototype.toString = function () {
-  'use strict';
-
-  return 'NullLayout';
-};
-
-if(typeof log4javascript !== 'undefined'){
   /**
    *
-   * @type {NullLayout}
+   * @type {Layout}
    */
-  log4javascript.NullLayout = NullLayout;
-}
+  NullLayout.prototype = new log4js.Layout();
+
+  /**
+   *
+   * @param loggingEvent
+   * @returns {Array}
+   */
+  NullLayout.prototype.format = function (loggingEvent) {
+    return loggingEvent.messages;
+  };
+
+  /**
+   *
+   * @returns {Boolean}
+   */
+  NullLayout.prototype.ignoresThrowable = function () {
+    return true;
+  };
+
+  /**
+   *
+   * @returns {String}
+   */
+  NullLayout.prototype.toString = function () {
+    return 'NullLayout';
+  };
+
+  log4js.NullLayout = NullLayout;
+});

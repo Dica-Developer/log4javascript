@@ -1,7 +1,7 @@
-var SimpleDateFormat;
-
-(function () {
+define(['log4js.helper', 'log4js.core'], function (helper, log4js) {
   'use strict';
+
+  var SimpleDateFormat;
 
   var regex = /('[^']*')|(G+|y+|M+|w+|W+|D+|d+|F+|E+|a+|H+|k+|K+|h+|m+|s+|S+|Z+)|([a-zA-Z]+)|([^a-zA-Z']+)/;
   var monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
@@ -93,7 +93,7 @@ var SimpleDateFormat;
    * @returns {Number}
    */
   Date.prototype.getWeekInYear = function (minimalDaysInFirstWeek) {
-    if (isUndefined(this.minimalDaysInFirstWeek)) {
+    if (helper.isUndefined(this.minimalDaysInFirstWeek)) {
       minimalDaysInFirstWeek = DEFAULT_MINIMAL_DAYS_IN_FIRST_WEEK;
     }
     var previousSunday = this.getPreviousSunday();
@@ -114,7 +114,7 @@ var SimpleDateFormat;
    * @returns {Number}
    */
   Date.prototype.getWeekInMonth = function (minimalDaysInFirstWeek) {
-    if (isUndefined(this.minimalDaysInFirstWeek)) {
+    if (helper.isUndefined(this.minimalDaysInFirstWeek)) {
       minimalDaysInFirstWeek = DEFAULT_MINIMAL_DAYS_IN_FIRST_WEEK;
     }
     var previousSunday = this.getPreviousSunday();
@@ -165,7 +165,7 @@ var SimpleDateFormat;
    * @returns {Number}
    */
   SimpleDateFormat.prototype.getMinimalDaysInFirstWeek = function () {
-    return isUndefined(this.minimalDaysInFirstWeek) ?
+    return helper.isUndefined(this.minimalDaysInFirstWeek) ?
       DEFAULT_MINIMAL_DAYS_IN_FIRST_WEEK : this.minimalDaysInFirstWeek;
   };
 
@@ -324,11 +324,6 @@ var SimpleDateFormat;
     }
     return formattedString;
   };
-})();
-if (typeof log4javascript !== 'undefined') {
-  /**
-   *
-   * @type {SimpleDateFormat}
-   */
-  log4javascript.SimpleDateFormat = SimpleDateFormat;
-}
+
+  log4js.SimpleDateFormat = SimpleDateFormat;
+});
