@@ -1,0 +1,8 @@
+{
+  "name": "log4js",
+  "version": "0.0.2",
+  "devDependencies": {
+    "requirejs": "~2.1.11",
+    "lodash": "~2.4.1"
+  }
+}
