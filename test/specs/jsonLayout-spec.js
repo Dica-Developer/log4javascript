@@ -138,5 +138,47 @@ define(['helper', 'log4js', 'logger', 'layout.json'], function (helper, log4js, 
       });
     });
 
+    describe('different message types', function () {
+      var layout, logger, date, milliSeconds, seconds;
+
+      beforeEach(function () {
+        layout = new log4js.JsonLayout(false, true);
+        logger = new log4js.getLogger('test');
+        date = new Date();
+        milliSeconds = date.getTime();
+        seconds = Math.floor(milliSeconds / 1000);
+      });
+
+      it('message with date', function(){
+        var message = [date];
+        var loggingEvent = new Logger.LoggingEvent(logger, date, log4js.Level.TRACE, message, null);
+        var jsonExpample = {
+          'logger': 'test',
+          'timestamp': seconds,
+          'level': 'TRACE',
+          'url': 'http://localhost:9876/context.html',
+          'message': date.getTime(),
+          'milliseconds': loggingEvent.milliseconds
+        };
+        expect(layout.format(loggingEvent)).toBe(JSON.stringify(jsonExpample));
+      });
+
+
+      it('message with Array', function(){
+        var message = [[1,2,3,4]];
+        var loggingEvent = new Logger.LoggingEvent(logger, date, log4js.Level.TRACE, message, null);
+        var jsonExpample = {
+          'logger': 'test',
+          'timestamp': seconds,
+          'level': 'TRACE',
+          'url': 'http://localhost:9876/context.html',
+          'message': [1,2,3,4],
+          'milliseconds': loggingEvent.milliseconds
+        };
+        expect(layout.format(loggingEvent)).toBe(JSON.stringify(jsonExpample));
+      });
+
+    });
+
   });
 });
