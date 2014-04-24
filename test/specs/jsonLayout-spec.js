@@ -4,12 +4,10 @@ define(['helper', 'log4js', 'logger', 'layout.json'], function (helper, log4js, 
 
   describe('#JsonLayout', function () {
 
-    var layout = null, logger = null, loggingEvent = null;
+    var layout = null;
 
     beforeEach(function () {
       layout = new log4js.JsonLayout();
-      logger = new log4js.getLogger('test');
-      loggingEvent = new Logger.LoggingEvent(logger, new Date(), log4js.Level.TRACE, ['1'], null);
     });
 
     it('.toString', function () {
@@ -25,17 +23,13 @@ define(['helper', 'log4js', 'logger', 'layout.json'], function (helper, log4js, 
     });
 
     describe('with prettyPrint', function () {
-      var layout = null, logger = null, loggingEvent = null,
-        date = null, milliSeconds = null, seconds = null;
+      var layout, loggingEvent, date, milliSeconds, seconds;
 
       beforeEach(function () {
         layout = new log4js.JsonLayout(true, true);
-        logger = new log4js.getLogger('test');
         date = new Date();
         milliSeconds = date.getTime();
         seconds = Math.floor(milliSeconds / 1000);
-        loggingEvent = new Logger.LoggingEvent(logger, date, log4js.Level.TRACE, ['1'], null);
-
       });
 
       it('.isReadable', function () {
@@ -81,16 +75,12 @@ define(['helper', 'log4js', 'logger', 'layout.json'], function (helper, log4js, 
 
 //        var jsonString = JSON.stringify(jsonExpample, null, '\t');
 
-        console.log(layout.format(loggingEvent));
-        console.log(jsonExpample);
-
         expect(layout.format(loggingEvent)).toEqual(jsonExpample);
       });
     });
 
     describe('without prettyPrint', function () {
-      var layout = null, logger = null, loggingEvent = null,
-        date = null, milliSeconds = null, seconds = null;
+      var layout, logger, loggingEvent, date, milliSeconds, seconds;
 
       beforeEach(function () {
         layout = new log4js.JsonLayout(false, true);
