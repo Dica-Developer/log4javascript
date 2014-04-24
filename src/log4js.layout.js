@@ -144,7 +144,7 @@ define(['log4js.helper', 'log4js.core'], function (helper, log4js) {
    */
   Layout.prototype.setTimeStampsInMilliseconds = function (timeStampsInMilliseconds) {
     this.overrideTimeStampsSetting = true;
-    this.useTimeStampsInMilliseconds = Boolean(timeStampsInMilliseconds);
+    this.useTimeStampsInMilliseconds = helper.toBoolean(timeStampsInMilliseconds);
   };
 
   /**

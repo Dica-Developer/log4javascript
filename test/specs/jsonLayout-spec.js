@@ -1,5 +1,5 @@
-/*global define, describe, it, expect, beforeEach*/
-define(['params', 'level', 'layout', 'logger', 'layout.json'], function () {
+/*global define, describe, it, xit, expect, beforeEach*/
+define(['helper', 'log4js', 'logger', 'layout.json'], function (helper, log4js, Logger) {
   'use strict';
 
   describe('#JsonLayout', function () {
@@ -7,9 +7,9 @@ define(['params', 'level', 'layout', 'logger', 'layout.json'], function () {
     var layout = null, logger = null, loggingEvent = null;
 
     beforeEach(function () {
-      layout = new JsonLayout();
-      logger = new Logger('test');
-      loggingEvent = new LoggingEvent(logger, new Date(), Level.TRACE, ['1'], null);
+      layout = new log4js.JsonLayout();
+      logger = new log4js.getLogger('test');
+      loggingEvent = new Logger.LoggingEvent(logger, new Date(), log4js.Level.TRACE, ['1'], null);
     });
 
     it('.toString', function () {
@@ -29,12 +29,13 @@ define(['params', 'level', 'layout', 'logger', 'layout.json'], function () {
         date = null, milliSeconds = null, seconds = null;
 
       beforeEach(function () {
-        layout = new JsonLayout(true, true);
-        logger = new Logger('test');
+        layout = new log4js.JsonLayout(true, true);
+        logger = new log4js.getLogger('test');
         date = new Date();
         milliSeconds = date.getTime();
         seconds = Math.floor(milliSeconds / 1000);
-        loggingEvent = new LoggingEvent(logger, date, Level.TRACE, ['1'], null);
+        loggingEvent = new Logger.LoggingEvent(logger, date, log4js.Level.TRACE, ['1'], null);
+
       });
 
       it('.isReadable', function () {
@@ -42,15 +43,15 @@ define(['params', 'level', 'layout', 'logger', 'layout.json'], function () {
       });
 
       it('.batchHeader', function () {
-        expect(layout.batchHeader).toBe('[' + newLine);
+        expect(layout.batchHeader).toBe('[' + helper.newLine);
       });
 
       it('.batchFooter', function () {
-        expect(layout.batchFooter).toBe(']' + newLine);
+        expect(layout.batchFooter).toBe(']' + helper.newLine);
       });
 
       it('.batchSeparator', function () {
-        expect(layout.batchSeparator).toBe(',' + newLine);
+        expect(layout.batchSeparator).toBe(',' + helper.newLine);
       });
 
       it('.colon', function () {
@@ -62,21 +63,21 @@ define(['params', 'level', 'layout', 'logger', 'layout.json'], function () {
       });
 
       it('.lineBreak', function () {
-        expect(layout.lineBreak).toBe(newLine);
+        expect(layout.lineBreak).toBe(helper.newLine);
       });
 
 
       //TODO needs further investigation fails with unknown reason maybe special chars
       xit('.format', function () {
 
-        var jsonExpample = '{ ' + newLine +
-          '\t"logger": "test",'  + newLine +
-          '\t"timestamp": ' + seconds + ',' +newLine +
-          '\t"level": "TRACE",' + newLine +
-          '\t"url": "http://localhost:9876/context.html",' + newLine +
-          '\t"message": "1",' + newLine +
-          '\t"milliseconds": ' + loggingEvent.milliseconds + newLine +
-        '}' + newLine;
+        var jsonExpample = '{ ' + helper.newLine +
+          '\t"logger": "test",' + helper.newLine +
+          '\t"timestamp": ' + seconds + ',' + helper.newLine +
+          '\t"level": "TRACE",' + helper.newLine +
+          '\t"url": "http://localhost:9876/context.html",' + helper.newLine +
+          '\t"message": "1",' + helper.newLine +
+          '\t"milliseconds": ' + loggingEvent.milliseconds + helper.newLine +
+        '}' + helper.newLine;
 
 //        var jsonString = JSON.stringify(jsonExpample, null, '\t');
 
@@ -92,12 +93,12 @@ define(['params', 'level', 'layout', 'logger', 'layout.json'], function () {
         date = null, milliSeconds = null, seconds = null;
 
       beforeEach(function () {
-        layout = new JsonLayout(false, true);
-        logger = new Logger('test');
+        layout = new log4js.JsonLayout(false, true);
+        logger = new log4js.getLogger('test');
         date = new Date();
         milliSeconds = date.getTime();
         seconds = Math.floor(milliSeconds / 1000);
-        loggingEvent = new LoggingEvent(logger, date, Level.TRACE, ['1'], null);
+        loggingEvent = new Logger.LoggingEvent(logger, date, log4js.Level.TRACE, ['1'], null);
       });
 
       it('.isReadable', function () {

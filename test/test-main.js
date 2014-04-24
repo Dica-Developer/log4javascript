@@ -26,9 +26,9 @@ requirejs.config({
     'layout': '../src/log4js.layout',
     'layout.pattern': '../src/log4js.layout.pattern',
     'layout.null': '../src/log4js.layout.null',
-    'layout.simple': '../src/log4js.layout.simple'
+    'layout.simple': '../src/log4js.layout.simple',
 //    'layout.httpPostData': '../src/log4js.layout.httpPostData',
-//    'layout.json': '../src/log4js.layout.json',
+    'layout.json': '../src/log4js.layout.json'
 //    'lodash': '../test/vendor/lodash/dist/lodash.min'
   },
   map: {
@@ -44,6 +44,7 @@ requirejs.config({
       'log4js.layout.pattern': 'layout.pattern',
       'log4js.layout.null': 'layout.null',
       'log4js.layout.simple': 'layout.simple',
+      'log4js.layout.json': 'layout.json',
       'log4js.simpleDateFormat': 'simpleDateFormat'
     }
   },
