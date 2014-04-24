@@ -2,7 +2,6 @@ define([
   'log4js.helper',
   'log4js.core',
   'log4js.eventSupport',
-  'log4js.layout',
   'log4js.layout.pattern'
 ], function (helper, log4js, EventSupport) {
   'use strict';
