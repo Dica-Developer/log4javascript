@@ -1,13 +1,11 @@
-/*global define, describe, it, expect, spyOn, beforeEach*/
+/*global define, describe, it, expect, spyOn, beforeEach, window*/
 define([
-  'params',
-  'level',
-  'layout',
+  'log4js',
+  'helper',
   'logger',
   'appender',
-  'layout.simple',
   'appender.alert'
-], function () {
+], function (log4js, helper, Logger) {
   'use strict';
 
   describe('#AlertAppender', function () {
@@ -15,9 +13,9 @@ define([
     var appender = null, loggingEvent = null, logger = null;
 
     beforeEach(function () {
-      appender = new AlertAppender();
-      logger = new Logger('test');
-      loggingEvent = new LoggingEvent(logger, new Date(), Level.TRACE, ['1', '2'], null);
+      appender = new log4js.AlertAppender();
+      logger = new log4js.getLogger('test');
+      loggingEvent = new Logger.LoggingEvent(logger, new Date(), log4js.Level.TRACE, ['1', '2'], null);
     });
 
     it('.toString', function () {
@@ -27,7 +25,7 @@ define([
     it('.toString', function () {
       var alertSpy = spyOn(window, 'alert');
       appender.append(loggingEvent);
-      expect(alertSpy).toHaveBeenCalledWith('TRACE - 1' + newLine + '2');
+      expect(alertSpy).toHaveBeenCalledWith('TRACE - 1' + helper.newLine + '2');
     });
 
     it('.toString', function () {
@@ -37,7 +35,7 @@ define([
       };
       var alertSpy = spyOn(window, 'alert');
       appender.append(loggingEvent);
-      expect(alertSpy).toHaveBeenCalledWith('TRACE - 1' + newLine + '2');
+      expect(alertSpy).toHaveBeenCalledWith('TRACE - 1' + helper.newLine + '2');
     });
 
   });

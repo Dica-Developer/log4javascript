@@ -22,11 +22,11 @@ requirejs.config({
     'logger': '../src/log4js.logger',
     'eventSupport': '../src/log4js.eventSupport',
     'appender': '../src/log4js.appender',
-//    'appender.alert': '../src/log4js.appender.alert',
+    'appender.alert': '../src/log4js.appender.alert',
     'layout': '../src/log4js.layout',
     'layout.pattern': '../src/log4js.layout.pattern',
-    'layout.null': '../src/log4js.layout.null'
-//    'layout.simple': '../src/log4js.layout.simple',
+    'layout.null': '../src/log4js.layout.null',
+    'layout.simple': '../src/log4js.layout.simple'
 //    'layout.httpPostData': '../src/log4js.layout.httpPostData',
 //    'layout.json': '../src/log4js.layout.json',
 //    'lodash': '../test/vendor/lodash/dist/lodash.min'
@@ -39,9 +39,11 @@ requirejs.config({
       'log4js.logger': 'logger',
       'log4js.eventSupport': 'eventSupport',
       'log4js.appender': 'appender',
+      'log4js.appender.alert': 'log4js.appender.alert',
       'log4js.layout': 'layout',
       'log4js.layout.pattern': 'layout.pattern',
       'log4js.layout.null': 'layout.null',
+      'log4js.layout.simple': 'layout.simple',
       'log4js.simpleDateFormat': 'simpleDateFormat'
     }
   },
