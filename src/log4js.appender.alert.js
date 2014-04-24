@@ -1,3 +1,4 @@
+/*global window*/
 define(['log4js.core', 'log4js.appender', 'log4js.layout.simple'], function(log4js){
   'use strict';
   /**
