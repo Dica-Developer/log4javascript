@@ -21,8 +21,8 @@ define([
     this.version = '0.0.2';
     this.enabled = true;
     this.showStackTraces = false;
-    this.setRootLogger();
     this.applicationStartDate = new Date();
+    this.setRootLogger();
   }
 
   /**
@@ -44,11 +44,7 @@ define([
    * @param {Boolean} enable
    */
   Log4js.prototype.setEnabled = function (enable) {
-    if (helper.isBoolean(enable)) {
-      this.enabled = enable;
-    } else {
-      helper.handleError('Log4js [' + this + ']: setEnabled: enable must be a boolean');
-    }
+    this.enabled = helper.toBoolean(enable);
   };
 
   /**
@@ -66,11 +62,7 @@ define([
    * @param {Boolean} timeStampsInMilliseconds
    */
   Log4js.prototype.setTimeStampsInMilliseconds = function (timeStampsInMilliseconds) {
-    if (helper.isBoolean(timeStampsInMilliseconds)) {
-      this.useTimeStampsInMilliseconds = timeStampsInMilliseconds;
-    } else {
-      helper.handleError('Log4js [' + this + ']: setTimeStampsInMilliseconds: timeStampsInMilliseconds must be a boolean');
-    }
+    this.useTimeStampsInMilliseconds = helper.toBoolean(timeStampsInMilliseconds);
   };
 
   /**
@@ -97,11 +89,7 @@ define([
    * @param {Boolean} show
    */
   Log4js.prototype.setShowStackTraces = function (show) {
-    if (helper.isBoolean(show)) {
-      this.showStackTraces = show;
-    } else {
-      helper.handleError('Log4js [' + this + ']: setShowStackTraces: show must be a boolean');
-    }
+    this.showStackTraces = helper.toBoolean(show);
   };
 
   /**
