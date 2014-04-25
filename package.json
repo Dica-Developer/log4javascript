@@ -47,7 +47,8 @@
     "karma-requirejs": "^0.2.1",
     "karma-phantomjs-launcher": "^0.1.4",
     "karma-coverage": "^0.2.1",
-    "grunt-karma-coveralls": "^2.4.4"
+    "grunt-karma-coveralls": "^2.4.4",
+    "grunt-complexity": "^0.1.6"
   },
   "engines": {
     "node": ">=0.8.0"
