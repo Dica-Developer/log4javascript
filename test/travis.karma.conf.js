@@ -16,17 +16,15 @@ module.exports = function(config) {
     files: [
       'test/test-main.js',
       {pattern: 'src/*.js', included: false},
-      {pattern: 'dist/*.js', included: false},
       {pattern: 'test/specs/*-spec.js', included: false}
     ],
 
     preprocessors: {
-      'src/*.js': 'coverage',
-      'dist/log4javascript.js': 'coverage'
+      'src/*.js': 'coverage'
     },
 
     coverageReporter: {
-      type : 'html',
+      type : 'lcov',
       dir : 'test/coverage/'
     },
 

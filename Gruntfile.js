@@ -1,10 +1,9 @@
 module.exports = function (grunt) {
   'use strict';
 
-  grunt.loadNpmTasks('grunt-contrib');
-  grunt.loadNpmTasks('grunt-jsdoc');
-  grunt.loadNpmTasks('grunt-karma');
   require('time-grunt')(grunt);
+  require('load-grunt-tasks')(grunt);
+  grunt.loadNpmTasks('grunt-karma-coveralls');
 
   // configurable paths
   var config = {
