@@ -45,19 +45,16 @@ define(function () {
       return found;
     },
     arrayRemove: function arrayRemove(arr, val) {
-      var index = -1;
+      var removed = false;
       for (var i = 0, len = arr.length; i < len; i++) {
         if (arr[i] === val) {
-          index = i;
+          arr.splice(i, 1);
+          removed = true;
           break;
+
         }
       }
-      if (index >= 0) {
-        arr.splice(index, 1);
-        return true;
-      } else {
-        return false;
-      }
+      return removed;
     },
     trim: function trim(str) {
       return str.replace(/^\s+/, '').replace(/\s+$/, '');
