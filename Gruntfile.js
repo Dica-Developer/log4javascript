@@ -62,11 +62,20 @@ module.exports = function (grunt) {
         loglevel: 5,
         inlineText: true,
         baseUrl: './<%= config.src %>',
-        optimize: 'uglify',
-        name: 'log4js',
-        out: 'dist/log4js.min.js'
+        optimize: 'uglify2',
+        preserveLicenseComments: false,
+        generateSourceMaps: true,
+        wrap: {
+          start: '(function() {\n \'use strict\'',
+          end: '}());'
+        }
       },
-      dist: {}
+      consoleAppender: {
+        options:{
+          include: 'log4js.part.console',
+          out: 'dist/log4js.part.console.js'
+        }
+      }
     },
     karma: {
       dist: {
