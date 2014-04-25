@@ -33,24 +33,6 @@ module.exports = function (grunt) {
         }]
       }
     },
-    uglify: {
-      dist: {
-        files: {
-          '<%= config.dist %>/log4javascript.min.js': ['<%= config.dist %>/log4javascript.js']
-        }
-      }
-    },
-    jsdoc : {
-      dist : {
-        src: ['<%= config.lib %>/*.js', '<%= config.lib %>/api/*.js', 'README.md'],
-        options: {
-          destination: 'doc',
-          configure: 'jsdoc.conf.json',
-          template: 'node_modules/grunt-jsdoc/node_modules/ink-docstrap/template',
-          tutorials: 'tutorials'
-        }
-      }
-    },
     jshint: {
       options: {
         jshintrc: '.jshintrc'
