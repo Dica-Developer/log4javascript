@@ -2,7 +2,7 @@
 requirejs.config({
   baseUrl: '../dist/'
 });
-require(['log4js.part.console'], function(log4js){
+require(['log4js.part.browserConsole'], function(log4js){
   'use strict';
 
   var log = log4js.getLogger('testLogger');

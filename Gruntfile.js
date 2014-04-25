@@ -52,10 +52,16 @@ module.exports = function (grunt) {
           end: '}());'
         }
       },
-      consoleAppender: {
+      browserConsole: {
         options:{
-          include: 'log4js.part.console',
-          out: 'dist/log4js.part.console.js'
+          include: 'log4js.part.browserConsole',
+          out: 'dist/log4js.part.browserConsole.js'
+        }
+      },
+      console: {
+        options:{
+          include: 'log4js.part.browserConsole',
+          out: 'dist/log4js.part.browserConsole.js'
         }
       }
     },
