@@ -1,8 +1,8 @@
 /*global require, requirejs*/
 requirejs.config({
-  baseUrl: '../../src/'
+  baseUrl: '../dist/'
 });
-require(['log4js.core', 'log4js.appender.browserConsole'], function(log4js){
+require(['log4js.part.console'], function(log4js){
   'use strict';
 
   var log = log4js.getLogger('testLogger');
