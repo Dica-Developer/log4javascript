@@ -75,6 +75,9 @@ module.exports = function (grunt) {
       },
       dev: {
         configFile: '<%= config.test %>/console.karma.conf.js'
+      },
+      travis: {
+        configFile: '<%= config.test %>/travis.karma.conf.js'
       }
     }
   });
@@ -99,5 +102,10 @@ module.exports = function (grunt) {
   grunt.registerTask('test', [
     'jshint',
     'karma:dev'
+  ]);
+
+  grunt.registerTask('travis', [
+    'jshint',
+    'karma:travis'
   ]);
 };
