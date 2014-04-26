@@ -173,6 +173,31 @@ define(['helper'], function (helper) {
       });
     });
 
+    describe('#helper.getExceptionStringRep', function () {
+
+      it('should return null if the argument is not exception', function(){
+        expect(helper.getExceptionStringRep()).toBe(null);
+      });
+
+      it('should return proper exception string representation', function(){
+        var error = new Error('test message');
+        error.lineNumber = '42';
+        expect(helper.getExceptionStringRep(error)).toBe('Exception: test message on line number 42');
+        error.fileName = 'test.js';
+        expect(helper.getExceptionStringRep(error)).toBe('Exception: test message on line number 42 in file test.js');
+        delete error.lineNumber;
+        expect(helper.getExceptionStringRep(error)).toBe('Exception: test message in file test.js');
+      });
+
+      xit('should call handle error if no "lineNumber and/or fileName" is present', function(){
+        var errorSpy = spyOn(helper, 'handleError');
+        var error = new Error('test message');
+        helper.getExceptionStringRep(error);
+        expect(errorSpy).toHaveBeenCalledWith();
+      });
+
+    });
+
     describe('#helper.getUrlFileName', function () {
       it('should return the everything after the last "/"', function(){
         var url = 'http://bla/bla/bla.js';
@@ -186,8 +211,30 @@ define(['helper'], function (helper) {
     describe('#helper.handleError', function () {
       it('should call window.alert', function(){
         var alertSpy = spyOn(window, 'alert');
-        helper.handleError('Alarm')
+        helper.handleError('Alarm');
         expect(alertSpy).toHaveBeenCalledWith('Alarm');
+      });
+    });
+
+    describe('#helper.getUUID', function () {
+      it('should return proper UUID', function(){
+        var uuid1 = helper.getUUID();
+        var uuid2 = helper.getUUID();
+        expect(uuid1.length).toBe(36);
+        expect(uuid1 === uuid2).toBeFalsy();
+      });
+    });
+
+    describe('#helper.extractStringFromParam', function () {
+      it('should return given argument as String', function(){
+        expect(typeof helper.extractStringFromParam(1)).toBe('string');
+        expect(typeof helper.extractStringFromParam(function(){})).toBe('string');
+        expect(typeof helper.extractStringFromParam({})).toBe('string');
+        expect(typeof helper.extractStringFromParam([])).toBe('string');
+      });
+
+      it('should return should return default value if first argument is undefined', function(){
+        expect(typeof helper.extractStringFromParam(void 0, 'string')).toBe('string');
       });
     });
 
