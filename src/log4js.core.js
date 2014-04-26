@@ -109,7 +109,7 @@ define([
     // Use default logger if loggerName is not specified or invalid
     if (!helper.isString(loggerName)) {
       helper.handleError(
-          'Log4js [' + this + ']: getLogger: non-string logger name ' +
+          'Log4js [' + this.toString() + ']: getLogger: non-string logger name ' +
           loggerName +
           ' supplied, returning anonymous logger'
       );
@@ -118,7 +118,7 @@ define([
 
     // Do not allow retrieval of the root logger by name
     if (loggerName === helper.rootLoggerName) {
-      helper.handleError('Log4js [' + this + ']: getLogger: root logger may not be obtained by name');
+      helper.handleError('Log4js [' + this.toString() + ']: getLogger: root logger may not be obtained by name');
     }
 
     // Create the logger for this name if it doesn't already exist
@@ -174,6 +174,10 @@ define([
   Log4js.prototype.resetConfiguration = function () {
     rootLogger.setLevel(Level.ROOT_LOGGER_DEFAULT_LEVEL);
     loggers = {};
+  };
+
+  Log4js.prototype.toString = function () {
+    return 'log4js.core';
   };
 
   /**
