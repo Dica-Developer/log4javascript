@@ -1,109 +1,78 @@
 /*global define, describe, it, expect, beforeEach*/
-define(['log4javascript'], function(log4javascript){
+define(['log4js'], function(log4js){
   'use strict';
 
   describe('log4js should defined and initiate with all Appender and Layouts', function () {
 
     it('log4js should be defined', function () {
-      expect(log4javascript).toBeDefined();
+      expect(log4js).toBeDefined();
     });
 
     describe('log4js prototypes should defined', function () {
 
       it('log4js.Level should be defined', function () {
-        expect(log4javascript.Level).toBeDefined();
+        expect(log4js.Level).toBeDefined();
       });
 
       it('log4js.evalInScope should be defined', function () {
-        expect(log4javascript.evalInScope).toBeDefined();
+        expect(log4js.evalInScope).toBeDefined();
       });
 
       it('log4js.eventListeners should be defined', function () {
-        expect(log4javascript.eventListeners).toBeDefined();
+        expect(log4js.eventListeners).toBeDefined();
       });
 
       it('log4js.eventTypes should be defined', function () {
-        expect(log4javascript.eventTypes).toBeDefined();
+        expect(log4js.eventTypes).toBeDefined();
       });
 
       it('log4js.getDefaultLogger should be defined', function () {
-        expect(log4javascript.getDefaultLogger).toBeDefined();
+        expect(log4js.getDefaultLogger).toBeDefined();
       });
 
       it('log4js.getLogger should be defined', function () {
-        expect(log4javascript.getLogger).toBeDefined();
+        expect(log4js.getLogger).toBeDefined();
       });
 
       it('log4js.getNullLogger should be defined', function () {
-        expect(log4javascript.getNullLogger).toBeDefined();
+        expect(log4js.getNullLogger).toBeDefined();
       });
 
       it('log4js.getRootLogger should be defined', function () {
-        expect(log4javascript.getRootLogger).toBeDefined();
+        expect(log4js.getRootLogger).toBeDefined();
       });
 
       it('log4js.isEnabled should be defined', function () {
-        expect(log4javascript.isEnabled).toBeDefined();
+        expect(log4js.isEnabled).toBeDefined();
       });
 
       it('log4js.isTimeStampsInMilliseconds should be defined', function () {
-        expect(log4javascript.isTimeStampsInMilliseconds).toBeDefined();
-      });
-
-      it('log4js.logLog should be defined', function () {
-        expect(log4javascript.logLog).toBeDefined();
+        expect(log4js.isTimeStampsInMilliseconds).toBeDefined();
       });
 
       it('log4js.resetConfiguration should be defined', function () {
-        expect(log4javascript.resetConfiguration).toBeDefined();
-      });
-
-      it('log4js.setDocumentReady should be defined', function () {
-        expect(log4javascript.setDocumentReady).toBeDefined();
+        expect(log4js.resetConfiguration).toBeDefined();
       });
 
       it('log4js.setEnabled should be defined', function () {
-        expect(log4javascript.setEnabled).toBeDefined();
+        expect(log4js.setEnabled).toBeDefined();
       });
 
       it('log4js.setShowStackTraces should be defined', function () {
-        expect(log4javascript.setShowStackTraces).toBeDefined();
+        expect(log4js.setShowStackTraces).toBeDefined();
       });
 
       it('log4js.setTimeStampsInMilliseconds should be defined', function () {
-        expect(log4javascript.setTimeStampsInMilliseconds).toBeDefined();
+        expect(log4js.setTimeStampsInMilliseconds).toBeDefined();
       });
     });
 
     describe('log4js Appender should defined', function () {
 
       it('log4js.Appender should be defined', function () {
-        expect(log4javascript.Appender).toBeDefined();
+        expect(log4js.Appender).toBeDefined();
       });
 
-      it('log4js.AlertAppender should be defined', function () {
-        expect(log4javascript.AlertAppender).toBeDefined();
-      });
-
-      it('log4js.AjaxAppender should be defined', function () {
-        expect(log4javascript.AjaxAppender).toBeDefined();
-      });
-
-      it('log4js.BrowserConsoleAppender should be defined', function () {
-        expect(log4javascript.BrowserConsoleAppender).toBeDefined();
-      });
-
-      it('log4js.InPageAppender should be defined', function () {
-        expect(log4javascript.InPageAppender).toBeDefined();
-      });
-
-      it('log4js.InlineAppender should be defined', function () {
-        expect(log4javascript.InlineAppender).toBeDefined();
-      });
-
-      it('log4js.PopUpAppender should be defined', function () {
-        expect(log4javascript.PopUpAppender).toBeDefined();
-      });
     });
   });
 
@@ -120,19 +89,19 @@ define(['log4javascript'], function(log4javascript){
     };
     var levelKeys = [];
     beforeEach(function(){
-      tmpLevel.OFF = log4javascript.Level.OFF;
-      tmpLevel.FATAL = log4javascript.Level.FATAL;
-      tmpLevel.ERROR = log4javascript.Level.ERROR;
-      tmpLevel.WARN = log4javascript.Level.WARN;
-      tmpLevel.INFO = log4javascript.Level.INFO;
-      tmpLevel.DEBUG = log4javascript.Level.DEBUG;
-      tmpLevel.TRACE = log4javascript.Level.TRACE;
-      tmpLevel.ALL = log4javascript.Level.ALL;
+      tmpLevel.OFF = log4js.Level.OFF;
+      tmpLevel.FATAL = log4js.Level.FATAL;
+      tmpLevel.ERROR = log4js.Level.ERROR;
+      tmpLevel.WARN = log4js.Level.WARN;
+      tmpLevel.INFO = log4js.Level.INFO;
+      tmpLevel.DEBUG = log4js.Level.DEBUG;
+      tmpLevel.TRACE = log4js.Level.TRACE;
+      tmpLevel.ALL = log4js.Level.ALL;
       levelKeys = Object.keys(tmpLevel);
     });
 
     it('log4js.Level should be defined', function () {
-      expect(log4javascript.Level).toBeDefined();
+      expect(log4js.Level).toBeDefined();
     });
 
     it('log4js.Level.ALL should be defined', function () {
