@@ -97,15 +97,11 @@ define(function () {
     getExceptionStringRep: function(ex){
       if (ex) {
         var exStr = 'Exception: ' + this.getExceptionMessage(ex);
-        try {
-          if (ex.lineNumber) {
-            exStr += ' on line number ' + ex.lineNumber;
-          }
-          if (ex.fileName) {
-            exStr += ' in file ' + this.getUrlFileName(ex.fileName);
-          }
-        } catch (localEx) {
-          this.handleError('Unable to obtain file and line information for error');
+        if (ex.lineNumber) {
+          exStr += ' on line number ' + ex.lineNumber;
+        }
+        if (ex.fileName) {
+          exStr += ' in file ' + this.getUrlFileName(ex.fileName);
         }
 //        if (showStackTraces && ex.stack) {
 //          exStr += this.newLine + 'Stack trace:' + this.newLine + ex.stack;
