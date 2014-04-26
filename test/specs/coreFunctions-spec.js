@@ -247,6 +247,7 @@ define(['helper', 'log4js', 'logger'], function (helper, log4js, Logger) {
       expect(errorSpy).toHaveBeenCalledWith('Log4js [log4js.core]: getLogger: root logger may not be obtained by name');
     });
 
+    //TODO check if 'new Logger()' is called
     xit('Should not call new Logger if logger exist', function(){
       log4js.getLogger('test');
       var loggerSpy = spyOn(Logger);
@@ -262,6 +263,7 @@ define(['helper', 'log4js', 'logger'], function (helper, log4js, Logger) {
 
   });
 
+  //TODO check if 'new Logger()' is called
   describe('log4js.getNullLogger', function(){
     it('Should add new null logger if not exist', function(){
       var nullLogger = log4js.getNullLogger();
