@@ -1,5 +1,5 @@
-/*global define, describe, it, expect, beforeEach*/
-define(['log4js'], function (log4js) {
+/*global define, describe, it, expect, beforeEach, spyOn, xit*/
+define(['helper', 'log4js', 'logger'], function (helper, log4js, Logger) {
   'use strict';
 
   describe('log4js should defined and initiate with all Appender and Layouts', function () {
@@ -156,6 +156,116 @@ define(['log4js'], function (log4js) {
       for (var i = 0, length = levelKeys.length; i < length; i++) {
         expect(tmpLevel[levelKeys[i]].name).toBe(levelKeys[i]);
       }
+    });
+  });
+
+  describe('log4js.setTimeStampsInMilliseconds', function(){
+
+    it('Should set to false', function(){
+      log4js.setTimeStampsInMilliseconds(false);
+      expect(log4js.useTimeStampsInMilliseconds).toBeFalsy();
+      log4js.setTimeStampsInMilliseconds(true);
+      expect(log4js.useTimeStampsInMilliseconds).toBeTruthy();
+      log4js.setTimeStampsInMilliseconds(0);
+      expect(log4js.useTimeStampsInMilliseconds).toBeFalsy();
+    });
+
+    it('Should set to true', function(){
+      log4js.setTimeStampsInMilliseconds(true);
+      expect(log4js.useTimeStampsInMilliseconds).toBeTruthy();
+      log4js.setTimeStampsInMilliseconds(false);
+      expect(log4js.useTimeStampsInMilliseconds).toBeFalsy();
+      log4js.setTimeStampsInMilliseconds(1);
+      expect(log4js.useTimeStampsInMilliseconds).toBeTruthy();
+    });
+
+  });
+
+  describe('log4js.isTimeStampsInMilliseconds', function(){
+
+    it('Should return false', function(){
+      log4js.setTimeStampsInMilliseconds(false);
+      expect(log4js.isTimeStampsInMilliseconds()).toBeFalsy();
+    });
+
+    it('Should return true', function(){
+      log4js.setTimeStampsInMilliseconds(true);
+      expect(log4js.isTimeStampsInMilliseconds()).toBeTruthy();
+    });
+
+  });
+
+  describe('log4js.setShowStackTraces', function(){
+
+    it('Should set to false', function(){
+      log4js.setShowStackTraces(false);
+      expect(log4js.showStackTraces).toBeFalsy();
+      log4js.setShowStackTraces(true);
+      expect(log4js.showStackTraces).toBeTruthy();
+      log4js.setShowStackTraces(0);
+      expect(log4js.showStackTraces).toBeFalsy();
+    });
+
+    it('Should set to true', function(){
+      log4js.setShowStackTraces(true);
+      expect(log4js.showStackTraces).toBeTruthy();
+      log4js.setShowStackTraces(false);
+      expect(log4js.showStackTraces).toBeFalsy();
+      log4js.setShowStackTraces(1);
+      expect(log4js.showStackTraces).toBeTruthy();
+    });
+
+  });
+
+  describe('log4js.getRootLogger', function(){
+
+    it('Should return root logger', function(){
+      var rootLogger = log4js.getRootLogger();
+      expect(rootLogger.name).toBe('root');
+      expect(rootLogger.getLevel()).toBe(log4js.Level.DEBUG);
+    });
+
+  });
+
+  describe('log4js.getLogger', function(){
+
+    it('Should throw error if name is not string', function(){
+      var errorSpy = spyOn(helper, 'handleError');
+      log4js.getLogger();
+      expect(errorSpy).toHaveBeenCalledWith('Log4js [log4js.core]: getLogger: non-string logger name undefined supplied, returning anonymous logger');
+    });
+
+    it('Should return "anonymous" logger if name is not string', function(){
+      spyOn(helper, 'handleError');
+      var logger = log4js.getLogger();
+      expect(logger.name).toBe('[anonymous]');
+    });
+
+    it('Should throw error if name is root logger', function(){
+      var errorSpy = spyOn(helper, 'handleError');
+      log4js.getLogger('root');
+      expect(errorSpy).toHaveBeenCalledWith('Log4js [log4js.core]: getLogger: root logger may not be obtained by name');
+    });
+
+    xit('Should not call new Logger if logger exist', function(){
+      log4js.getLogger('test');
+      var loggerSpy = spyOn(Logger);
+      log4js.getLogger('test');
+      expect(loggerSpy).not.toHaveBeenCalled();
+    });
+
+    it('Should correctly add child logger to parents depending on the name', function(){
+      var parent = log4js.getLogger('test');
+      var child = log4js.getLogger('test.test');
+      expect(child.parent).toBe(parent);
+    });
+
+  });
+
+  describe('log4js.getNullLogger', function(){
+    it('Should add new null logger if not exist', function(){
+      var nullLogger = log4js.getNullLogger();
+      expect(nullLogger.name).toBe('[null]');
     });
   });
 });
