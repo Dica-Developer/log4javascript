@@ -44,9 +44,9 @@ module.exports = function (grunt) {
         loglevel: 5,
         inlineText: true,
         baseUrl: './<%= config.src %>',
-        optimize: 'uglify2',
+        optimize: 'none',
         preserveLicenseComments: false,
-        generateSourceMaps: true,
+//        generateSourceMaps: true,
         wrap: {
           start: '(function() {\n \'use strict\'',
           end: '}());'
@@ -60,8 +60,8 @@ module.exports = function (grunt) {
       },
       console: {
         options:{
-          include: 'log4js.part.browserConsole',
-          out: 'dist/log4js.part.browserConsole.js'
+          include: 'log4js.part.console',
+          out: 'dist/log4js.part.console.js'
         }
       }
     },
