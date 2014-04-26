@@ -99,5 +99,27 @@ define(['log4js', 'helper', 'level', 'logger', 'appender', 'layout.pattern'], fu
 
     });
 
+    describe('Empty functions', function(){
+
+      it('append should be defined and function', function(){
+        expect(appender.append).toBeDefined();
+        expect(typeof appender.append).toBe('function');
+        expect(appender.append()).toBe(void 0);
+      });
+
+      it('group should be defined and function', function(){
+        expect(appender.group).toBeDefined();
+        expect(typeof appender.group).toBe('function');
+        expect(appender.group()).toBe(void 0);
+      });
+
+      it('groupEnd should be defined and function', function(){
+        expect(appender.groupEnd).toBeDefined();
+        expect(typeof appender.groupEnd).toBe('function');
+        expect(appender.groupEnd()).toBe(void 0);
+      });
+
+    });
+
   });
 });
