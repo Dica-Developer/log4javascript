@@ -1,5 +1,5 @@
 /*global define, describe, it, expect, beforeEach*/
-define(['log4js'], function(log4js){
+define(['log4js'], function (log4js) {
   'use strict';
 
   describe('log4js should defined and initiate with all Appender and Layouts', function () {
@@ -88,7 +88,7 @@ define(['log4js'], function(log4js){
       ALL: null
     };
     var levelKeys = [];
-    beforeEach(function(){
+    beforeEach(function () {
       tmpLevel.OFF = log4js.Level.OFF;
       tmpLevel.FATAL = log4js.Level.FATAL;
       tmpLevel.ERROR = log4js.Level.ERROR;
@@ -141,22 +141,21 @@ define(['log4js'], function(log4js){
     });
 
     it('log4js.Level.<Level>.level should be Number', function () {
-      for(var i = 0, length = levelKeys.length; i < length; i++){
+      for (var i = 0, length = levelKeys.length; i < length; i++) {
         expect(typeof tmpLevel[levelKeys[i]].level).toBe('number');
       }
     });
 
     it('log4js.Level.<Level>.name should be String', function () {
-      for(var i = 0, length = levelKeys.length; i < length; i++){
+      for (var i = 0, length = levelKeys.length; i < length; i++) {
         expect(typeof tmpLevel[levelKeys[i]].name).toBe('string');
       }
     });
 
     it('log4js.Level.<Level>.name should be the same as the identifier', function () {
-      for(var i = 0, length = levelKeys.length; i < length; i++){
+      for (var i = 0, length = levelKeys.length; i < length; i++) {
         expect(tmpLevel[levelKeys[i]].name).toBe(levelKeys[i]);
       }
     });
-
   });
 });
