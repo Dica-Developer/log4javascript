@@ -107,12 +107,13 @@ module.exports = function (grunt) {
 
   grunt.registerTask('devWatch', [
     'jshint',
-    'complexity'
+    'requirejs'
   ]);
 
   grunt.registerTask('dev', [
     'jshint',
     'complexity',
+    'requirejs',
     'watch:dev'
   ]);
 
