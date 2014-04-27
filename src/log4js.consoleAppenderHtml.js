@@ -291,7 +291,6 @@ define(function(){
     '    </div>',
     '   </div>',
     '  </div>',
-    '  <div id="log" class="TRACE DEBUG INFO WARN ERROR FATAL"></div>',
     '  </div>'
   ];
 
