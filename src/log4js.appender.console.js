@@ -2,10 +2,48 @@
 define(['log4js.helper', 'log4js.core', 'log4js.consoleAppenderHtml', 'log4js.appender'], function(helper, log4js, consoleAppenderHtml){
   'use strict';
 
+  function LogCache(size){
+    this.size = size || 100;
+    this.cache = [];
+  }
+
+  LogCache.prototype.setSize = function(newSize){
+    this.size = newSize;
+  };
+
+  LogCache.prototype.add = function(loggingEvent){
+    if(this.cache.length === this.size){
+      this.cache.shift();
+    }
+
+    this.cache.push(loggingEvent);
+  };
+
+  LogCache.prototype.get = function(index){
+    return this.cache[index];
+  };
+
+  LogCache.prototype.getFirst = function(){
+    return this.get(0);
+  };
+
+  LogCache.prototype.getLast = function(){
+    return this.get(this.cache.length);
+  };
+
+  LogCache.prototype.getAll = function(){
+    return this.cache;
+  };
+
+  LogCache.prototype.clear = function(){
+    this.cache = [];
+  };
+
   function ConsoleAppender(options){
     options = options || {};
     this.options = {
       inPage: options.inPage || true
+      logCacheSize:   options.logCacheSize || 100
     };
   }
 
