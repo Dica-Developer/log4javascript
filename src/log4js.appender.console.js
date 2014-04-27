@@ -1,5 +1,5 @@
 /*global window*/
-define(['log4js.helper', 'log4js.core', 'log4js.consoleAppenderHtml', 'log4js.appender'], function(helper, log4js, consoleAppenderHtml){
+define(['log4js.helper', 'log4js.core', 'log4js.consoleAppenderHtml', 'log4js.appender', 'log4js.layout.pattern'], function(helper, log4js, consoleAppenderHtml){
   'use strict';
 
   function LogCache(size){
@@ -43,6 +43,7 @@ define(['log4js.helper', 'log4js.core', 'log4js.consoleAppenderHtml', 'log4js.ap
     options = options || {};
     this.options = {
       inPage: options.inPage || true
+      layout: options.layout || new log4js.PatternLayout('%d{HH:mm:ss} %-5p - %m{1}%n'),
       logCacheSize:   options.logCacheSize || 100
     };
   }
