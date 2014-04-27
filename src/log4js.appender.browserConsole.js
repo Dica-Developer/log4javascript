@@ -46,17 +46,17 @@ define(['log4js.core', 'log4js.appender', 'log4js.layout.null'], function (log4j
     };
 
     if (window.console && window.console.log) {
-      var formattedMesage = getFormattedMessage();
+      var formattedMessage = getFormattedMessage();
       if (window.console.debug && log4js.Level.DEBUG.isGreaterOrEqual(loggingEvent.level)) {
-        window.console.debug(formattedMesage);
+        window.console.debug(formattedMessage);
       } else if (window.console.info && log4js.Level.INFO.equals(loggingEvent.level)) {
-        window.console.info(formattedMesage);
+        window.console.info(formattedMessage);
       } else if (window.console.warn && log4js.Level.WARN.equals(loggingEvent.level)) {
-        window.console.warn(formattedMesage);
+        window.console.warn(formattedMessage);
       } else if (window.console.error && loggingEvent.level.isGreaterOrEqual(log4js.Level.ERROR)) {
-        window.console.error(formattedMesage);
+        window.console.error(formattedMessage);
       } else {
-        window.console.log(formattedMesage);
+        window.console.log(formattedMessage);
       }
     }
   };
