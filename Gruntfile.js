@@ -48,7 +48,7 @@ module.exports = function (grunt) {
         preserveLicenseComments: false,
 //        generateSourceMaps: true,
         wrap: {
-          start: '(function() {\n \'use strict\'',
+          start: '(function() {\n \'use strict\';\n',
           end: '}());'
         }
       },
@@ -62,6 +62,12 @@ module.exports = function (grunt) {
         options:{
           include: 'log4js.part.console',
           out: 'dist/log4js.part.console.js'
+        }
+      },
+      full: {
+        options:{
+          include: 'log4js',
+          out: 'dist/log4js.js'
         }
       }
     },
