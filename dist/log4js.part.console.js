@@ -2399,19 +2399,19 @@ define('log4js.appender.console',['log4js.helper', 'log4js.core', 'log4js.consol
     this.cache.push(loggingEvent);
   };
 
-  LogCache.prototype.get = function(index){
+  LogCache.prototype.getAtIndex = function(index){
     return this.cache[index];
   };
 
   LogCache.prototype.getFirst = function(){
-    return this.get(0);
+    return this.getAtIndex(0);
   };
 
   LogCache.prototype.getLast = function(){
-    return this.get(this.cache.length);
+    return this.getAtIndex(this.cache.length);
   };
 
-  LogCache.prototype.getAll = function(){
+  LogCache.prototype.get = function(){
     return this.cache;
   };
 
@@ -2424,7 +2424,7 @@ define('log4js.appender.console',['log4js.helper', 'log4js.core', 'log4js.consol
     this.options = {
       inPage: options.inPage || true,
       layout: options.layout || new log4js.PatternLayout('%d{HH:mm:ss} %-5p - %m{1}%n'),
-      logCacheSize:   options.logCacheSize || 100
+      logCacheSize: options.logCacheSize || 100
     };
   }
 
@@ -2475,7 +2475,7 @@ define('log4js.appender.console',['log4js.helper', 'log4js.core', 'log4js.consol
 
   ConsoleAppender.prototype.renderLogs = function(){
     var layout = this.layout;
-    var logs = this.logCache.getAll();
+    var logs = this.logCache.get();
     var logEntries = [];
     logs.forEach(function(loggingEvent){
       logEntries.push('<div>' + layout.format(loggingEvent) + '</div>');
