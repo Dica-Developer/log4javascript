@@ -1,5 +1,6 @@
 (function() {
- 'use strict'/*global window*/
+ 
+/*global window*/
 define('log4js.helper',[],function () {
   
 
@@ -98,15 +99,11 @@ define('log4js.helper',[],function () {
     getExceptionStringRep: function(ex){
       if (ex) {
         var exStr = 'Exception: ' + this.getExceptionMessage(ex);
-        try {
-          if (ex.lineNumber) {
-            exStr += ' on line number ' + ex.lineNumber;
-          }
-          if (ex.fileName) {
-            exStr += ' in file ' + this.getUrlFileName(ex.fileName);
-          }
-        } catch (localEx) {
-          this.handleError('Unable to obtain file and line information for error');
+        if (ex.lineNumber) {
+          exStr += ' on line number ' + ex.lineNumber;
+        }
+        if (ex.fileName) {
+          exStr += ' in file ' + this.getUrlFileName(ex.fileName);
         }
 //        if (showStackTraces && ex.stack) {
 //          exStr += this.newLine + 'Stack trace:' + this.newLine + ex.stack;
@@ -912,7 +909,7 @@ define('log4js.core',[
     // Use default logger if loggerName is not specified or invalid
     if (!helper.isString(loggerName)) {
       helper.handleError(
-          'Log4js [' + this + ']: getLogger: non-string logger name ' +
+          'Log4js [' + this.toString() + ']: getLogger: non-string logger name ' +
           loggerName +
           ' supplied, returning anonymous logger'
       );
@@ -921,7 +918,7 @@ define('log4js.core',[
 
     // Do not allow retrieval of the root logger by name
     if (loggerName === helper.rootLoggerName) {
-      helper.handleError('Log4js [' + this + ']: getLogger: root logger may not be obtained by name');
+      helper.handleError('Log4js [' + this.toString() + ']: getLogger: root logger may not be obtained by name');
     }
 
     // Create the logger for this name if it doesn't already exist
@@ -977,6 +974,10 @@ define('log4js.core',[
   Log4js.prototype.resetConfiguration = function () {
     rootLogger.setLevel(Level.ROOT_LOGGER_DEFAULT_LEVEL);
     loggers = {};
+  };
+
+  Log4js.prototype.toString = function () {
+    return 'log4js.core';
   };
 
   /**
@@ -1286,8 +1287,8 @@ define('log4js.consoleAppenderHtml',[],function(){
     '    </div>',
     '   </div>',
     '  </div>',
-    '  <div id="log" class="TRACE DEBUG INFO WARN ERROR FATAL"></div>',
-    '  </div>'];
+    '  </div>'
+  ];
 
   return html.join('\n');
 });
@@ -2378,13 +2379,52 @@ define('log4js.appender',[
 });
 
 /*global window*/
-define('log4js.appender.console',['log4js.helper', 'log4js.core', 'log4js.consoleAppenderHtml', 'log4js.appender'], function(helper, log4js, consoleAppenderHtml){
+define('log4js.appender.console',['log4js.helper', 'log4js.core', 'log4js.consoleAppenderHtml', 'log4js.appender', 'log4js.layout.pattern'], function(helper, log4js, consoleAppenderHtml){
   
+
+  function LogCache(size){
+    this.size = size || 100;
+    this.cache = [];
+  }
+
+  LogCache.prototype.setSize = function(newSize){
+    this.size = newSize;
+  };
+
+  LogCache.prototype.add = function(loggingEvent){
+    if(this.cache.length === this.size){
+      this.cache.shift();
+    }
+
+    this.cache.push(loggingEvent);
+  };
+
+  LogCache.prototype.get = function(index){
+    return this.cache[index];
+  };
+
+  LogCache.prototype.getFirst = function(){
+    return this.get(0);
+  };
+
+  LogCache.prototype.getLast = function(){
+    return this.get(this.cache.length);
+  };
+
+  LogCache.prototype.getAll = function(){
+    return this.cache;
+  };
+
+  LogCache.prototype.clear = function(){
+    this.cache = [];
+  };
 
   function ConsoleAppender(options){
     options = options || {};
     this.options = {
-      inPage: options.inPage || true
+      inPage: options.inPage || true,
+      layout: options.layout || new log4js.PatternLayout('%d{HH:mm:ss} %-5p - %m{1}%n'),
+      logCacheSize:   options.logCacheSize || 100
     };
   }
 
@@ -2392,68 +2432,72 @@ define('log4js.appender.console',['log4js.helper', 'log4js.core', 'log4js.consol
 
   ConsoleAppender.prototype.create = function(){
 
-    //setLayout is inherited from Appender
-//    this.setLayout(this.default.layout);
+    this.setLayout(this.options.layout);
+
+    this.logCache = new LogCache(this.options.logCacheSize);
+    this.mainContainer = window.document.createElement('div');
+    this.logContainer = window.document.createElement('div');
+    this.logDiv = window.document.createElement('div');
+
+    this.prepareContainer();
 
     if(this.options.inPage){
-      this.injectDom();
+      this.addContainerToPage();
+    } else {
+      this.addContainerToPopup();
     }
-
-    this.append = function(){
-
-    };
-
-    this.group = function(){
-
-    };
-
-    this.groupEnd = function(){
-
-    };
-
-    this.toString = function(){
-      return 'ConsoleAppender';
-    };
   };
 
-  ConsoleAppender.prototype.injectDom = function(){
-    var containerElement = window.document.createElement('div');
-    containerElement.style.position = 'fixed';
-    containerElement.style.left = '0';
-    containerElement.style.right = '0';
-    containerElement.style.bottom = '0';
-    window.document.body.appendChild(containerElement);
-//    appender.addCssProperty('borderWidth', '1px 0 0 0');
-//    appender.addCssProperty('zIndex', 1000000);
+  ConsoleAppender.prototype.prepareContainer = function(){
+    this.mainContainer.style.position = 'fixed';
+    this.mainContainer.style.left = '0';
+    this.mainContainer.style.right = '0';
+    this.mainContainer.style.bottom = '0';
+//    this.mainContainer.style.display = 'none';
 
-    var iframeContainerDiv = containerElement.appendChild(window.document.createElement('div'));
-
-    iframeContainerDiv.style.width = '100%';
-    iframeContainerDiv.style.height = '200px';
-    iframeContainerDiv.style.border = 'solid gray 1px';
-    iframeContainerDiv.style.borderWidth = '1px 0 0 0';
-
-    var iframeSrc = '';
-    var iframeId = '__ConsoleAppender__' + helper.getUUID();
-
-    // Adding an iframe using the DOM would be preferable, but it doesn't work
-    // in IE5 on Windows, or in Konqueror prior to version 3.5 - in Konqueror
-    // it creates the iframe fine but I haven't been able to find a way to obtain
-    // the iframe's window object
-    iframeContainerDiv.innerHTML = '<iframe id="' + iframeId + '" name="' + iframeId +
-      '" width="100%" height="100%" frameborder="0"' + iframeSrc +
-      ' scrolling="no"></iframe>';
-
-    var iframe = window.document.getElementById(iframeId);
-    var html = consoleAppenderHtml;
-    var doc = iframe.contentDocument;
-    doc.open();
-    doc.writeln(html);
-    doc.close();
+    this.logContainer.style.width = '100%';
+    this.logContainer.style.height = '200px';
+    this.logContainer.style.border = 'solid gray 1px';
+    this.logContainer.style.borderWidth = '1px 0 0 0';
+    this.logContainer.innerHTML = consoleAppenderHtml;
   };
 
-  ConsoleAppender.prototype.addIframe = function(){
+  ConsoleAppender.prototype.addContainerToPage = function(){
+    window.document.body.appendChild(this.mainContainer);
+    this.logContainer.appendChild(this.logDiv);
+    this.mainContainer.appendChild(this.logContainer);
+  };
 
+  ConsoleAppender.prototype.addContainerToPopup = function(){
+    window.document.body.appendChild(this.mainContainer);
+    this.mainContainer.appendChild(this.logContainer);
+  };
+
+  ConsoleAppender.prototype.renderLogs = function(){
+    var layout = this.layout;
+    var logs = this.logCache.getAll();
+    var logEntries = [];
+    logs.forEach(function(loggingEvent){
+      logEntries.push('<div>' + layout.format(loggingEvent) + '</div>');
+    });
+    this.logDiv.innerHTML = logEntries.join('');
+  };
+
+  ConsoleAppender.prototype.doAppend = function(loggingEvent){
+    this.logCache.add(loggingEvent);
+    this.renderLogs();
+  };
+
+  ConsoleAppender.prototype.group = function(){
+
+  };
+
+  ConsoleAppender.prototype.groupEnd = function(){
+
+  };
+
+  ConsoleAppender.prototype.toString = function(){
+    return 'ConsoleAppender';
   };
 
   log4js.ConsoleAppender = ConsoleAppender;
